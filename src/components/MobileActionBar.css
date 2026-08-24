@@ -1,0 +1,39 @@
+.mobile-action-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 90;
+  display: flex;
+  height: var(--mobile-bar-height);
+  background: #fff;
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -6px 20px rgba(6, 50, 69, 0.1);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.mobile-action-bar a {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.mobile-action-bar a:first-child {
+  background: var(--color-ocean-700);
+  color: #fff;
+}
+
+.mobile-action-bar a:last-child {
+  background: var(--color-gold-500);
+  color: var(--color-ocean-900);
+}
+
+@media (min-width: 720px) {
+  .mobile-action-bar {
+    display: none;
+  }
+}

@@ -1,0 +1,40 @@
+.final-cta {
+  position: relative;
+  background: linear-gradient(120deg, var(--color-ocean-700), var(--color-green-600) 120%);
+  padding: 64px 0;
+  overflow: hidden;
+}
+
+.final-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 85% 20%, rgba(240, 171, 46, 0.35), transparent 45%);
+  pointer-events: none;
+}
+
+.final-cta-inner {
+  position: relative;
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.final-cta h2 {
+  color: #fff;
+  font-size: clamp(1.6rem, 3.6vw, 2.3rem);
+  margin-bottom: 14px;
+}
+
+.final-cta p {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 1.05rem;
+  margin-bottom: 28px;
+}
+
+.final-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}

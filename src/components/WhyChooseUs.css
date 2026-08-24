@@ -1,0 +1,48 @@
+.why-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.why-card {
+  padding: 28px 24px;
+  text-align: left;
+}
+
+.why-card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.why-card:nth-child(1) .why-card-icon { background: var(--color-gold-100); color: var(--color-gold-600); }
+.why-card:nth-child(2) .why-card-icon { background: var(--color-coral-100); color: var(--color-coral-600); }
+.why-card:nth-child(3) .why-card-icon { background: var(--color-ocean-100); color: var(--color-ocean-700); }
+.why-card:nth-child(4) .why-card-icon { background: var(--color-green-100); color: var(--color-green-600); }
+
+.why-card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+}
+
+.why-card p {
+  color: var(--color-ink-light);
+  font-size: 0.92rem;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .why-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1040px) {
+  .why-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

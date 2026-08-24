@@ -1,0 +1,59 @@
+.how-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  position: relative;
+}
+
+.how-step {
+  text-align: center;
+  padding: 8px 16px;
+  position: relative;
+}
+
+.how-step-icon {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  background: var(--color-ocean-100);
+  color: var(--color-ocean-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+  position: relative;
+}
+
+.how-step-number {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--color-gold-500);
+  color: var(--color-ocean-900);
+  font-size: 0.78rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.how-step h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.how-step p {
+  color: var(--color-ink-light);
+  font-size: 0.94rem;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+@media (min-width: 780px) {
+  .how-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

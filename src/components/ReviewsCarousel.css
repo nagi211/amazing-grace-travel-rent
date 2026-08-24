@@ -1,0 +1,45 @@
+.reviews-carousel-viewport {
+  overflow: hidden;
+}
+
+.reviews-carousel-track {
+  display: flex;
+  transition: transform 0.6s ease;
+}
+
+.reviews-carousel-page {
+  flex: 0 0 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  padding: 4px 4px 4px 0;
+}
+
+.reviews-carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.reviews-carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  border: none;
+  background: var(--color-border);
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.reviews-carousel-dot.is-active {
+  background: var(--color-ocean-700);
+  transform: scale(1.25);
+}
+
+@media (min-width: 720px) {
+  .reviews-carousel-page {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

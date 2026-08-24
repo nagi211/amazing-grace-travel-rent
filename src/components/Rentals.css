@@ -1,0 +1,17 @@
+.rentals-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+}
+
+@media (min-width: 640px) {
+  .rentals-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1040px) {
+  .rentals-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

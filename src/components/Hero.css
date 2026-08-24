@@ -1,0 +1,131 @@
+.hero {
+  position: relative;
+  background: linear-gradient(180deg, var(--color-ocean-900) 0%, var(--color-ocean-700) 68%, var(--color-ocean-600) 100%);
+  overflow: hidden;
+  padding-top: 56px;
+  padding-bottom: 0;
+}
+
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 15% 20%, rgba(240, 171, 46, 0.25), transparent 45%),
+    radial-gradient(circle at 90% 10%, rgba(255, 141, 120, 0.2), transparent 40%);
+}
+
+.hero-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+  padding-bottom: 56px;
+}
+
+.hero-copy {
+  color: #fff;
+  text-align: center;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: var(--color-gold-100);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 7px 16px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  color: #fff;
+  font-size: clamp(2.1rem, 5.4vw, 3.4rem);
+  margin-bottom: 18px;
+}
+
+.hero-subtitle {
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 1.1rem;
+  max-width: 560px;
+  margin: 0 auto 28px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  margin-bottom: 26px;
+}
+
+.hero-trust {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 18px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.hero-trust span {
+  display: inline-flex;
+  align-items: center;
+}
+
+.hero-trust span:not(:last-child)::after {
+  content: "•";
+  margin-left: 18px;
+  color: var(--color-gold-500);
+}
+
+.hero-media {
+  position: relative;
+}
+
+.hero-media-frame {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  aspect-ratio: 4 / 3;
+}
+
+.hero-media-frame img,
+.hero-media-frame .placeholder-img {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-wave {
+  display: block;
+  width: 100%;
+  height: auto;
+  position: relative;
+}
+
+@media (min-width: 860px) {
+  .hero-inner {
+    grid-template-columns: 1.05fr 0.95fr;
+    text-align: left;
+    gap: 56px;
+  }
+
+  .hero-copy {
+    text-align: left;
+  }
+
+  .hero-subtitle {
+    margin: 0 0 28px;
+  }
+
+  .hero-actions,
+  .hero-trust {
+    justify-content: flex-start;
+  }
+}
