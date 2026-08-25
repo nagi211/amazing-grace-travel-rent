@@ -1,0 +1,229 @@
+.pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.pricing-card {
+  padding: 24px 22px;
+}
+
+.pricing-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.pricing-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-ocean-100);
+  color: var(--color-ocean-700);
+}
+
+.pricing-card-header h3 {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.pricing-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pricing-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.pricing-list li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.pricing-item-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.pricing-item-name {
+  color: var(--color-ink);
+  font-size: 0.94rem;
+  font-weight: 600;
+}
+
+.pricing-item-note {
+  color: var(--color-ink-light);
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.pricing-item-price {
+  color: var(--color-ocean-700);
+  font-weight: 700;
+  font-size: 0.94rem;
+  white-space: nowrap;
+}
+
+.planning-packages {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.planning-package {
+  padding: 20px 22px;
+}
+
+.planning-package summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.planning-package summary::-webkit-details-marker {
+  display: none;
+}
+
+.planning-package summary::after {
+  content: "+";
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-ocean-700);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.planning-package[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.planning-package-name {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--color-ocean-900);
+}
+
+.planning-package-price {
+  font-weight: 700;
+  color: var(--color-gold-600);
+  white-space: nowrap;
+}
+
+.planning-package-description {
+  color: var(--color-ink-light);
+  font-size: 0.92rem;
+  margin: 14px 0 10px;
+}
+
+.planning-package-sublabel {
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-ocean-700);
+  margin: 14px 0 8px;
+}
+
+.planning-package-list {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--color-ink);
+  font-size: 0.92rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pricing-staffing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--color-gold-100);
+  color: var(--color-ocean-900);
+  border: 1px solid var(--color-gold-500);
+  border-radius: 999px;
+  padding: 12px 24px;
+  width: fit-content;
+  margin: 0 auto 24px;
+  font-size: 0.95rem;
+}
+
+.pricing-staffing-icon {
+  display: flex;
+  color: var(--color-gold-600);
+}
+
+.pricing-fulfillment {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  text-align: center;
+  background: var(--color-surface);
+}
+
+.pricing-fulfillment-steps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 28px;
+  margin-bottom: 16px;
+}
+
+.pricing-fulfillment-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-ocean-700);
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.pricing-fulfillment p {
+  color: var(--color-ink-light);
+  font-size: 0.88rem;
+  font-style: italic;
+  margin: 0;
+  max-width: 560px;
+  margin-inline: auto;
+}
+
+.pricing-disclaimer {
+  text-align: center;
+  color: var(--color-ink-faint);
+  font-size: 0.82rem;
+  margin: 20px 0 0;
+}
+
+@media (min-width: 720px) {
+  .pricing-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .planning-packages {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

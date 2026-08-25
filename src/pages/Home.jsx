@@ -2,9 +2,11 @@ import { useState } from "react";
 import Hero from "../components/Hero";
 import TrustBar from "../components/TrustBar";
 import Rentals from "../components/Rentals";
+import RentalPricing from "../components/RentalPricing";
 import HowItWorks from "../components/HowItWorks";
 import About from "../components/About";
 import WhyChooseUs from "../components/WhyChooseUs";
+import Certifications from "../components/Certifications";
 import Gallery from "../components/Gallery";
 import Reviews from "../components/Reviews";
 import QuoteForm from "../components/QuoteForm";
@@ -20,9 +22,11 @@ export default function Home() {
       <Hero />
       <TrustBar />
       <Rentals onSelectInterest={setPrefillInterest} />
+      <RentalPricing />
       <HowItWorks />
       <About />
       <WhyChooseUs />
+      <Certifications />
       <Gallery />
       <Reviews />
       <QuoteForm prefillInterest={prefillInterest} />
