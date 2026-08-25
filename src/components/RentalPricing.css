@@ -83,6 +83,7 @@
 .planning-packages {
   display: grid;
   grid-template-columns: 1fr;
+  align-items: start;
   gap: 16px;
   margin-bottom: 28px;
 }
