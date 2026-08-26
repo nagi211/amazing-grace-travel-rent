@@ -1,13 +1,16 @@
 .pricing-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  align-items: start;
-  gap: 20px;
+  display: block;
   margin-bottom: 24px;
 }
 
 .pricing-card {
   padding: 24px 22px;
+  margin-bottom: 20px;
+  break-inside: avoid;
+}
+
+.pricing-card:last-child {
+  margin-bottom: 0;
 }
 
 .pricing-card-header {
@@ -269,7 +272,13 @@
 
 @media (min-width: 720px) {
   .pricing-grid {
-    grid-template-columns: repeat(2, 1fr);
+    column-count: 2;
+    column-gap: 20px;
+  }
+
+  .pricing-card {
+    display: inline-block;
+    width: 100%;
   }
 
   .planning-packages {
