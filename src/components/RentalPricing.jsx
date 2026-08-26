@@ -55,6 +55,11 @@ export default function RentalPricing() {
                 <ul className="pricing-list">
                   {group.items.map((item) => (
                     <li key={item.id}>
+                      {item.image && (
+                        <span className="pricing-item-thumb">
+                          <img src={item.image} alt={item.name} loading="lazy" />
+                        </span>
+                      )}
                       <div className="pricing-item-info">
                         <span className="pricing-item-name">{item.name}</span>
                         {item.note && <span className="pricing-item-note">{item.note}</span>}

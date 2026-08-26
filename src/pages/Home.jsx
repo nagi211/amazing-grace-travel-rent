@@ -6,7 +6,8 @@ import RentalPricing from "../components/RentalPricing";
 import HowItWorks from "../components/HowItWorks";
 import About from "../components/About";
 import WhyChooseUs from "../components/WhyChooseUs";
-import Certifications from "../components/Certifications";
+// Hidden for now — re-add the <Certifications /> render below to bring it back.
+// import Certifications from "../components/Certifications";
 import Gallery from "../components/Gallery";
 import Reviews from "../components/Reviews";
 import QuoteForm from "../components/QuoteForm";
@@ -26,7 +27,7 @@ export default function Home() {
       <HowItWorks />
       <About />
       <WhyChooseUs />
-      <Certifications />
+      {/* <Certifications /> */}
       <Gallery />
       <Reviews />
       <QuoteForm prefillInterest={prefillInterest} />

@@ -33,8 +33,7 @@ export default function Gallery() {
           <span className="eyebrow">Gallery</span>
           <h2 className="section-title">See It in Action</h2>
           <p className="section-subtitle">
-            A look at our rentals, packages and celebrations. Photos shown here are placeholders
-            and will be replaced with real event photography.
+            A look at our rentals, packages and celebrations from real Oahu events.
           </p>
         </div>
 
