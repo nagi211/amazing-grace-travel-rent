@@ -102,6 +102,7 @@ export const pricingGroups = [
         price: "$150",
         amount: 150,
         unit: null,
+        image: "/selfie_mirror.jpg",
       },
     ],
   },
