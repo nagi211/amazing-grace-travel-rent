@@ -44,7 +44,7 @@
 
 .pricing-list li {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 12px;
   padding-bottom: 10px;
@@ -59,6 +59,7 @@
 .pricing-item-info {
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .pricing-item-name {
@@ -78,6 +79,33 @@
   font-weight: 700;
   font-size: 0.94rem;
   white-space: nowrap;
+}
+
+.pricing-item-add {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1px solid var(--color-ocean-700);
+  background: #fff;
+  color: var(--color-ocean-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.pricing-item-add:hover {
+  background: var(--color-ocean-700);
+  color: #fff;
+}
+
+.planning-package-add {
+  margin-top: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .planning-packages {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingCart } from "lucide-react";
+import { useCart } from "../context/CartContext";
 import "./Navbar.css";
 
 const NAV_LINKS = [
@@ -13,6 +14,7 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const { itemCount, openCart } = useCart();
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -44,6 +46,10 @@ export default function Navbar() {
         </nav>
 
         <div className="navbar-actions">
+          <button type="button" className="navbar-cart" aria-label={`Open cart (${itemCount} items)`} onClick={openCart}>
+            <ShoppingCart size={22} />
+            {itemCount > 0 && <span className="navbar-cart-badge">{itemCount}</span>}
+          </button>
           <a href="#quote" className="btn btn-primary navbar-cta">
             Request a Quote
           </a>

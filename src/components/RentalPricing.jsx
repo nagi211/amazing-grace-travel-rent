@@ -1,4 +1,5 @@
-import { Armchair, Tent, Table2, Heart, Music, ClipboardList, Users, Truck, Settings, Wrench } from "lucide-react";
+import { useState } from "react";
+import { Armchair, Tent, Table2, Heart, Music, ClipboardList, Users, Truck, Settings, Wrench, Plus, Check } from "lucide-react";
 import {
   pricingGroups,
   staffingRate,
@@ -6,6 +7,7 @@ import {
   pricingDisclaimer,
   planningPackages,
 } from "../data/pricing";
+import { useCart } from "../context/CartContext";
 import "./RentalPricing.css";
 
 const ICONS = { Armchair, Tent, Table2, Heart, Music, ClipboardList };
@@ -18,6 +20,15 @@ const FULFILLMENT_STEPS = [
 ];
 
 export default function RentalPricing() {
+  const { addItem } = useCart();
+  const [justAdded, setJustAdded] = useState(null);
+
+  function handleAdd(item) {
+    addItem(item);
+    setJustAdded(item.id);
+    setTimeout(() => setJustAdded((current) => (current === item.id ? null : current)), 1200);
+  }
+
   return (
     <section id="pricing" className="section section-alt">
       <div className="container">
@@ -25,8 +36,8 @@ export default function RentalPricing() {
           <span className="eyebrow">Pricing</span>
           <h2 className="section-title">Rental Pricing &amp; Packages</h2>
           <p className="section-subtitle">
-            A full look at our à la carte rentals and service packages, so you know exactly what to
-            expect.
+            A full look at our à la carte rentals and service packages. Add items to your cart to
+            build out your event before requesting a quote.
           </p>
         </div>
 
@@ -43,12 +54,20 @@ export default function RentalPricing() {
                 </div>
                 <ul className="pricing-list">
                   {group.items.map((item) => (
-                    <li key={item.name}>
+                    <li key={item.id}>
                       <div className="pricing-item-info">
                         <span className="pricing-item-name">{item.name}</span>
                         {item.note && <span className="pricing-item-note">{item.note}</span>}
                       </div>
                       <span className="pricing-item-price">{item.price}</span>
+                      <button
+                        type="button"
+                        className="pricing-item-add"
+                        aria-label={`Add ${item.name} to cart`}
+                        onClick={() => handleAdd(item)}
+                      >
+                        {justAdded === item.id ? <Check size={16} /> : <Plus size={16} />}
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -92,6 +111,17 @@ export default function RentalPricing() {
                   </ul>
                 </>
               )}
+              <button type="button" className="btn btn-outline planning-package-add" onClick={() => handleAdd(pkg)}>
+                {justAdded === pkg.id ? (
+                  <>
+                    <Check size={16} /> Added to Cart
+                  </>
+                ) : (
+                  <>
+                    <Plus size={16} /> Add to Cart
+                  </>
+                )}
+              </button>
             </details>
           ))}
         </div>
