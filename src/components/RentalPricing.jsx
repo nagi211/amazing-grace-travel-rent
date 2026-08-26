@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Armchair, Tent, Table2, Heart, Music, ClipboardList, Users, Truck, Settings, Wrench, Plus, Check } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Armchair, Tent, Table2, Heart, Music, ClipboardList, Users, Truck, Settings, Wrench, Plus, Check, X } from "lucide-react";
 import {
   pricingGroups,
   staffingRate,
@@ -22,12 +22,26 @@ const FULFILLMENT_STEPS = [
 export default function RentalPricing() {
   const { addItem } = useCart();
   const [justAdded, setJustAdded] = useState(null);
+  const [previewItem, setPreviewItem] = useState(null);
 
   function handleAdd(item) {
     addItem(item);
     setJustAdded(item.id);
     setTimeout(() => setJustAdded((current) => (current === item.id ? null : current)), 1200);
   }
+
+  useEffect(() => {
+    if (!previewItem) return;
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") setPreviewItem(null);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [previewItem]);
 
   return (
     <section id="pricing" className="section section-alt">
@@ -56,9 +70,14 @@ export default function RentalPricing() {
                   {group.items.map((item) => (
                     <li key={item.id}>
                       {item.image && (
-                        <span className="pricing-item-thumb">
+                        <button
+                          type="button"
+                          className="pricing-item-thumb"
+                          aria-label={`View larger image of ${item.name}`}
+                          onClick={() => setPreviewItem(item)}
+                        >
                           <img src={item.image} alt={item.name} loading="lazy" />
-                        </span>
+                        </button>
                       )}
                       <div className="pricing-item-info">
                         <span className="pricing-item-name">{item.name}</span>
@@ -154,6 +173,34 @@ export default function RentalPricing() {
 
         <p className="pricing-disclaimer">{pricingDisclaimer}</p>
       </div>
+
+      {previewItem && (
+        <div
+          className="pricing-lightbox-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label={previewItem.name}
+          onClick={() => setPreviewItem(null)}
+        >
+          <div className="pricing-lightbox-inner" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              className="pricing-lightbox-close"
+              aria-label="Close"
+              onClick={() => setPreviewItem(null)}
+            >
+              <X size={20} />
+            </button>
+            <div className="pricing-lightbox-content">
+              <img src={previewItem.image} alt={previewItem.name} />
+            </div>
+            <div className="pricing-lightbox-caption">
+              <span>{previewItem.name}</span>
+              <span className="pricing-lightbox-price">{previewItem.price}</span>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
