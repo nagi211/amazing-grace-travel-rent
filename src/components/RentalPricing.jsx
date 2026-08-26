@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Armchair, Tent, Table2, Heart, Music, ClipboardList, Users, Truck, Settings, Wrench, Plus, Check, X } from "lucide-react";
+import { Armchair, Tent, Table2, Heart, Music, ClipboardList, Sparkles, Users, Truck, Settings, Wrench, Plus, Check, X } from "lucide-react";
 import {
   pricingGroups,
   staffingRate,
@@ -10,7 +10,7 @@ import {
 import { useCart } from "../context/CartContext";
 import "./RentalPricing.css";
 
-const ICONS = { Armchair, Tent, Table2, Heart, Music, ClipboardList };
+const ICONS = { Armchair, Tent, Table2, Heart, Music, ClipboardList, Sparkles };
 
 const FULFILLMENT_STEPS = [
   { icon: Truck, label: "Delivery" },

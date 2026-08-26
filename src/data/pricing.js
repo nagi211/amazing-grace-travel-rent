@@ -11,6 +11,8 @@ export const pricingGroups = [
     title: "Individual Rentals",
     items: [
       { id: "white-resin-chairs", name: "White Resin Chairs", price: "$3 each", amount: 3, unit: "each", image: "/items/chair_white.jpg" },
+      { id: "folding-chair-natural", name: "Folding Chair (Natural Wood)", price: "$7 each", amount: 7, unit: "each", image: "/items/chair_2.jpg" },
+      { id: "folding-chair-dark-brown", name: "Folding Chair (Dark Brown)", price: "$7 each", amount: 7, unit: "each", image: "/items/chair_3.jpg" },
       { id: "folding-white-tables", name: "6 ft Folding White Tables", price: "$8 each", amount: 8, unit: "each", image: "/items/table_long.jpg" },
       { id: "round-tables", name: '72" Round Tables', price: "$35 each", amount: 35, unit: "each", image: "/items/table_short.jpg" },
       { id: "tablecloths", name: "Tablecloths", price: "$15 each", amount: 15, unit: "each" },
@@ -66,6 +68,41 @@ export const pricingGroups = [
     items: [
       { id: "maid-of-honor", name: "Maid of Honor Service (Partial planning)", price: "$3,000", amount: 3000, unit: null },
       { id: "full-wedding-planning", name: "Full Premium Planning", price: "$5,000", amount: 5000, unit: null },
+    ],
+  },
+  {
+    id: "decor-addons",
+    icon: "Sparkles",
+    title: "Decor & Add-Ons",
+    items: [
+      {
+        id: "wooden-bar",
+        name: "Wooden Bar",
+        note: "Can customize decals",
+        price: "$250",
+        amount: 250,
+        unit: null,
+        image: "/items/mobile_bar.jpg",
+      },
+      { id: "display-shelf", name: "Shelf", price: "$150", amount: 150, unit: null, image: "/items/shelfie.jpg" },
+      {
+        id: "custom-panels",
+        name: "Customized Panels",
+        note: "For any occasion",
+        price: "$250",
+        amount: 250,
+        unit: null,
+        image: "/items/signage.jpg",
+      },
+      { id: "welcome-bar-umbrella", name: "Welcome / Bar Umbrella", price: "$50", amount: 50, unit: null },
+      {
+        id: "welcome-mirror",
+        name: "Customized Welcome Mirror",
+        note: "Gold, black, or white rim",
+        price: "$150",
+        amount: 150,
+        unit: null,
+      },
     ],
   },
 ];
