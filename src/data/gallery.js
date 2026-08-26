@@ -12,9 +12,8 @@ export const galleryItems = [
   { id: 6, category: "Celebrations", tone: "coral", icon: "Sparkles", image: "/items/flower_wall.jpg", caption: "Flower wall photo backdrop" },
   { id: 7, category: "Events", tone: "green", icon: "Sparkles", image: "/items/flower_stand.jpg", caption: "Beachside floral arch" },
   { id: 9, category: "Events", tone: "gold", icon: "CalendarHeart", image: "/items/signage.jpg", caption: "Custom wedding directional signage" },
-  { id: 13, category: "Packages", tone: "green", icon: "Gift", image: null, caption: "Package setup" },
-  { id: 14, category: "Packages", tone: "ocean", icon: "Palmtree", image: null, caption: "Celebration package" },
-  { id: 15, category: "Celebrations", tone: "coral", icon: "Cake", image: "/birthday.jpg", caption: "Birthday celebration" },
-  { id: 16, category: "Rentals", tone: "gold", icon: "Armchair", image: "/selfie_mirror.jpg", caption: "Selfie mirror rental" },
-  { id: 17, category: "Celebrations", tone: "green", icon: "Sparkles", image: "/gender_reveal.jpg", caption: "Gender reveal celebration" },
+  { id: 13, category: "Rentals", tone: "green", icon: "Armchair", image: "/chairs_tables.jpg", caption: "Event rental essentials" },
+  { id: 14, category: "Packages", tone: "ocean", icon: "Gift", image: "/birthday.jpg", caption: "Celebration Package" },
+  { id: 16, category: "Packages", tone: "gold", icon: "PartyPopper", image: "/selfie_mirror.jpg", caption: "Party Package" },
+  { id: 17, category: "Packages", tone: "green", icon: "Sparkles", image: "/gender_reveal.jpg", caption: "Custom Package" },
 ];
