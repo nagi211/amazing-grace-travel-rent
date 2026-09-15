@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import MobileActionBar from "./components/MobileActionBar";
 import CartDrawer from "./components/CartDrawer";
+import EstimateChat from "./components/EstimateChat";
 import Home from "./pages/Home";
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
         <Footer />
         <MobileActionBar />
         <CartDrawer />
+        <EstimateChat />
       </CartProvider>
     </BrowserRouter>
   );

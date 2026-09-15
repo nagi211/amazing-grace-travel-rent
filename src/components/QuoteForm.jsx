@@ -2,19 +2,10 @@ import { useEffect, useState } from "react";
 import { CheckCircle2, Send } from "lucide-react";
 import { rentals } from "../data/rentals";
 import { packages } from "../data/packages";
+import { EVENT_TYPES } from "../data/eventTypes";
 import { submitQuoteRequest } from "../lib/submitQuote";
 import { useCart } from "../context/CartContext";
 import "./QuoteForm.css";
-
-const EVENT_TYPES = [
-  "Birthday",
-  "Family Gathering",
-  "Party",
-  "Wedding",
-  "Baby Shower",
-  "Community / Group Event",
-  "Other",
-];
 
 const RENTAL_OPTIONS = [
   ...rentals.map((r) => r.name),
