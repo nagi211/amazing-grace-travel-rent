@@ -1,25 +1,25 @@
 // Handles submission of the Request a Quote form.
 //
-// Sends the request to Formspree, which emails it to the address configured
-// on that form (currently nagi.gdr@gmail.com). No backend of our own needed.
-//
-// Setup (one-time, in the Formspree dashboard at formspree.io):
-//   1. Create a free account / form with nagi.gdr@gmail.com as the recipient.
-//   2. Copy the form ID from the endpoint Formspree gives you
-//      (https://formspree.io/f/XXXXXXX) and paste it below in place of
-//      FORM_ID.
-const FORM_ID = "meajbqnd";
+// Stores the request in the `inquiries` table in Supabase (see
+// supabase/schema.sql) instead of a third-party form service — it shows up
+// live in the admin panel at /admin.
+import { supabase } from "./supabaseClient";
 
 export async function submitQuoteRequest(values) {
-  const res = await fetch(`https://formspree.io/f/${FORM_ID}`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(values),
+  if (!supabase) throw new Error("Supabase is not configured yet.");
+
+  const { error } = await supabase.from("inquiries").insert({
+    full_name: values.fullName,
+    email: values.email,
+    phone: values.phone,
+    event_date: values.eventDate || null,
+    event_type: values.eventType,
+    guest_count: values.guestCount ? Number(values.guestCount) : null,
+    rental_needed: values.rentalNeeded,
+    event_location: values.eventLocation,
+    details: values.details,
   });
 
-  if (!res.ok) throw new Error("Submission failed");
+  if (error) throw error;
   return { ok: true, values };
 }
