@@ -107,9 +107,19 @@ export default function EstimateChat() {
         <div className="estimate-chat-panel" role="dialog" aria-label="Get an estimate">
           <div className="estimate-chat-header">
             <span>Get an Estimate</span>
-            <button type="button" className="estimate-chat-reset" aria-label="Start over" onClick={handleReset}>
-              <RotateCcw size={15} /> Start Over
-            </button>
+            <div className="estimate-chat-header-actions">
+              <button type="button" className="estimate-chat-reset" aria-label="Start over" onClick={handleReset}>
+                <RotateCcw size={15} /> Start Over
+              </button>
+              <button
+                type="button"
+                className="estimate-chat-header-close"
+                aria-label="Close chat"
+                onClick={() => setIsOpen(false)}
+              >
+                <X size={16} />
+              </button>
+            </div>
           </div>
 
           <div className="estimate-chat-body" ref={scrollRef}>
@@ -172,6 +182,9 @@ export default function EstimateChat() {
                   >
                     Continue
                   </button>
+                  {selectedCategoryIds.length === 0 && (
+                    <p className="estimate-chat-hint">Tap one or more above, or skip below.</p>
+                  )}
                   <button
                     type="button"
                     className="estimate-chat-skip"
@@ -234,6 +247,9 @@ export default function EstimateChat() {
                   Request a Quote
                 </button>
               </div>
+              {itemCount === 0 && (
+                <p className="estimate-chat-hint">Tap + on at least one item above to request a quote.</p>
+              )}
             </div>
           )}
         </div>

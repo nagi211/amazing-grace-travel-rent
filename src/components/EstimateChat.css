@@ -57,6 +57,12 @@
   font-weight: 700;
 }
 
+.estimate-chat-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .estimate-chat-reset {
   display: flex;
   align-items: center;
@@ -69,6 +75,20 @@
   padding: 5px 10px;
   border-radius: 999px;
   cursor: pointer;
+}
+
+.estimate-chat-header-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #fff;
+  border-radius: 999px;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .estimate-chat-body {
@@ -157,6 +177,13 @@
   text-decoration: underline;
   cursor: pointer;
   padding: 0;
+}
+
+.estimate-chat-hint {
+  color: var(--color-ink-light);
+  font-size: 0.78rem;
+  font-style: italic;
+  margin: 6px 0 0;
 }
 
 .estimate-chat-group {
