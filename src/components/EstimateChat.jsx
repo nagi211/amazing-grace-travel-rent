@@ -41,11 +41,14 @@ export default function EstimateChat() {
   const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
   const [justAdded, setJustAdded] = useState(null);
   const scrollRef = useRef(null);
+  const lastMessageRef = useRef(null);
 
   useEffect(() => {
-    if (!scrollRef.current) return;
-    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-  }, [messages, step, selectedCategoryIds]);
+    if (!scrollRef.current || !lastMessageRef.current) return;
+    // Scroll so the newest reply starts at the top of the panel instead of
+    // jumping to the bottom of whatever long item list follows it.
+    scrollRef.current.scrollTop = lastMessageRef.current.offsetTop - 8;
+  }, [messages]);
 
   function pushMessage(from, text) {
     setMessages((current) => [...current, { from, text }]);
@@ -178,7 +181,11 @@ export default function EstimateChat() {
 
           <div className="estimate-chat-body" ref={scrollRef}>
             {messages.map((m, i) => (
-              <div key={i} className={`estimate-chat-bubble ${m.from}`}>
+              <div
+                key={i}
+                ref={i === messages.length - 1 ? lastMessageRef : undefined}
+                className={`estimate-chat-bubble ${m.from}`}
+              >
                 {m.text.split("\n").map((line, j) => (
                   <span key={j} className="estimate-chat-line">
                     {line}
