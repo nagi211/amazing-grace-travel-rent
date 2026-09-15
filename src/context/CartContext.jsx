@@ -68,7 +68,7 @@ export function CartProvider({ children }) {
     setIsOpen(false);
   }
 
-  function requestQuoteFromCart() {
+  function requestQuoteFromCart(extra = {}) {
     if (items.length === 0) return;
     const lines = items.map((i) => `- ${i.name} x${i.qty} — ${formatMoney(i.amount * i.qty)}`);
     const total = items.reduce((sum, i) => sum + i.amount * i.qty, 0);
@@ -79,7 +79,7 @@ export function CartProvider({ children }) {
       `Estimated total: ${formatMoney(total)} (${pricingDisclaimer.toLowerCase()})`,
     ].join("\n");
 
-    setPendingRequest({ interest: "Multiple Items (Cart)", details: summary });
+    setPendingRequest({ interest: "Multiple Items (Cart)", details: summary, ...extra });
     setIsOpen(false);
   }
 

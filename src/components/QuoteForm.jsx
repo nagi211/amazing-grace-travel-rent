@@ -58,7 +58,12 @@ export default function QuoteForm({ prefillInterest }) {
 
   useEffect(() => {
     if (!pendingRequest) return;
-    setValues((v) => ({ ...v, rentalNeeded: pendingRequest.interest, details: pendingRequest.details }));
+    setValues((v) => ({
+      ...v,
+      rentalNeeded: pendingRequest.interest,
+      details: pendingRequest.details,
+      ...(pendingRequest.eventDate ? { eventDate: pendingRequest.eventDate } : {}),
+    }));
     clearPendingRequest();
     document.getElementById("quote")?.scrollIntoView({ behavior: "smooth" });
   }, [pendingRequest, clearPendingRequest]);

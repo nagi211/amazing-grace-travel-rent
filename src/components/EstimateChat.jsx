@@ -21,6 +21,15 @@ import "./EstimateChat.css";
 
 const ICONS = { Armchair, Tent, Table2, Heart, Music, ClipboardList, Sparkles };
 
+function formatEventDate(isoDate) {
+  const [year, month, day] = isoDate.split("-").map(Number);
+  return new Date(year, month - 1, day).toLocaleDateString(undefined, {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
 const INITIAL_MESSAGES = [
   {
     from: "bot",
@@ -31,11 +40,13 @@ const INITIAL_MESSAGES = [
 export default function EstimateChat() {
   const { addItem, itemCount, subtotal, requestQuoteFromCart } = useCart();
   const [isOpen, setIsOpen] = useState(false);
-  const [step, setStep] = useState("eventType"); // eventType | guestCount | budget | categories | items
+  const [step, setStep] = useState("eventType"); // eventType | guestCount | eventDate | budget | categories | items
   const [messages, setMessages] = useState(INITIAL_MESSAGES);
   const [eventType, setEventType] = useState(null);
   const [guestCountInput, setGuestCountInput] = useState("");
   const [guestCount, setGuestCount] = useState(null);
+  const [eventDateInput, setEventDateInput] = useState("");
+  const [eventDate, setEventDate] = useState(null);
   const [budgetInput, setBudgetInput] = useState("");
   const [budget, setBudget] = useState(null);
   const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
@@ -66,7 +77,22 @@ export default function EstimateChat() {
     if (!guestCountInput) return;
     setGuestCount(Number(guestCountInput));
     pushMessage("user", `${guestCountInput} guests`);
+    pushMessage("bot", "When's the big day? (You can skip this if you're not sure yet.)");
+    setStep("eventDate");
+  }
+
+  function handleSubmitEventDate(e) {
+    e.preventDefault();
+    if (!eventDateInput) return;
+    setEventDate(eventDateInput);
+    pushMessage("user", formatEventDate(eventDateInput));
     pushMessage("bot", "Do you have a budget in mind? I can put together a starting plan that fits it.");
+    setStep("budget");
+  }
+
+  function handleSkipEventDate() {
+    pushMessage("user", "I'm not sure yet");
+    pushMessage("bot", "No worries. Do you have a budget in mind? I can put together a starting plan that fits it.");
     setStep("budget");
   }
 
@@ -141,6 +167,8 @@ export default function EstimateChat() {
     setEventType(null);
     setGuestCountInput("");
     setGuestCount(null);
+    setEventDateInput("");
+    setEventDate(null);
     setBudgetInput("");
     setBudget(null);
     setSelectedCategoryIds([]);
@@ -218,6 +246,25 @@ export default function EstimateChat() {
                   Next
                 </button>
               </form>
+            )}
+
+            {step === "eventDate" && (
+              <>
+                <form className="estimate-chat-guest-form" onSubmit={handleSubmitEventDate}>
+                  <input
+                    type="date"
+                    value={eventDateInput}
+                    onChange={(e) => setEventDateInput(e.target.value)}
+                    aria-label="Event date"
+                  />
+                  <button type="submit" className="btn btn-primary">
+                    Next
+                  </button>
+                </form>
+                <button type="button" className="estimate-chat-skip" onClick={handleSkipEventDate}>
+                  I'm not sure yet
+                </button>
+              </>
             )}
 
             {step === "budget" && (
@@ -333,7 +380,7 @@ export default function EstimateChat() {
                   className="btn btn-primary"
                   disabled={itemCount === 0}
                   onClick={() => {
-                    requestQuoteFromCart();
+                    requestQuoteFromCart(eventDate ? { eventDate } : {});
                     setIsOpen(false);
                   }}
                 >
