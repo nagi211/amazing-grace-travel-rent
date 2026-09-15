@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { pricingGroups } from "../data/pricing";
 import { EVENT_TYPES } from "../data/eventTypes";
+import { buildSuggestedPlan } from "../lib/estimatePlanner";
 import { useCart, formatMoney } from "../context/CartContext";
 import "./EstimateChat.css";
 
@@ -30,10 +31,13 @@ const INITIAL_MESSAGES = [
 export default function EstimateChat() {
   const { addItem, itemCount, subtotal, requestQuoteFromCart } = useCart();
   const [isOpen, setIsOpen] = useState(false);
-  const [step, setStep] = useState("eventType"); // eventType | guestCount | categories | items
+  const [step, setStep] = useState("eventType"); // eventType | guestCount | budget | categories | items
   const [messages, setMessages] = useState(INITIAL_MESSAGES);
+  const [eventType, setEventType] = useState(null);
   const [guestCountInput, setGuestCountInput] = useState("");
   const [guestCount, setGuestCount] = useState(null);
+  const [budgetInput, setBudgetInput] = useState("");
+  const [budget, setBudget] = useState(null);
   const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
   const [justAdded, setJustAdded] = useState(null);
   const scrollRef = useRef(null);
@@ -48,6 +52,7 @@ export default function EstimateChat() {
   }
 
   function handleSelectEventType(type) {
+    setEventType(type);
     pushMessage("user", type);
     pushMessage("bot", `Got it — a ${type}! About how many guests are you expecting?`);
     setStep("guestCount");
@@ -58,7 +63,51 @@ export default function EstimateChat() {
     if (!guestCountInput) return;
     setGuestCount(Number(guestCountInput));
     pushMessage("user", `${guestCountInput} guests`);
-    pushMessage("bot", "What do you need for your event? Tap everything that applies.");
+    pushMessage("bot", "Do you have a budget in mind? I can put together a starting plan that fits it.");
+    setStep("budget");
+  }
+
+  function handleSubmitBudget(e) {
+    e.preventDefault();
+    if (!budgetInput) return;
+    const budgetValue = Number(budgetInput);
+    setBudget(budgetValue);
+    pushMessage("user", `${formatMoney(budgetValue)} budget`);
+
+    const plan = buildSuggestedPlan({ eventType, guestCount, budget: budgetValue });
+    addItem(plan.essential.item, plan.essential.qty);
+    plan.addOns.forEach(({ item, qty }) => addItem(item, qty));
+
+    const lines = [
+      `- ${plan.essential.item.name} x${plan.essential.qty} — ${formatMoney(
+        plan.essential.item.amount * plan.essential.qty
+      )}`,
+      ...plan.addOns.map(({ item, qty }) => `- ${item.name} x${qty} — ${formatMoney(item.amount * qty)}`),
+    ];
+
+    if (plan.overBudget) {
+      pushMessage(
+        "bot",
+        `Seating alone for ${guestCount} guests runs about ${formatMoney(plan.total)}, which is already above ${formatMoney(
+          budgetValue
+        )}. Here's that baseline — let's talk about trade-offs, or adjust guest count / budget with Start Over.\n\n${lines.join("\n")}`
+      );
+    } else {
+      pushMessage(
+        "bot",
+        `Here's a starting plan for ${formatMoney(budgetValue)} and ${guestCount} guests:\n\n${lines.join(
+          "\n"
+        )}\n\nThat leaves about ${formatMoney(plan.remaining)}. Add or remove anything below, then request your quote.`
+      );
+    }
+
+    setSelectedCategoryIds(pricingGroups.map((g) => g.id));
+    setStep("items");
+  }
+
+  function handleSkipBudget() {
+    pushMessage("user", "I'll just browse");
+    pushMessage("bot", "No problem — what do you need for your event? Tap everything that applies.");
     setStep("categories");
   }
 
@@ -86,11 +135,16 @@ export default function EstimateChat() {
   function handleReset() {
     setMessages(INITIAL_MESSAGES);
     setStep("eventType");
+    setEventType(null);
     setGuestCountInput("");
+    setGuestCount(null);
+    setBudgetInput("");
+    setBudget(null);
     setSelectedCategoryIds([]);
   }
 
   const visibleGroups = pricingGroups.filter((g) => selectedCategoryIds.includes(g.id));
+  const remainingBudget = budget != null ? budget - subtotal : null;
 
   return (
     <>
@@ -125,7 +179,11 @@ export default function EstimateChat() {
           <div className="estimate-chat-body" ref={scrollRef}>
             {messages.map((m, i) => (
               <div key={i} className={`estimate-chat-bubble ${m.from}`}>
-                {m.text}
+                {m.text.split("\n").map((line, j) => (
+                  <span key={j} className="estimate-chat-line">
+                    {line}
+                  </span>
+                ))}
               </div>
             ))}
 
@@ -153,6 +211,27 @@ export default function EstimateChat() {
                   Next
                 </button>
               </form>
+            )}
+
+            {step === "budget" && (
+              <>
+                <form className="estimate-chat-guest-form" onSubmit={handleSubmitBudget}>
+                  <input
+                    type="number"
+                    min="1"
+                    placeholder="e.g. 15000"
+                    value={budgetInput}
+                    onChange={(e) => setBudgetInput(e.target.value)}
+                    aria-label="Budget in dollars"
+                  />
+                  <button type="submit" className="btn btn-primary">
+                    Build My Plan
+                  </button>
+                </form>
+                <button type="button" className="estimate-chat-skip" onClick={handleSkipBudget}>
+                  Skip — I'll just browse
+                </button>
+              </>
             )}
 
             {step === "categories" && (
@@ -231,6 +310,13 @@ export default function EstimateChat() {
                 <span>{itemCount} item{itemCount === 1 ? "" : "s"}</span>
                 <strong>{formatMoney(subtotal)}</strong>
               </div>
+              {remainingBudget != null && (
+                <p className={`estimate-chat-budget-line ${remainingBudget < 0 ? "over" : ""}`}>
+                  {remainingBudget < 0
+                    ? `${formatMoney(Math.abs(remainingBudget))} over your ${formatMoney(budget)} budget`
+                    : `${formatMoney(remainingBudget)} left of your ${formatMoney(budget)} budget`}
+                </p>
+              )}
               <div className="estimate-chat-footer-actions">
                 <a href="#pricing" className="btn btn-outline" onClick={() => setIsOpen(false)}>
                   Full Price List
