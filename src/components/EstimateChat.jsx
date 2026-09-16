@@ -126,33 +126,28 @@ export default function EstimateChat() {
         "bot",
         `Seating alone for ${guestCount} guests runs about ${formatMoney(plan.total)}, which is already above ${formatMoney(
           budgetValue
-        )}. That's just one item for now — want to add it to your cart while you think it over, or pick your own items instead?`
+        )}. Here's that baseline — tap + if you'd like to add it while you think it over.`
       );
     } else {
       pushMessage(
         "bot",
-        `We could suggest ${allPlanItems.length} items totaling ${formatMoney(
+        `Here's what we could suggest for ${formatMoney(budgetValue)} and ${guestCount} guests — ${allPlanItems.length} items totaling ${formatMoney(
           plan.total
-        )} — leaving about ${formatMoney(plan.remaining)} of your ${formatMoney(
-          budgetValue
-        )} budget. Take your time — want to add these to your cart, or pick your own items instead?`
+        )}, leaving about ${formatMoney(plan.remaining)}. Tap + on any you'd like to add — no pressure to take them all.`
       );
     }
 
     setStep("planDecision");
   }
 
-  function handleAddPlanToCart() {
-    planItems.forEach(({ item, qty }) => addItem(item, qty));
-    pushMessage("user", "Add these to my cart");
-    pushMessage("bot", "Added! Want us to save this and follow up if you have questions? Totally optional.");
-    setHideBrowseList(true);
-    setStep("contact");
+  function handleAddSuggestedItem(entry) {
+    addItem(entry.item, entry.qty);
+    setJustAdded(entry.item.id);
+    setTimeout(() => setJustAdded((current) => (current === entry.item.id ? null : current)), 1000);
   }
 
-  function handleDeclinePlan() {
-    pushMessage("user", "I'll pick my own items");
-    pushMessage("bot", "No problem! Want us to save your info so we can follow up if helpful? Totally optional.");
+  function handleContinueFromPlan() {
+    pushMessage("bot", "Want us to save this and follow up if you have questions? Totally optional.");
     setHideBrowseList(true);
     setStep("contact");
   }
@@ -352,14 +347,32 @@ export default function EstimateChat() {
             )}
 
             {step === "planDecision" && (
-              <div className="estimate-chat-continue-row">
-                <button type="button" className="btn btn-primary" onClick={handleAddPlanToCart}>
-                  Add These to My Cart
-                </button>
-                <button type="button" className="estimate-chat-skip" onClick={handleDeclinePlan}>
-                  I'll pick my own items
-                </button>
-              </div>
+              <>
+                <ul className="estimate-chat-items">
+                  {planItems.map(({ item, qty }) => (
+                    <li key={item.id}>
+                      <span className="estimate-chat-item-info">
+                        {item.name}
+                        {qty > 1 && <span className="estimate-chat-item-hint">x{qty}</span>}
+                      </span>
+                      <span className="estimate-chat-item-price">{formatMoney(item.amount * qty)}</span>
+                      <button
+                        type="button"
+                        className="estimate-chat-item-add"
+                        aria-label={`Add ${item.name}`}
+                        onClick={() => handleAddSuggestedItem({ item, qty })}
+                      >
+                        {justAdded === item.id ? <Check size={14} /> : <Plus size={14} />}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+                <div className="estimate-chat-continue-row">
+                  <button type="button" className="btn btn-primary" onClick={handleContinueFromPlan}>
+                    Continue
+                  </button>
+                </div>
+              </>
             )}
 
             {step === "categories" && (
