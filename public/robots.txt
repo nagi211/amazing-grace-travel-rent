@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /admin
+Allow: /
+
+Sitemap: https://amazing-grace-travel-rent.vercel.app/sitemap.xml
