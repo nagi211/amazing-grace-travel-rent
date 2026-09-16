@@ -4,6 +4,7 @@ import { rentals } from "../data/rentals";
 import { packages } from "../data/packages";
 import { EVENT_TYPES } from "../data/eventTypes";
 import { submitQuoteRequest } from "../lib/submitQuote";
+import { todayISODate } from "../lib/dateUtils";
 import { useCart } from "../context/CartContext";
 import "./QuoteForm.css";
 
@@ -37,6 +38,7 @@ function validate(values) {
   if (!values.phone.trim()) errors.phone = "Please enter your phone number.";
   else if (!PHONE_PATTERN.test(values.phone)) errors.phone = "Please enter a valid phone number.";
   if (!values.eventDate) errors.eventDate = "Please select your event date.";
+  else if (values.eventDate < todayISODate()) errors.eventDate = "Event date can't be in the past.";
   if (!values.eventType) errors.eventType = "Please select an event type.";
   if (!values.guestCount) errors.guestCount = "Please enter your expected guest count.";
   else if (Number(values.guestCount) <= 0) errors.guestCount = "Guest count must be greater than 0.";
@@ -154,6 +156,7 @@ export default function QuoteForm({ prefillInterest }) {
                   label="Event Date"
                   name="eventDate"
                   type="date"
+                  min={todayISODate()}
                   required
                   value={values.eventDate}
                   onChange={handleChange}

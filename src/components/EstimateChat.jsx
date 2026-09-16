@@ -17,6 +17,7 @@ import { pricingGroups } from "../data/pricing";
 import { EVENT_TYPES } from "../data/eventTypes";
 import { buildSuggestedPlan } from "../lib/estimatePlanner";
 import { getSessionId, upsertEstimateSession } from "../lib/estimateSessions";
+import { todayISODate } from "../lib/dateUtils";
 import { useCart, formatMoney } from "../context/CartContext";
 import "./EstimateChat.css";
 
@@ -311,6 +312,7 @@ export default function EstimateChat() {
                 <form className="estimate-chat-guest-form" onSubmit={handleSubmitEventDate}>
                   <input
                     type="date"
+                    min={todayISODate()}
                     value={eventDateInput}
                     onChange={(e) => setEventDateInput(e.target.value)}
                     aria-label="Event date"
