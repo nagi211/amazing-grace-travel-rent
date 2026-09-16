@@ -16,6 +16,7 @@ import {
 import { pricingGroups } from "../data/pricing";
 import { EVENT_TYPES } from "../data/eventTypes";
 import { buildSuggestedPlan } from "../lib/estimatePlanner";
+import { getSessionId, upsertEstimateSession } from "../lib/estimateSessions";
 import { useCart, formatMoney } from "../context/CartContext";
 import "./EstimateChat.css";
 
@@ -38,9 +39,9 @@ const INITIAL_MESSAGES = [
 ];
 
 export default function EstimateChat() {
-  const { addItem, itemCount, subtotal, requestQuoteFromCart } = useCart();
+  const { items, addItem, itemCount, subtotal, requestQuoteFromCart } = useCart();
   const [isOpen, setIsOpen] = useState(false);
-  const [step, setStep] = useState("eventType"); // eventType | guestCount | eventDate | budget | categories | items
+  const [step, setStep] = useState("eventType"); // eventType | guestCount | eventDate | budget | categories | contact | items
   const [messages, setMessages] = useState(INITIAL_MESSAGES);
   const [eventType, setEventType] = useState(null);
   const [guestCountInput, setGuestCountInput] = useState("");
@@ -50,9 +51,11 @@ export default function EstimateChat() {
   const [budgetInput, setBudgetInput] = useState("");
   const [budget, setBudget] = useState(null);
   const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
+  const [emailInput, setEmailInput] = useState("");
   const [justAdded, setJustAdded] = useState(null);
   const scrollRef = useRef(null);
   const lastMessageRef = useRef(null);
+  const sessionIdRef = useRef(null);
 
   useEffect(() => {
     if (!scrollRef.current || !lastMessageRef.current) return;
@@ -60,6 +63,15 @@ export default function EstimateChat() {
     // jumping to the bottom of whatever long item list follows it.
     scrollRef.current.scrollTop = lastMessageRef.current.offsetTop - 8;
   }, [messages]);
+
+  // Once a session has been started (someone reached the contact prompt —
+  // real interest, not just opening the bubble), keep its cart snapshot
+  // current so the admin dashboard reflects what they're actually looking
+  // at, not just their state at the moment they gave/skipped an email.
+  useEffect(() => {
+    if (!sessionIdRef.current) return;
+    upsertEstimateSession(sessionIdRef.current, { cart_snapshot: items });
+  }, [items]);
 
   function pushMessage(from, text) {
     setMessages((current) => [...current, { from, text }]);
@@ -131,7 +143,8 @@ export default function EstimateChat() {
     }
 
     setSelectedCategoryIds(pricingGroups.map((g) => g.id));
-    setStep("items");
+    pushMessage("bot", "Want us to save this and follow up if you have questions? Totally optional.");
+    setStep("contact");
   }
 
   function handleSkipBudget() {
@@ -149,8 +162,45 @@ export default function EstimateChat() {
   function handleContinueCategories(ids) {
     const names = pricingGroups.filter((g) => ids.includes(g.id)).map((g) => g.title);
     pushMessage("user", names.length ? names.join(", ") : "Show me everything");
-    pushMessage("bot", "Here's what we've got — tap + to add items. I'll keep a running total below.");
+    pushMessage(
+      "bot",
+      "Here's what we've got — tap + to add items. Want us to save your progress and follow up? Totally optional."
+    );
     setSelectedCategoryIds(ids);
+    setStep("contact");
+  }
+
+  function ensureSessionId() {
+    if (!sessionIdRef.current) sessionIdRef.current = getSessionId();
+    return sessionIdRef.current;
+  }
+
+  function handleSubmitContact(e) {
+    e.preventDefault();
+    if (!emailInput) return;
+    pushMessage("user", emailInput);
+    pushMessage("bot", "Mahalo! We'll reach out if you have any questions. Here's what we've got:");
+    upsertEstimateSession(ensureSessionId(), {
+      event_type: eventType,
+      guest_count: guestCount,
+      event_date: eventDate,
+      budget,
+      email: emailInput,
+      cart_snapshot: items,
+    });
+    setStep("items");
+  }
+
+  function handleSkipContact() {
+    pushMessage("user", "No thanks");
+    pushMessage("bot", "No problem! Here's what we've got:");
+    upsertEstimateSession(ensureSessionId(), {
+      event_type: eventType,
+      guest_count: guestCount,
+      event_date: eventDate,
+      budget,
+      cart_snapshot: items,
+    });
     setStep("items");
   }
 
@@ -172,6 +222,7 @@ export default function EstimateChat() {
     setBudgetInput("");
     setBudget(null);
     setSelectedCategoryIds([]);
+    setEmailInput("");
   }
 
   const visibleGroups = pricingGroups.filter((g) => selectedCategoryIds.includes(g.id));
@@ -329,6 +380,26 @@ export default function EstimateChat() {
               </>
             )}
 
+            {step === "contact" && (
+              <>
+                <form className="estimate-chat-guest-form" onSubmit={handleSubmitContact}>
+                  <input
+                    type="email"
+                    placeholder="you@email.com"
+                    value={emailInput}
+                    onChange={(e) => setEmailInput(e.target.value)}
+                    aria-label="Email address"
+                  />
+                  <button type="submit" className="btn btn-primary">
+                    Save
+                  </button>
+                </form>
+                <button type="button" className="estimate-chat-skip" onClick={handleSkipContact}>
+                  No thanks, just browsing
+                </button>
+              </>
+            )}
+
             {step === "items" &&
               visibleGroups.map((group) => (
                 <div className="estimate-chat-group" key={group.id}>
@@ -380,6 +451,9 @@ export default function EstimateChat() {
                   className="btn btn-primary"
                   disabled={itemCount === 0}
                   onClick={() => {
+                    if (sessionIdRef.current) {
+                      upsertEstimateSession(sessionIdRef.current, { status: "submitted" });
+                    }
                     requestQuoteFromCart(eventDate ? { eventDate } : {});
                     setIsOpen(false);
                   }}

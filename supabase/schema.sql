@@ -62,11 +62,18 @@ create table if not exists public.estimate_sessions (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   event_type text,
+  event_date date,
   guest_count integer,
   budget numeric,
+  email text,
   cart_snapshot jsonb,
   status text not null default 'in_progress' check (status in ('in_progress', 'submitted'))
 );
+
+-- Columns added after the table's first release — safe no-ops if this is a
+-- fresh install where the create table above already included them.
+alter table public.estimate_sessions add column if not exists event_date date;
+alter table public.estimate_sessions add column if not exists email text;
 
 alter table public.estimate_sessions enable row level security;
 grant select, insert, update on public.estimate_sessions to anon, authenticated;
@@ -74,8 +81,8 @@ grant select, insert, update on public.estimate_sessions to anon, authenticated;
 -- Anon can create/update its own session by session_id (a random UUID
 -- generated client-side — not guessable in practice). This is a
 -- deliberately loose policy for a lead-capture MVP: anyone who somehow
--- knew another visitor's session_id could update that row, but nothing
--- sensitive (no contact info) lives in this table.
+-- knew another visitor's session_id could update that row could see/change
+-- the email left on it, but a random UUID isn't practically guessable.
 drop policy if exists "Anyone can create an estimate session" on public.estimate_sessions;
 create policy "Anyone can create an estimate session"
   on public.estimate_sessions for insert
