@@ -51,6 +51,8 @@ export default function EstimateChat() {
   const [budgetInput, setBudgetInput] = useState("");
   const [budget, setBudget] = useState(null);
   const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
+  const [planItems, setPlanItems] = useState([]);
+  const [hideBrowseList, setHideBrowseList] = useState(false);
   const [emailInput, setEmailInput] = useState("");
   const [justAdded, setJustAdded] = useState(null);
   const scrollRef = useRef(null);
@@ -116,34 +118,42 @@ export default function EstimateChat() {
     pushMessage("user", `${formatMoney(budgetValue)} budget`);
 
     const plan = buildSuggestedPlan({ eventType, guestCount, budget: budgetValue });
-    addItem(plan.essential.item, plan.essential.qty);
-    plan.addOns.forEach(({ item, qty }) => addItem(item, qty));
-
-    const lines = [
-      `- ${plan.essential.item.name} x${plan.essential.qty} — ${formatMoney(
-        plan.essential.item.amount * plan.essential.qty
-      )}`,
-      ...plan.addOns.map(({ item, qty }) => `- ${item.name} x${qty} — ${formatMoney(item.amount * qty)}`),
-    ];
+    const allPlanItems = [plan.essential, ...plan.addOns];
+    setPlanItems(allPlanItems);
 
     if (plan.overBudget) {
       pushMessage(
         "bot",
         `Seating alone for ${guestCount} guests runs about ${formatMoney(plan.total)}, which is already above ${formatMoney(
           budgetValue
-        )}. Here's that baseline — let's talk about trade-offs, or adjust guest count / budget with Start Over.\n\n${lines.join("\n")}`
+        )}. That's just one item for now — want to add it to your cart while you think it over, or pick your own items instead?`
       );
     } else {
       pushMessage(
         "bot",
-        `Here's a starting plan for ${formatMoney(budgetValue)} and ${guestCount} guests:\n\n${lines.join(
-          "\n"
-        )}\n\nThat leaves about ${formatMoney(plan.remaining)}. Add or remove anything below, then request your quote.`
+        `We could suggest ${allPlanItems.length} items totaling ${formatMoney(
+          plan.total
+        )} — leaving about ${formatMoney(plan.remaining)} of your ${formatMoney(
+          budgetValue
+        )} budget. Take your time — want to add these to your cart, or pick your own items instead?`
       );
     }
 
-    setSelectedCategoryIds(pricingGroups.map((g) => g.id));
-    pushMessage("bot", "Want us to save this and follow up if you have questions? Totally optional.");
+    setStep("planDecision");
+  }
+
+  function handleAddPlanToCart() {
+    planItems.forEach(({ item, qty }) => addItem(item, qty));
+    pushMessage("user", "Add these to my cart");
+    pushMessage("bot", "Added! Want us to save this and follow up if you have questions? Totally optional.");
+    setHideBrowseList(true);
+    setStep("contact");
+  }
+
+  function handleDeclinePlan() {
+    pushMessage("user", "I'll pick my own items");
+    pushMessage("bot", "No problem! Want us to save your info so we can follow up if helpful? Totally optional.");
+    setHideBrowseList(true);
     setStep("contact");
   }
 
@@ -222,6 +232,8 @@ export default function EstimateChat() {
     setBudgetInput("");
     setBudget(null);
     setSelectedCategoryIds([]);
+    setPlanItems([]);
+    setHideBrowseList(false);
     setEmailInput("");
   }
 
@@ -339,6 +351,17 @@ export default function EstimateChat() {
               </>
             )}
 
+            {step === "planDecision" && (
+              <div className="estimate-chat-continue-row">
+                <button type="button" className="btn btn-primary" onClick={handleAddPlanToCart}>
+                  Add These to My Cart
+                </button>
+                <button type="button" className="estimate-chat-skip" onClick={handleDeclinePlan}>
+                  I'll pick my own items
+                </button>
+              </div>
+            )}
+
             {step === "categories" && (
               <>
                 <div className="estimate-chat-choices">
@@ -401,6 +424,7 @@ export default function EstimateChat() {
             )}
 
             {step === "items" &&
+              !hideBrowseList &&
               visibleGroups.map((group) => (
                 <div className="estimate-chat-group" key={group.id}>
                   <p className="estimate-chat-group-title">{group.title}</p>
@@ -462,7 +486,11 @@ export default function EstimateChat() {
                 </button>
               </div>
               {itemCount === 0 && (
-                <p className="estimate-chat-hint">Tap + on at least one item above to request a quote.</p>
+                <p className="estimate-chat-hint">
+                  {hideBrowseList
+                    ? "Add at least one item from the Full Price List to request a quote."
+                    : "Tap + on at least one item above to request a quote."}
+                </p>
               )}
             </div>
           )}
