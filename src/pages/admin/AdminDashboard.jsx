@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { LogOut, Mail, Phone, MapPin, Calendar, Users, Wallet } from "lucide-react";
-import { supabase } from "../../lib/supabaseClient";
+import { supabaseAdmin } from "../../lib/supabaseAdminClient";
 import { useAdminAuth } from "../../context/AdminAuthContext";
 import "./Admin.css";
 
@@ -30,7 +30,7 @@ export default function AdminDashboard() {
   const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
-    if (!supabase) {
+    if (!supabaseAdmin) {
       setLoading(false);
       return;
     }
@@ -38,8 +38,8 @@ export default function AdminDashboard() {
     let active = true;
 
     Promise.all([
-      supabase.from("inquiries").select("*").order("created_at", { ascending: false }),
-      supabase
+      supabaseAdmin.from("inquiries").select("*").order("created_at", { ascending: false }),
+      supabaseAdmin
         .from("estimate_sessions")
         .select("*")
         .eq("status", "in_progress")
@@ -51,7 +51,7 @@ export default function AdminDashboard() {
       setLoading(false);
     });
 
-    const inquiriesChannel = supabase
+    const inquiriesChannel = supabaseAdmin
       .channel("inquiries-changes")
       .on("postgres_changes", { event: "*", schema: "public", table: "inquiries" }, (payload) => {
         setInquiries((current) => {
@@ -64,7 +64,7 @@ export default function AdminDashboard() {
       })
       .subscribe();
 
-    const leadsChannel = supabase
+    const leadsChannel = supabaseAdmin
       .channel("estimate-sessions-changes")
       .on("postgres_changes", { event: "*", schema: "public", table: "estimate_sessions" }, (payload) => {
         setLeads((current) => {
@@ -85,14 +85,14 @@ export default function AdminDashboard() {
 
     return () => {
       active = false;
-      supabase.removeChannel(inquiriesChannel);
-      supabase.removeChannel(leadsChannel);
+      supabaseAdmin.removeChannel(inquiriesChannel);
+      supabaseAdmin.removeChannel(leadsChannel);
     };
   }, []);
 
   async function updateStatus(id, status) {
     setInquiries((current) => current.map((row) => (row.id === id ? { ...row, status } : row)));
-    await supabase.from("inquiries").update({ status }).eq("id", id);
+    await supabaseAdmin.from("inquiries").update({ status }).eq("id", id);
   }
 
   return (

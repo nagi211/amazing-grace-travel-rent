@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { supabaseAdmin } from "../lib/supabaseAdminClient";
 
 const AdminAuthContext = createContext(null);
 
@@ -8,17 +8,17 @@ export function AdminAuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!supabase) {
+    if (!supabaseAdmin) {
       setLoading(false);
       return;
     }
 
-    supabase.auth.getSession().then(({ data }) => {
+    supabaseAdmin.auth.getSession().then(({ data }) => {
       setSession(data.session);
       setLoading(false);
     });
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
+    const { data: listener } = supabaseAdmin.auth.onAuthStateChange((_event, newSession) => {
       setSession(newSession);
     });
 
@@ -26,21 +26,21 @@ export function AdminAuthProvider({ children }) {
   }, []);
 
   async function signIn(email, password) {
-    if (!supabase) return { error: new Error("Supabase is not configured.") };
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (!supabaseAdmin) return { error: new Error("Supabase is not configured.") };
+    const { error } = await supabaseAdmin.auth.signInWithPassword({ email, password });
     return { error };
   }
 
   async function signOut() {
-    if (!supabase) return;
-    await supabase.auth.signOut();
+    if (!supabaseAdmin) return;
+    await supabaseAdmin.auth.signOut();
   }
 
   const value = {
     session,
     user: session?.user ?? null,
     loading,
-    isConfigured: !!supabase,
+    isConfigured: !!supabaseAdmin,
     signIn,
     signOut,
   };
