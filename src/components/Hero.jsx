@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import HeroCarousel from "./HeroCarousel";
 import "./Hero.css";
@@ -15,9 +16,9 @@ export default function Hero() {
             that cares about making your celebration special.
           </p>
           <div className="hero-actions">
-            <a href="/#rentals" className="btn btn-gold">
-              Browse Rentals <ArrowRight size={18} />
-            </a>
+            <Link to="/pricing" className="btn btn-gold">
+              Browse Pricing <ArrowRight size={18} />
+            </Link>
             <a href="/#quote" className="btn btn-outline" style={{ borderColor: "rgba(255,255,255,0.6)", color: "#fff" }}>
               Request a Quote
             </a>
