@@ -4,12 +4,12 @@ import { FacebookIcon, InstagramIcon } from "./SocialIcons";
 import "./Footer.css";
 
 const LINKS = [
-  { label: "Home", href: "#home" },
-  { label: "Rentals", href: "#rentals" },
-  { label: "About", href: "#about" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/#home" },
+  { label: "Rentals", href: "/#rentals" },
+  { label: "About", href: "/#about" },
+  { label: "Gallery", href: "/#gallery" },
+  { label: "FAQ", href: "/#faq" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export default function Footer() {

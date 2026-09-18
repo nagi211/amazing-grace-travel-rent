@@ -15,10 +15,10 @@ export default function Hero() {
             that cares about making your celebration special.
           </p>
           <div className="hero-actions">
-            <a href="#rentals" className="btn btn-gold">
+            <a href="/#rentals" className="btn btn-gold">
               Browse Rentals <ArrowRight size={18} />
             </a>
-            <a href="#quote" className="btn btn-outline" style={{ borderColor: "rgba(255,255,255,0.6)", color: "#fff" }}>
+            <a href="/#quote" className="btn btn-outline" style={{ borderColor: "rgba(255,255,255,0.6)", color: "#fff" }}>
               Request a Quote
             </a>
           </div>

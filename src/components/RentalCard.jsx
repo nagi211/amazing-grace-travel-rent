@@ -15,7 +15,7 @@ export default function RentalCard({ rental, onViewDetails }) {
       <div className="rental-card-body">
         <h3>{rental.name}</h3>
         <p>{rental.description}</p>
-        <a href="#quote" className="btn btn-outline" onClick={() => onViewDetails?.(rental.name)}>
+        <a href="/#quote" className="btn btn-outline" onClick={() => onViewDetails?.(rental.name)}>
           Request a Quote
         </a>
       </div>

@@ -5,27 +5,34 @@ import { useCart } from "../context/CartContext";
 import "./Navbar.css";
 
 const NAV_LINKS = [
-  { label: "Home", href: "#home" },
-  { label: "Rentals", href: "#rentals" },
+  { label: "Home", href: "/#home" },
+  { label: "Rentals", href: "/#rentals" },
   { label: "Pricing", href: "/pricing" },
-  { label: "About Us", href: "#about" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Contact", href: "#contact" },
+  { label: "About Us", href: "/#about" },
+  { label: "Gallery", href: "/#gallery" },
+  { label: "FAQ", href: "/#faq" },
+  { label: "Contact", href: "/#contact" },
 ];
 
+// Hash links (e.g. "/#about") must stay plain <a> tags: the browser
+// natively handles "same page → just scroll" vs "different page → load
+// then scroll to the fragment" for free. React Router's <Link> only does
+// client-side navigation and won't auto-scroll to a fragment on a route
+// change, which is exactly the bug this fixes — clicking these from
+// /pricing did nothing because there's no matching element there and
+// nothing navigated back to "/" first.
 function NavLink({ href, onClick, children, className }) {
-  if (href.startsWith("/")) {
+  if (href.includes("#")) {
     return (
-      <Link to={href} onClick={onClick} className={className}>
+      <a href={href} onClick={onClick} className={className}>
         {children}
-      </Link>
+      </a>
     );
   }
   return (
-    <a href={href} onClick={onClick} className={className}>
+    <Link to={href} onClick={onClick} className={className}>
       {children}
-    </a>
+    </Link>
   );
 }
 
@@ -44,7 +51,7 @@ export default function Navbar() {
     <header className="navbar">
       <div className="navbar-blur-bg" aria-hidden="true" />
       <div className="container navbar-inner">
-        <a href="#home" className="navbar-logo" onClick={() => setOpen(false)}>
+        <a href="/#home" className="navbar-logo" onClick={() => setOpen(false)}>
           <span className="navbar-logo-mark">
             <img src="/logo_only.png" alt="Amazing Grace Travel and Rentals logo" />
           </span>
@@ -67,7 +74,7 @@ export default function Navbar() {
             <ShoppingCart size={22} />
             {itemCount > 0 && <span className="navbar-cart-badge">{itemCount}</span>}
           </button>
-          <a href="#quote" className="btn btn-primary navbar-cta">
+          <a href="/#quote" className="btn btn-primary navbar-cta">
             Request a Quote
           </a>
           <button
@@ -92,7 +99,7 @@ export default function Navbar() {
             ))}
           </nav>
           <a
-            href="#quote"
+            href="/#quote"
             className="btn btn-primary btn-block navbar-mobile-cta"
             onClick={() => setOpen(false)}
           >

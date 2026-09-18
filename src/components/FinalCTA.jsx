@@ -12,7 +12,7 @@ export default function FinalCTA() {
           your celebration.
         </p>
         <div className="final-cta-actions">
-          <a href="#quote" className="btn btn-gold">
+          <a href="/#quote" className="btn btn-gold">
             Request a Quote
           </a>
           <a href={business.messengerUrl} target="_blank" rel="noreferrer" className="btn btn-white">
