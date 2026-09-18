@@ -5,7 +5,7 @@ import "./Reviews.css";
 
 export default function Reviews() {
   return (
-    <section className="section" aria-labelledby="reviews-title">
+    <section className="section section-alt" aria-labelledby="reviews-title">
       <div className="container">
         <div className="section-header">
           <span className="eyebrow">Reviews</span>

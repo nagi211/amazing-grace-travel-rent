@@ -11,7 +11,7 @@ const VALUES = [
 
 export default function About() {
   return (
-    <section id="about" className="section section-alt">
+    <section id="about" className="section">
       <div className="container about-inner">
         <div className="about-media-frame">
           <PlaceholderImage

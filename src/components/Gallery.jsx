@@ -27,7 +27,7 @@ export default function Gallery() {
   }, [activeItem]);
 
   return (
-    <section id="gallery" className="section section-alt">
+    <section id="gallery" className="section">
       <div className="container">
         <div className="section-header">
           <span className="eyebrow">Gallery</span>

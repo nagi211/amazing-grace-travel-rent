@@ -26,7 +26,7 @@ const FEATURES = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="section">
+    <section className="section section-alt">
       <div className="container">
         <div className="section-header">
           <span className="eyebrow">Why Amazing Grace</span>

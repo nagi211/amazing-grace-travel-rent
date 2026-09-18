@@ -21,7 +21,7 @@ const STEPS = [
 
 export default function HowItWorks() {
   return (
-    <section className="section" aria-labelledby="how-it-works-title">
+    <section className="section section-alt" aria-labelledby="how-it-works-title">
       <div className="container">
         <div className="section-header">
           <span className="eyebrow">How It Works</span>
