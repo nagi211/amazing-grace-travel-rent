@@ -1,4 +1,4 @@
-import { Mail, MapPin, Palmtree } from "lucide-react";
+import { Mail, MapPin, Phone, Palmtree } from "lucide-react";
 import { business } from "../data/business";
 import { FacebookIcon, InstagramIcon } from "./SocialIcons";
 import "./Footer.css";
@@ -57,6 +57,12 @@ export default function Footer() {
                 <Mail size={14} style={{ marginRight: 6, verticalAlign: "-2px" }} />
                 {business.email}
               </a>
+              {business.phone && (
+                <a href={`tel:${business.phone.replace(/\s+/g, "")}`}>
+                  <Phone size={14} style={{ marginRight: 6, verticalAlign: "-2px" }} />
+                  {business.phone}
+                </a>
+              )}
               <span>
                 <MapPin size={14} style={{ marginRight: 6, verticalAlign: "-2px" }} />
                 {business.location}

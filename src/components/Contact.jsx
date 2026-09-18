@@ -1,4 +1,4 @@
-import { Mail, MapPin, MessageCircle } from "lucide-react";
+import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { business } from "../data/business";
 import "./Contact.css";
 
@@ -16,10 +16,20 @@ export default function Contact() {
             <a className="contact-email-link" href={`mailto:${business.email}`}>
               {business.email}
             </a>
+            {business.phone && (
+              <a className="contact-email-link" href={`tel:${business.phone.replace(/\s+/g, "")}`}>
+                {business.phone}
+              </a>
+            )}
           </div>
 
           <div className="contact-actions">
-            <a href={`mailto:${business.email}`} className="btn btn-primary">
+            {business.phone && (
+              <a href={`tel:${business.phone.replace(/\s+/g, "")}`} className="btn btn-primary">
+                <Phone size={17} /> Call Us
+              </a>
+            )}
+            <a href={`mailto:${business.email}`} className="btn btn-outline">
               <Mail size={17} /> Email Us
             </a>
             <a href={business.messengerUrl} target="_blank" rel="noreferrer" className="btn btn-gold">

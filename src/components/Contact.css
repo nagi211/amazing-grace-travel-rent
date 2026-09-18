@@ -48,6 +48,7 @@
 @media (min-width: 520px) {
   .contact-actions {
     flex-direction: row;
+    flex-wrap: wrap;
     max-width: none;
     justify-content: center;
   }
