@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Menu, X, ShoppingCart } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import "./Navbar.css";
@@ -6,11 +7,27 @@ import "./Navbar.css";
 const NAV_LINKS = [
   { label: "Home", href: "#home" },
   { label: "Rentals", href: "#rentals" },
+  { label: "Pricing", href: "/pricing" },
   { label: "About Us", href: "#about" },
   { label: "Gallery", href: "#gallery" },
   { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
 ];
+
+function NavLink({ href, onClick, children, className }) {
+  if (href.startsWith("/")) {
+    return (
+      <Link to={href} onClick={onClick} className={className}>
+        {children}
+      </Link>
+    );
+  }
+  return (
+    <a href={href} onClick={onClick} className={className}>
+      {children}
+    </a>
+  );
+}
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -39,9 +56,9 @@ export default function Navbar() {
 
         <nav className="navbar-links" aria-label="Primary">
           {NAV_LINKS.map((link) => (
-            <a key={link.href} href={link.href}>
+            <NavLink key={link.href} href={link.href}>
               {link.label}
-            </a>
+            </NavLink>
           ))}
         </nav>
 
@@ -69,9 +86,9 @@ export default function Navbar() {
         <div className="navbar-mobile-panel">
           <nav className="navbar-mobile-links" aria-label="Mobile">
             {NAV_LINKS.map((link) => (
-              <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
+              <NavLink key={link.href} href={link.href} onClick={() => setOpen(false)}>
                 {link.label}
-              </a>
+              </NavLink>
             ))}
           </nav>
           <a

@@ -8,16 +8,15 @@ import CartDrawer from "./components/CartDrawer";
 import EstimateChat from "./components/EstimateChat";
 import ProtectedAdminRoute from "./components/admin/ProtectedAdminRoute";
 import Home from "./pages/Home";
+import Pricing from "./pages/Pricing";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 
-function PublicSite() {
+function PublicSite({ children }) {
   return (
     <CartProvider>
       <Navbar />
-      <main>
-        <Home />
-      </main>
+      <main>{children}</main>
       <Footer />
       <MobileActionBar />
       <CartDrawer />
@@ -31,7 +30,22 @@ export default function App() {
     <BrowserRouter>
       <AdminAuthProvider>
         <Routes>
-          <Route path="/" element={<PublicSite />} />
+          <Route
+            path="/"
+            element={
+              <PublicSite>
+                <Home />
+              </PublicSite>
+            }
+          />
+          <Route
+            path="/pricing"
+            element={
+              <PublicSite>
+                <Pricing />
+              </PublicSite>
+            }
+          />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route
             path="/admin"

@@ -1,137 +1,117 @@
-.pricing-grid {
-  display: block;
-  margin-bottom: 24px;
-}
-
-.pricing-card {
-  padding: 24px 22px;
-  margin-bottom: 20px;
-  break-inside: avoid;
-}
-
-.pricing-card:last-child {
-  margin-bottom: 0;
-}
-
-.pricing-card-header {
+.pricing-tabs {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-.pricing-card-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   justify-content: center;
-  background: var(--color-ocean-100);
-  color: var(--color-ocean-700);
+  gap: 10px;
+  margin-bottom: 36px;
 }
 
-.pricing-card-header h3 {
-  font-size: 1.05rem;
-  margin: 0;
+.pricing-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-weight: 700;
+  font-size: 0.86rem;
+  padding: 10px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
 
-.pricing-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.pricing-tab-btn:hover {
+  border-color: var(--color-ocean-500);
+}
+
+.pricing-tab-btn.active {
+  background: var(--color-ocean-700);
+  border-color: var(--color-ocean-700);
+  color: #fff;
+}
+
+.pricing-items-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.pricing-item-card {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-}
-
-.pricing-list li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding-bottom: 10px;
-  border-bottom: 1px dashed var(--color-border);
-}
-
-.pricing-list li:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.pricing-item-thumb {
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
-  border-radius: var(--radius-sm);
   overflow: hidden;
-  background: var(--color-surface-alt);
-  border: 1px solid var(--color-border);
+}
+
+.pricing-item-media {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
   padding: 0;
+  border: none;
+  background: none;
   cursor: pointer;
 }
 
-.pricing-item-thumb img {
+.pricing-item-media:disabled {
+  cursor: default;
+}
+
+.pricing-item-media,
+.pricing-item-media .placeholder-img {
+  width: 100%;
+  height: 100%;
+}
+
+.pricing-item-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.pricing-item-info {
+.pricing-item-card-body {
+  padding: 20px 22px 24px;
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
-.pricing-item-name {
-  color: var(--color-ink);
-  font-size: 0.94rem;
-  font-weight: 600;
+.pricing-item-card-body h3 {
+  font-size: 1.1rem;
+  margin-bottom: 4px;
 }
 
-.pricing-item-note {
+.pricing-item-card-note {
   color: var(--color-ink-light);
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-style: italic;
+  margin: 0 0 12px;
+  flex: 1;
 }
 
-.pricing-item-price {
-  color: var(--color-ocean-700);
-  font-weight: 700;
-  font-size: 0.94rem;
-  white-space: nowrap;
-}
-
-.pricing-item-add {
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
-  border-radius: 999px;
-  border: 1px solid var(--color-ocean-700);
-  background: #fff;
-  color: var(--color-ocean-700);
+.pricing-item-card-footer {
   display: flex;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 12px;
 }
 
-.pricing-item-add:hover {
-  background: var(--color-ocean-700);
-  color: #fff;
+.pricing-item-card-price {
+  color: var(--color-ocean-700);
+  font-weight: 700;
+  font-size: 1.05rem;
 }
 
-.planning-package-add {
-  margin-top: 18px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+.pricing-item-card-add {
+  padding: 9px 16px;
+  font-size: 0.85rem;
 }
 
-.planning-packages {
+.planning-packages-grid {
   display: grid;
   grid-template-columns: 1fr;
   align-items: start;
@@ -139,11 +119,11 @@
   margin-bottom: 28px;
 }
 
-.planning-package {
-  padding: 20px 22px;
+.planning-package-card {
+  padding: 24px 26px;
 }
 
-.planning-package summary {
+.planning-package-card summary {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -152,11 +132,11 @@
   list-style: none;
 }
 
-.planning-package summary::-webkit-details-marker {
+.planning-package-card summary::-webkit-details-marker {
   display: none;
 }
 
-.planning-package summary::after {
+.planning-package-card summary::after {
   content: "+";
   font-size: 1.3rem;
   font-weight: 700;
@@ -165,13 +145,13 @@
   transition: transform 0.2s ease;
 }
 
-.planning-package[open] summary::after {
+.planning-package-card[open] summary::after {
   transform: rotate(45deg);
 }
 
 .planning-package-name {
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   color: var(--color-ocean-900);
 }
 
@@ -183,8 +163,8 @@
 
 .planning-package-description {
   color: var(--color-ink-light);
-  font-size: 0.92rem;
-  margin: 14px 0 10px;
+  font-size: 0.94rem;
+  margin: 16px 0 10px;
 }
 
 .planning-package-sublabel {
@@ -200,10 +180,17 @@
   margin: 0;
   padding-left: 18px;
   color: var(--color-ink);
-  font-size: 0.92rem;
+  font-size: 0.94rem;
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+.planning-package-add {
+  margin-top: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .pricing-staffing {
@@ -270,22 +257,6 @@
   margin: 20px 0 0;
 }
 
-@media (min-width: 720px) {
-  .pricing-grid {
-    column-count: 2;
-    column-gap: 20px;
-  }
-
-  .pricing-card {
-    display: inline-block;
-    width: 100%;
-  }
-
-  .planning-packages {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
 .pricing-lightbox-overlay {
   position: fixed;
   inset: 0;
@@ -350,4 +321,20 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+
+@media (min-width: 640px) {
+  .pricing-items-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .pricing-items-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .planning-packages-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

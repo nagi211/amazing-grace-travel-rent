@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   MessageCircle,
   X,
@@ -482,9 +483,9 @@ export default function EstimateChat() {
                 </p>
               )}
               <div className="estimate-chat-footer-actions">
-                <a href="#pricing" className="btn btn-outline" onClick={() => setIsOpen(false)}>
+                <Link to="/pricing" className="btn btn-outline" onClick={() => setIsOpen(false)}>
                   Full Price List
-                </a>
+                </Link>
                 <button
                   type="button"
                   className="btn btn-primary"
