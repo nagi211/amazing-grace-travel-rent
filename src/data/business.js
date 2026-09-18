@@ -4,7 +4,7 @@ export const business = {
   shortName: "Amazing Grace",
   tagline: "Travel & Rentals",
   location: "Oahu, Hawaii",
-  email: "amazinggrace1987llc@gmail.com",
+  email: "inquiries@amazinggrace.events",
   facebookUrl: "https://www.facebook.com/Rencabelin",
   messengerUrl: "https://m.me/Rencabelin",
   instagramUrl: "https://www.instagram.com/amazinggracehi/",

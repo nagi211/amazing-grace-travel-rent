@@ -88,6 +88,23 @@
   border-color: var(--color-gold-500);
 }
 
+.navbar-links a.navbar-link-pricing {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-gold-100);
+  color: var(--color-gold-600);
+  padding: 8px 14px;
+  border-radius: 999px;
+  border-bottom: none;
+}
+
+.navbar-links a.navbar-link-pricing:hover {
+  background: var(--color-gold-500);
+  color: #fff;
+  border-color: transparent;
+}
+
 .navbar-actions {
   display: flex;
   align-items: center;
@@ -160,6 +177,13 @@
 .navbar-mobile-links {
   display: flex;
   flex-direction: column;
+}
+
+.navbar-mobile-links a.navbar-link-pricing {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-gold-600);
 }
 
 .navbar-mobile-links a {

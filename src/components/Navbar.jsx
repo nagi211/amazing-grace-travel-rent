@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, ShoppingCart } from "lucide-react";
+import { Menu, X, ShoppingCart, Tag } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import "./Navbar.css";
 
 const NAV_LINKS = [
   { label: "Home", href: "/#home" },
   { label: "Rentals", href: "/#rentals" },
-  { label: "Pricing", href: "/pricing" },
+  { label: "Pricing", href: "/pricing", accent: true },
   { label: "About Us", href: "/#about" },
   { label: "Gallery", href: "/#gallery" },
   { label: "FAQ", href: "/#faq" },
@@ -63,7 +63,12 @@ export default function Navbar() {
 
         <nav className="navbar-links" aria-label="Primary">
           {NAV_LINKS.map((link) => (
-            <NavLink key={link.href} href={link.href}>
+            <NavLink
+              key={link.href}
+              href={link.href}
+              className={link.accent ? "navbar-link-pricing" : undefined}
+            >
+              {link.accent && <Tag size={14} strokeWidth={2.4} />}
               {link.label}
             </NavLink>
           ))}
@@ -93,7 +98,13 @@ export default function Navbar() {
         <div className="navbar-mobile-panel">
           <nav className="navbar-mobile-links" aria-label="Mobile">
             {NAV_LINKS.map((link) => (
-              <NavLink key={link.href} href={link.href} onClick={() => setOpen(false)}>
+              <NavLink
+                key={link.href}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className={link.accent ? "navbar-link-pricing" : undefined}
+              >
+                {link.accent && <Tag size={16} strokeWidth={2.4} />}
                 {link.label}
               </NavLink>
             ))}

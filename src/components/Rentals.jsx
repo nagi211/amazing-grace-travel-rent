@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { rentals } from "../data/rentals";
 import RentalCard from "./RentalCard";
 import "./Rentals.css";
@@ -19,12 +18,6 @@ export default function Rentals({ onSelectInterest }) {
           {rentals.map((rental) => (
             <RentalCard key={rental.id} rental={rental} onViewDetails={onSelectInterest} />
           ))}
-        </div>
-
-        <div className="rentals-pricing-link">
-          <Link to="/pricing" className="btn btn-outline">
-            View Full Pricing
-          </Link>
         </div>
       </div>
     </section>
