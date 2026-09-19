@@ -33,6 +33,15 @@ function formatEventDate(isoDate) {
   });
 }
 
+function pluralize(count, singular, plural = `${singular}s`) {
+  return `${count} ${count === 1 ? singular : plural}`;
+}
+
+function describeEventType(type) {
+  if (type === "Other") return "your event";
+  return `${/^[aeiou]/i.test(type) ? "an" : "a"} ${type}`;
+}
+
 const INITIAL_MESSAGES = [
   {
     from: "bot",
@@ -84,7 +93,7 @@ export default function EstimateChat() {
   function handleSelectEventType(type) {
     setEventType(type);
     pushMessage("user", type);
-    pushMessage("bot", `Got it — a ${type}! About how many guests are you expecting?`);
+    pushMessage("bot", `Got it — ${describeEventType(type)}! About how many guests are you expecting?`);
     setStep("guestCount");
   }
 
@@ -92,7 +101,7 @@ export default function EstimateChat() {
     e.preventDefault();
     if (!guestCountInput) return;
     setGuestCount(Number(guestCountInput));
-    pushMessage("user", `${guestCountInput} guests`);
+    pushMessage("user", pluralize(Number(guestCountInput), "guest"));
     pushMessage("bot", "When's the big day? (You can skip this if you're not sure yet.)");
     setStep("eventDate");
   }
@@ -126,14 +135,17 @@ export default function EstimateChat() {
     if (plan.overBudget) {
       pushMessage(
         "bot",
-        `Seating alone for ${guestCount} guests runs about ${formatMoney(plan.total)}, which is already above ${formatMoney(
+        `Seating alone for ${pluralize(guestCount, "guest")} runs about ${formatMoney(plan.total)}, which is already above ${formatMoney(
           budgetValue
         )}. Here's that baseline — tap + if you'd like to add it while you think it over.`
       );
     } else {
       pushMessage(
         "bot",
-        `Here's what we could suggest for ${formatMoney(budgetValue)} and ${guestCount} guests — ${allPlanItems.length} items totaling ${formatMoney(
+        `Here's what we could suggest for ${formatMoney(budgetValue)} and ${pluralize(guestCount, "guest")} — ${pluralize(
+          allPlanItems.length,
+          "item"
+        )} totaling ${formatMoney(
           plan.total
         )}, leaving about ${formatMoney(plan.remaining)}. Tap + on any you'd like to add — no pressure to take them all.`
       );
@@ -460,7 +472,7 @@ export default function EstimateChat() {
                         <span className="estimate-chat-item-info">
                           {item.name}
                           {item.unit === "person" && guestCount && (
-                            <span className="estimate-chat-item-hint">for {guestCount} guests</span>
+                            <span className="estimate-chat-item-hint">for {pluralize(guestCount, "guest")}</span>
                           )}
                         </span>
                         <span className="estimate-chat-item-price">{item.price}</span>
