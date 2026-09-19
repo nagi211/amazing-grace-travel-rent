@@ -53,7 +53,7 @@ export default function Navbar() {
       <div className="container navbar-inner">
         <a href="/#home" className="navbar-logo" onClick={() => setOpen(false)}>
           <span className="navbar-logo-mark">
-            <img src="/logo.png" alt="Amazing Grace Travel and Rentals logo" />
+            <img src="/logo.png" alt="Amazing Grace Travels, Events and Rentals logo" />
           </span>
           <span className="navbar-logo-text">
             <strong>Amazing Grace</strong>

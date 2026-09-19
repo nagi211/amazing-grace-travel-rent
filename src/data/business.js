@@ -1,6 +1,6 @@
 // Central business info — update here and it flows through the whole site.
 export const business = {
-  name: "Amazing Grace Travel and Rentals by MRC",
+  name: "Amazing Grace Travels, Events and Rentals by MRC",
   shortName: "Amazing Grace",
   tagline: "Travels, Events & Rentals",
   location: "Oahu, Hawaii",

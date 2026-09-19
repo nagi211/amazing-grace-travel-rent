@@ -18,7 +18,7 @@ export default function About() {
             src="/mrc_fam.jpg"
             icon="Users"
             tone="green"
-            alt="The Amazing Grace Travel and Rentals family"
+            alt="The Amazing Grace Travels, Events and Rentals family"
             iconSize={56}
           />
         </div>
@@ -27,7 +27,7 @@ export default function About() {
           <span className="eyebrow">About Us</span>
           <h2>A Family Business With Aloha at Heart</h2>
           <p>
-            Amazing Grace Travel and Rentals by MRC is a military family-owned business based on
+            Amazing Grace Travels, Events and Rentals by MRC is a military family-owned business based on
             Oahu, Hawaii. We started this business to help our neighbors celebrate life's special
             moments without the stress — and without the big price tag.
           </p>
