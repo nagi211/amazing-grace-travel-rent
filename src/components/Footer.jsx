@@ -20,7 +20,7 @@ export default function Footer() {
           <div>
             <div className="footer-brand">
               <span className="footer-brand-mark">
-                <img src="/logo_mark.png" alt="Amazing Grace Travel and Rentals logo" />
+                <img src="/logo.png" alt="Amazing Grace Travel and Rentals logo" />
               </span>
               <span className="footer-brand-text">
                 <strong>Amazing Grace</strong>
