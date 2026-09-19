@@ -1,4 +1,4 @@
-import { Mail, MapPin, Phone, Palmtree } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { business } from "../data/business";
 import { FacebookIcon, InstagramIcon } from "./SocialIcons";
 import "./Footer.css";
@@ -20,7 +20,7 @@ export default function Footer() {
           <div>
             <div className="footer-brand">
               <span className="footer-brand-mark">
-                <Palmtree size={20} />
+                <img src="/logo_mark.png" alt="Amazing Grace Travel and Rentals logo" />
               </span>
               <span className="footer-brand-text">
                 <strong>Amazing Grace</strong>
