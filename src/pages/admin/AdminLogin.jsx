@@ -26,7 +26,7 @@ export default function AdminLogin() {
     <div className="admin-auth-page">
       <form className="admin-auth-card" onSubmit={handleSubmit}>
         <h1>Admin Login</h1>
-        <p className="admin-auth-subtitle">Amazing Grace Travel &amp; Rentals</p>
+        <p className="admin-auth-subtitle">Amazing Grace Travels, Events &amp; Rentals</p>
 
         {!isConfigured && (
           <p className="field-error">

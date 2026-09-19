@@ -100,7 +100,7 @@ export default function AdminDashboard() {
       <header className="admin-header">
         <div>
           <h1>Amazing Grace Admin</h1>
-          <p>Amazing Grace Travel &amp; Rentals</p>
+          <p>Amazing Grace Travels, Events &amp; Rentals</p>
         </div>
         <button type="button" className="admin-signout" onClick={signOut}>
           <LogOut size={16} /> Sign Out

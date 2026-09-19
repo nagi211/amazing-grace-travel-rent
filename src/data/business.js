@@ -2,7 +2,7 @@
 export const business = {
   name: "Amazing Grace Travel and Rentals by MRC",
   shortName: "Amazing Grace",
-  tagline: "Travel & Rentals",
+  tagline: "Travels, Events & Rentals",
   location: "Oahu, Hawaii",
   email: "inquiries@amazinggrace.events",
   facebookUrl: "https://www.facebook.com/Rencabelin",

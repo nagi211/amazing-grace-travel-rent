@@ -57,7 +57,7 @@ export default function Navbar() {
           </span>
           <span className="navbar-logo-text">
             <strong>Amazing Grace</strong>
-            <span>Travel &amp; Rentals</span>
+            <span>Travels, Events &amp; Rentals</span>
           </span>
         </a>
 
