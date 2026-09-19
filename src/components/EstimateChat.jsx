@@ -41,7 +41,7 @@ const INITIAL_MESSAGES = [
 ];
 
 export default function EstimateChat() {
-  const { items, addItem, itemCount, subtotal, requestQuoteFromCart } = useCart();
+  const { items, addItem, itemCount, subtotal } = useCart();
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState("eventType"); // eventType | guestCount | eventDate | budget | categories | contact | items
   const [messages, setMessages] = useState(INITIAL_MESSAGES);
@@ -186,7 +186,12 @@ export default function EstimateChat() {
     e.preventDefault();
     if (!emailInput) return;
     pushMessage("user", emailInput);
-    pushMessage("bot", "Mahalo! We'll reach out if you have any questions. Here's what we've got:");
+    pushMessage(
+      "bot",
+      hideBrowseList
+        ? "Mahalo! We've saved your info and will reach out soon to help finalize your plan."
+        : "Mahalo! We'll reach out if you have any questions. Here's what we've got:"
+    );
     upsertEstimateSession(ensureSessionId(), {
       event_type: eventType,
       guest_count: guestCount,
@@ -200,7 +205,12 @@ export default function EstimateChat() {
 
   function handleSkipContact() {
     pushMessage("user", "No thanks");
-    pushMessage("bot", "No problem! Here's what we've got:");
+    pushMessage(
+      "bot",
+      hideBrowseList
+        ? "No problem! We've saved your info and will reach out soon."
+        : "No problem! Here's what we've got:"
+    );
     upsertEstimateSession(ensureSessionId(), {
       event_type: eventType,
       guest_count: guestCount,
@@ -471,43 +481,37 @@ export default function EstimateChat() {
 
           {step === "items" && (
             <div className="estimate-chat-footer">
-              <div className="estimate-chat-total">
-                <span>{itemCount} item{itemCount === 1 ? "" : "s"}</span>
-                <strong>{formatMoney(subtotal)}</strong>
-              </div>
-              {remainingBudget != null && (
-                <p className={`estimate-chat-budget-line ${remainingBudget < 0 ? "over" : ""}`}>
-                  {remainingBudget < 0
-                    ? `${formatMoney(Math.abs(remainingBudget))} over your ${formatMoney(budget)} budget`
-                    : `${formatMoney(remainingBudget)} left of your ${formatMoney(budget)} budget`}
+              {itemCount > 0 ? (
+                <>
+                  <div className="estimate-chat-total">
+                    <span>{itemCount} item{itemCount === 1 ? "" : "s"}</span>
+                    <strong>{formatMoney(subtotal)}</strong>
+                  </div>
+                  {remainingBudget != null && (
+                    <p className={`estimate-chat-budget-line ${remainingBudget < 0 ? "over" : ""}`}>
+                      {remainingBudget < 0
+                        ? `${formatMoney(Math.abs(remainingBudget))} over your ${formatMoney(budget)} budget`
+                        : `${formatMoney(remainingBudget)} left of your ${formatMoney(budget)} budget`}
+                    </p>
+                  )}
+                  <p className="estimate-chat-hint">
+                    We've saved your picks — we'll follow up soon to help finalize your plan.
+                  </p>
+                </>
+              ) : (
+                <p className="estimate-chat-hint">
+                  No worries — we've saved your info and will reach out to help you plan. Feel free to keep
+                  browsing anytime.
                 </p>
               )}
               <div className="estimate-chat-footer-actions">
                 <Link to="/pricing" className="btn btn-outline" onClick={() => setIsOpen(false)}>
                   Full Price List
                 </Link>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  disabled={itemCount === 0}
-                  onClick={() => {
-                    if (sessionIdRef.current) {
-                      upsertEstimateSession(sessionIdRef.current, { status: "submitted" });
-                    }
-                    requestQuoteFromCart(eventDate ? { eventDate } : {});
-                    setIsOpen(false);
-                  }}
-                >
-                  Request a Quote
+                <button type="button" className="btn btn-primary" onClick={() => setIsOpen(false)}>
+                  Done
                 </button>
               </div>
-              {itemCount === 0 && (
-                <p className="estimate-chat-hint">
-                  {hideBrowseList
-                    ? "Add at least one item from the Full Price List to request a quote."
-                    : "Tap + on at least one item above to request a quote."}
-                </p>
-              )}
             </div>
           )}
         </div>
