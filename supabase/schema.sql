@@ -67,6 +67,7 @@ create table if not exists public.estimate_sessions (
   budget numeric,
   email text,
   cart_snapshot jsonb,
+  suggested_plan jsonb,
   status text not null default 'in_progress' check (status in ('in_progress', 'submitted'))
 );
 
@@ -74,6 +75,10 @@ create table if not exists public.estimate_sessions (
 -- fresh install where the create table above already included them.
 alter table public.estimate_sessions add column if not exists event_date date;
 alter table public.estimate_sessions add column if not exists email text;
+-- What the budget planner suggested, saved separately from cart_snapshot (what
+-- the customer actually chose to add) so the admin dashboard can show both
+-- even when someone ignored every suggestion.
+alter table public.estimate_sessions add column if not exists suggested_plan jsonb;
 
 alter table public.estimate_sessions enable row level security;
 grant select, insert, update on public.estimate_sessions to anon, authenticated;

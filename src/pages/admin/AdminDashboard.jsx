@@ -241,6 +241,18 @@ export default function AdminDashboard() {
                     ) : (
                       <p>—</p>
                     )}
+                    {Array.isArray(row.suggested_plan) && row.suggested_plan.length > 0 && (
+                      <>
+                        <p className="admin-detail-label">Our suggestion</p>
+                        <ul className="admin-cart-list">
+                          {row.suggested_plan.map((item) => (
+                            <li key={item.id}>
+                              {item.name} x{item.qty} — {formatMoney(item.amount * item.qty)}
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
                     {row.email && (
                       <a className="btn btn-outline admin-lead-contact" href={`mailto:${row.email}`}>
                         <Mail size={14} /> Email {row.email}

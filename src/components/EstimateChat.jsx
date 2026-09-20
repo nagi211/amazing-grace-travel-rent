@@ -42,6 +42,18 @@ function describeEventType(type) {
   return `${/^[aeiou]/i.test(type) ? "an" : "a"} ${type}`;
 }
 
+// Same shape as a cart line (see CartContext.addItem) so the admin dashboard
+// can render "what we suggested" and "what they picked" with one component.
+function serializePlanItems(planItems) {
+  return planItems.map(({ item, qty }) => ({
+    id: item.id,
+    name: item.name,
+    amount: item.amount,
+    unit: item.unit,
+    qty,
+  }));
+}
+
 const INITIAL_MESSAGES = [
   {
     from: "bot",
@@ -211,6 +223,7 @@ export default function EstimateChat() {
       budget,
       email: emailInput,
       cart_snapshot: items,
+      suggested_plan: serializePlanItems(planItems),
     });
     setStep("items");
   }
@@ -229,6 +242,7 @@ export default function EstimateChat() {
       event_date: eventDate,
       budget,
       cart_snapshot: items,
+      suggested_plan: serializePlanItems(planItems),
     });
     setStep("items");
   }
