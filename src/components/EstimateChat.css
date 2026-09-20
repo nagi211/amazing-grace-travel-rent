@@ -277,11 +277,15 @@
   font-size: 0.78rem;
   font-weight: 700;
   color: var(--color-green-600);
-  margin: 0 0 10px;
+  margin: 0 0 6px;
 }
 
 .estimate-chat-budget-line.over {
   color: var(--color-coral-600);
+}
+
+.estimate-chat-footer .estimate-chat-hint {
+  margin: 0 0 10px;
 }
 
 .estimate-chat-footer-actions {
