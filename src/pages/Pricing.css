@@ -349,6 +349,26 @@
 }
 
 @media (max-width: 639px) {
+  .pricing-tabs {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    padding: 2px 20px 10px;
+    margin: 0 -20px 16px;
+    scrollbar-width: none;
+  }
+
+  .pricing-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pricing-tab-btn {
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    white-space: nowrap;
+  }
+
   .pricing-item-card-body {
     padding: 14px 14px 16px;
   }
