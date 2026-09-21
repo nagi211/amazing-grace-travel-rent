@@ -7,6 +7,7 @@ import MobileActionBar from "./components/MobileActionBar";
 import CartDrawer from "./components/CartDrawer";
 import EstimateChat from "./components/EstimateChat";
 import ProtectedAdminRoute from "./components/admin/ProtectedAdminRoute";
+import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import Pricing from "./pages/Pricing";
 import AdminLogin from "./pages/admin/AdminLogin";
@@ -29,6 +30,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <AdminAuthProvider>
+        <ScrollToTop />
         <Routes>
           <Route
             path="/"
