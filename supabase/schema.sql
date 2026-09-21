@@ -29,8 +29,18 @@ create table if not exists public.inquiries (
   rental_needed text,
   event_location text,
   details text,
-  status text not null default 'new' check (status in ('new', 'contacted', 'closed'))
+  status text not null default 'pending' check (status in ('pending', 'contacted', 'confirmed', 'closed'))
 );
+
+-- Status set expanded from ('new', 'contacted', 'closed') to add a real
+-- "confirmed" state once availability's been checked, and renamed 'new' to
+-- 'pending' to match. Safe to re-run: drops/recreates the constraint and
+-- only touches rows still on the old 'new' value.
+alter table public.inquiries drop constraint if exists inquiries_status_check;
+update public.inquiries set status = 'pending' where status = 'new';
+alter table public.inquiries add constraint inquiries_status_check
+  check (status in ('pending', 'contacted', 'confirmed', 'closed'));
+alter table public.inquiries alter column status set default 'pending';
 
 alter table public.inquiries enable row level security;
 grant select, insert, update on public.inquiries to anon, authenticated;

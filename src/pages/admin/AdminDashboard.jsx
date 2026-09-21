@@ -4,7 +4,7 @@ import { supabaseAdmin } from "../../lib/supabaseAdminClient";
 import { useAdminAuth } from "../../context/AdminAuthContext";
 import "./Admin.css";
 
-const STATUSES = ["new", "contacted", "closed"];
+const STATUSES = ["pending", "contacted", "confirmed", "closed"];
 
 function formatDate(iso) {
   if (!iso) return "—";
@@ -28,6 +28,7 @@ export default function AdminDashboard() {
   const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState(null);
+  const [leadsFilter, setLeadsFilter] = useState("all");
 
   useEffect(() => {
     if (!supabaseAdmin) {
@@ -95,36 +96,46 @@ export default function AdminDashboard() {
     await supabaseAdmin.from("inquiries").update({ status }).eq("id", id);
   }
 
+  const leadsWithEmail = leads.filter((row) => row.email).length;
+  const leadsWithoutEmail = leads.length - leadsWithEmail;
+  const filteredLeads = leads.filter((row) => {
+    if (leadsFilter === "with-email") return !!row.email;
+    if (leadsFilter === "no-email") return !row.email;
+    return true;
+  });
+
   return (
     <div className="admin-page">
-      <header className="admin-header">
-        <div>
-          <h1>Amazing Grace Admin</h1>
-          <p>Amazing Grace Travels, Events &amp; Rentals</p>
-        </div>
-        <button type="button" className="admin-signout" onClick={signOut}>
-          <LogOut size={16} /> Sign Out
-        </button>
-      </header>
-
-      <main className="admin-main">
-        <div className="admin-tabs">
-          <button
-            type="button"
-            className={activeTab === "inquiries" ? "is-active" : ""}
-            onClick={() => setActiveTab("inquiries")}
-          >
-            Inquiries {inquiries.length > 0 && `(${inquiries.length})`}
+      <div className="admin-shell">
+        <aside className="admin-sidebar">
+          <div className="admin-sidebar-brand">
+            <h1>Amazing Grace</h1>
+            <p>Admin Dashboard</p>
+          </div>
+          <nav className="admin-nav">
+            <button
+              type="button"
+              className={activeTab === "inquiries" ? "is-active" : ""}
+              onClick={() => setActiveTab("inquiries")}
+            >
+              Inquiries
+              {inquiries.length > 0 && <span className="admin-nav-count">{inquiries.length}</span>}
+            </button>
+            <button
+              type="button"
+              className={activeTab === "leads" ? "is-active" : ""}
+              onClick={() => setActiveTab("leads")}
+            >
+              Warm Leads
+              {leads.length > 0 && <span className="admin-nav-count">{leads.length}</span>}
+            </button>
+          </nav>
+          <button type="button" className="admin-signout" onClick={signOut}>
+            <LogOut size={16} /> Sign Out
           </button>
-          <button
-            type="button"
-            className={activeTab === "leads" ? "is-active" : ""}
-            onClick={() => setActiveTab("leads")}
-          >
-            Warm Leads {leads.length > 0 && `(${leads.length})`}
-          </button>
-        </div>
+        </aside>
 
+        <main className="admin-main">
         {loading ? (
           <p className="admin-empty">Loading...</p>
         ) : activeTab === "inquiries" ? (
@@ -200,21 +211,49 @@ export default function AdminDashboard() {
             the full quote form.
           </p>
         ) : (
-          <ul className="admin-list">
-            {leads.map((row) => (
-              <li key={row.id} className="admin-card">
-                <button
-                  type="button"
-                  className="admin-card-summary"
-                  onClick={() => setExpandedId((id) => (id === row.id ? null : row.id))}
-                >
-                  <div className="admin-card-summary-main">
-                    <strong>{row.email || "No email left"}</strong>
-                    <span>{row.event_type || "—"}</span>
-                    <span>Active {formatDate(row.updated_at)}</span>
-                  </div>
-                  <span className="admin-status-badge status-new">in progress</span>
-                </button>
+          <>
+            <div className="admin-leads-filter">
+              <button
+                type="button"
+                className={leadsFilter === "all" ? "is-active" : ""}
+                onClick={() => setLeadsFilter("all")}
+              >
+                All ({leads.length})
+              </button>
+              <button
+                type="button"
+                className={leadsFilter === "with-email" ? "is-active" : ""}
+                onClick={() => setLeadsFilter("with-email")}
+              >
+                With Email ({leadsWithEmail})
+              </button>
+              <button
+                type="button"
+                className={leadsFilter === "no-email" ? "is-active" : ""}
+                onClick={() => setLeadsFilter("no-email")}
+              >
+                No Email ({leadsWithoutEmail})
+              </button>
+            </div>
+
+            {filteredLeads.length === 0 ? (
+              <p className="admin-empty">No warm leads match this filter.</p>
+            ) : (
+              <ul className="admin-list">
+                {filteredLeads.map((row) => (
+                  <li key={row.id} className="admin-card">
+                    <button
+                      type="button"
+                      className="admin-card-summary"
+                      onClick={() => setExpandedId((id) => (id === row.id ? null : row.id))}
+                    >
+                      <div className="admin-card-summary-main">
+                        <strong>{row.email || "No email left"}</strong>
+                        <span>{row.event_type || "—"}</span>
+                        <span>Active {formatDate(row.updated_at)}</span>
+                      </div>
+                      <span className="admin-status-badge status-pending">in progress</span>
+                    </button>
 
                 {expandedId === row.id && (
                   <div className="admin-card-detail">
@@ -261,10 +300,13 @@ export default function AdminDashboard() {
                   </div>
                 )}
               </li>
-            ))}
-          </ul>
+                ))}
+              </ul>
+            )}
+          </>
         )}
-      </main>
+        </main>
+      </div>
     </div>
   );
 }
