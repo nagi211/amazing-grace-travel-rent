@@ -8,7 +8,7 @@ export const rentals = [
     tone: "ocean",
     name: "Event Rentals",
     description: "Tables, chairs, décor and other event essentials.",
-    image: "/chairs_tables.jpg",
+    image: "/slide_1.jpg",
   },
   {
     id: "party-packages",

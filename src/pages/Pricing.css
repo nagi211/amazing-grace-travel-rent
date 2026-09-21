@@ -33,8 +33,9 @@
 
 .pricing-items-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: start;
+  gap: 14px;
   margin-bottom: 40px;
 }
 
@@ -80,6 +81,8 @@
 
 .pricing-item-card-body h3 {
   font-size: 1.1rem;
+  line-height: 1.25;
+  min-height: 2.75rem;
   margin-bottom: 4px;
 }
 
@@ -95,7 +98,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 8px 12px;
   margin-top: auto;
   padding-top: 12px;
 }
@@ -323,9 +327,35 @@
   cursor: pointer;
 }
 
+@media (max-width: 639px) {
+  .pricing-item-card-body {
+    padding: 14px 14px 16px;
+  }
+
+  .pricing-item-card-body h3 {
+    font-size: 0.95rem;
+    line-height: 1.25;
+    min-height: 2.4rem;
+  }
+
+  .pricing-item-card-note {
+    font-size: 0.78rem;
+    margin-bottom: 8px;
+  }
+
+  .pricing-item-card-price {
+    font-size: 0.92rem;
+  }
+
+  .pricing-item-card-add {
+    padding: 7px 12px;
+    font-size: 0.78rem;
+  }
+}
+
 @media (min-width: 640px) {
   .pricing-items-grid {
-    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
   }
 }
 
