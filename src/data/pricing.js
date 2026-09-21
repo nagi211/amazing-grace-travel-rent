@@ -41,7 +41,11 @@ export const pricingGroups = [
     id: "linens-chinaware",
     icon: "Layers",
     title: "Linens & Chinaware",
-    items: [{ id: "tablecloths", name: "Tablecloths", price: "$15 each", amount: 15, unit: "each" }],
+    items: [
+      { id: "tablecloths", name: "Tablecloths", price: "$15 each", amount: 15, unit: "each" },
+      { id: "plate-dinner", name: "Round White Dinner Plate", price: "$1.15 each", amount: 1.15, unit: "each", image: "/items/plate_dinner.png" },
+      { id: "plate-salad", name: "Round White Salad Plate", price: "$1.15 each", amount: 1.15, unit: "each", image: "/items/plate_salad.png" },
+    ],
   },
   {
     id: "lighting",
