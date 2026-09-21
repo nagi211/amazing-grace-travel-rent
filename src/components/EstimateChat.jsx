@@ -10,6 +10,8 @@ import {
   Music,
   ClipboardList,
   Sparkles,
+  Layers,
+  Lightbulb,
   Plus,
   Check,
   RotateCcw,
@@ -22,7 +24,7 @@ import { todayISODate } from "../lib/dateUtils";
 import { useCart, formatMoney } from "../context/CartContext";
 import "./EstimateChat.css";
 
-const ICONS = { Armchair, Tent, Table2, Heart, Music, ClipboardList, Sparkles };
+const ICONS = { Armchair, Tent, Table2, Heart, Music, ClipboardList, Sparkles, Layers, Lightbulb };
 
 function formatEventDate(isoDate) {
   const [year, month, day] = isoDate.split("-").map(Number);

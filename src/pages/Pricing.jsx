@@ -7,6 +7,8 @@ import {
   Music,
   ClipboardList,
   Sparkles,
+  Layers,
+  Lightbulb,
   Users,
   Truck,
   Settings,
@@ -26,16 +28,18 @@ import { useCart } from "../context/CartContext";
 import PlaceholderImage from "../components/PlaceholderImage";
 import "./Pricing.css";
 
-const ICONS = { Armchair, Tent, Table2, Heart, Music, ClipboardList, Sparkles };
+const ICONS = { Armchair, Tent, Table2, Heart, Music, ClipboardList, Sparkles, Layers, Lightbulb };
 
 const TONE_BY_CATEGORY = {
-  "individual-rentals": "ocean",
+  chairs: "ocean",
+  tables: "coral",
   tents: "gold",
-  "table-event-setups": "coral",
+  "linens-chinaware": "green",
+  lighting: "gold",
+  "decor-displays": "coral",
   "ceremony-services": "green",
   entertainment: "ocean",
   "coordination-planning": "gold",
-  "decor-addons": "coral",
 };
 
 const FULFILLMENT_STEPS = [

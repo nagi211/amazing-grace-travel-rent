@@ -1,9 +1,30 @@
+.pricing-page {
+  padding-top: 32px;
+}
+
+.pricing-page .section-header {
+  margin-bottom: 20px;
+}
+
+.pricing-page .eyebrow {
+  margin-bottom: 8px;
+}
+
+.pricing-page .section-title {
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  margin-bottom: 8px;
+}
+
+.pricing-page .section-subtitle {
+  font-size: 0.95rem;
+}
+
 .pricing-tabs {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 36px;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
 .pricing-tab-btn {
