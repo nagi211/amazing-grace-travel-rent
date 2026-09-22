@@ -13,7 +13,7 @@ export const pricingGroups = [
       { id: "white-resin-chairs", name: "White Resin Chairs", price: "$3 each", amount: 3, unit: "each", image: "/items/chair_white.jpg" },
       { id: "folding-chair-natural", name: "Folding Chair (Natural Wood)", price: "$7 each", amount: 7, unit: "each", image: "/items/chair_2.jpg" },
       { id: "folding-chair-dark-brown", name: "Folding Chair (Dark Brown)", price: "$7 each", amount: 7, unit: "each", image: "/items/chair_3.jpg" },
-      { id: "wooden-chair-crossback", name: "Wooden Cross-Back Chair", price: "$12 each", amount: 12, unit: "each", image: "/items/wooden_chair.jpeg" },
+      { id: "wooden-chair-crossback", name: "Wooden Cross-Back Chair", price: "$12 each", amount: 12, unit: "each", image: "/items/wooden_chair.png" },
     ],
   },
   {
