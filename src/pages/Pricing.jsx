@@ -255,6 +255,21 @@ export default function Pricing() {
               <span>{previewItem.name}</span>
               <span className="pricing-lightbox-price">{previewItem.price}</span>
             </div>
+            <button
+              type="button"
+              className="btn btn-primary pricing-lightbox-add"
+              onClick={() => handleAdd(previewItem)}
+            >
+              {justAdded === previewItem.id ? (
+                <>
+                  <Check size={16} /> Added to Cart
+                </>
+              ) : (
+                <>
+                  <Plus size={16} /> Add to Cart
+                </>
+              )}
+            </button>
           </div>
         </div>
       )}

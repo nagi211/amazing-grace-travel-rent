@@ -332,6 +332,11 @@
   white-space: nowrap;
 }
 
+.pricing-lightbox-add {
+  width: 100%;
+  margin-top: 14px;
+}
+
 .pricing-lightbox-close {
   position: absolute;
   top: -50px;
