@@ -107,6 +107,11 @@
   font-weight: 700;
 }
 
+.admin-nav-count.is-overdue {
+  background: var(--color-coral-600);
+  color: #fff;
+}
+
 .admin-sidebar .admin-signout {
   margin-top: auto;
   justify-content: center;
@@ -246,6 +251,25 @@
   overflow: hidden;
 }
 
+.admin-card.is-overdue {
+  border-color: var(--color-coral-600);
+}
+
+.admin-card-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.admin-badge-overdue {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--color-coral-100);
+  color: var(--color-coral-600);
+}
+
 .admin-card-summary {
   width: 100%;
   display: flex;
@@ -361,4 +385,172 @@
   background: var(--color-ocean-700);
   border-color: var(--color-ocean-700);
   color: #fff;
+}
+
+.admin-calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.admin-calendar-header h2 {
+  font-size: 1.1rem;
+  margin: 0;
+  min-width: 160px;
+  text-align: center;
+}
+
+.admin-calendar-header button {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-ink);
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.admin-calendar-header button:hover {
+  border-color: var(--color-ocean-500);
+}
+
+.admin-calendar-legend {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 18px;
+  font-size: 0.78rem;
+  color: var(--color-ink-light);
+}
+
+.admin-calendar-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.admin-calendar-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.admin-calendar-dot.status-pending {
+  background: var(--color-gold-600);
+}
+
+.admin-calendar-dot.status-contacted {
+  background: var(--color-ocean-700);
+}
+
+.admin-calendar-dot.status-confirmed {
+  background: var(--color-green-600);
+}
+
+.admin-calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 6px;
+}
+
+.admin-calendar-weekdays span {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-ink-light);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.admin-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.admin-calendar-cell {
+  min-height: 92px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 6px;
+  background: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden;
+}
+
+.admin-calendar-cell.is-empty {
+  background: none;
+  border: none;
+}
+
+.admin-calendar-cell.is-today {
+  border-color: var(--color-ocean-700);
+  border-width: 2px;
+}
+
+.admin-calendar-daynum {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-ink-light);
+}
+
+.admin-calendar-events {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  overflow-y: auto;
+}
+
+.admin-calendar-event {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-calendar-event.status-pending {
+  background: var(--color-gold-100);
+  color: var(--color-gold-600);
+}
+
+.admin-calendar-event.status-contacted {
+  background: var(--color-ocean-100);
+  color: var(--color-ocean-700);
+}
+
+.admin-calendar-event.status-confirmed {
+  background: var(--color-green-100);
+  color: var(--color-green-600);
+}
+
+.admin-calendar-event.status-closed {
+  background: var(--color-border);
+  color: var(--color-ink-light);
+}
+
+@media (max-width: 639px) {
+  .admin-calendar-cell {
+    min-height: 64px;
+    padding: 4px;
+  }
+
+  .admin-calendar-daynum {
+    font-size: 0.68rem;
+  }
+
+  .admin-calendar-event {
+    font-size: 0.62rem;
+    padding: 1px 4px;
+  }
 }

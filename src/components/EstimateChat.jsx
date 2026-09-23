@@ -215,8 +215,8 @@ export default function EstimateChat() {
     pushMessage(
       "bot",
       hideBrowseList
-        ? "Mahalo! We've saved your info and will reach out soon to help finalize your plan."
-        : "Mahalo! We'll reach out if you have any questions. Here's what we've got:"
+        ? "Mahalo! We've saved your info and will reach out within 24 hours to help finalize your plan."
+        : "Mahalo! We'll reach out within 24 hours if you have any questions. Here's what we've got:"
     );
     upsertEstimateSession(ensureSessionId(), {
       event_type: eventType,
@@ -524,14 +524,14 @@ export default function EstimateChat() {
                   )}
                   <p className="estimate-chat-hint">
                     {emailInput
-                      ? "We've saved your picks — we'll follow up soon to help finalize your plan."
+                      ? "We've saved your picks — we'll follow up within 24 hours to help finalize your plan."
                       : "We've saved your picks — reach out anytime if you'd like help finalizing your plan."}
                   </p>
                 </>
               ) : (
                 <p className="estimate-chat-hint">
                   {emailInput
-                    ? "No worries — we've saved your info and will reach out to help you plan. Feel free to keep browsing anytime."
+                    ? "No worries — we've saved your info and will reach out within 24 hours to help you plan. Feel free to keep browsing anytime."
                     : "No worries — feel free to keep browsing anytime, and reach out whenever you're ready to plan."}
                 </p>
               )}

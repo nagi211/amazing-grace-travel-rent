@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
-import { LogOut, Mail, Phone, MapPin, Calendar, Users, Wallet } from "lucide-react";
+import { LogOut, Mail, Phone, MapPin, Calendar, Users, Wallet, AlertCircle } from "lucide-react";
 import { supabaseAdmin } from "../../lib/supabaseAdminClient";
 import { useAdminAuth } from "../../context/AdminAuthContext";
+import BookingCalendar from "../../components/admin/BookingCalendar";
 import "./Admin.css";
 
 const STATUSES = ["pending", "contacted", "confirmed", "closed"];
+const RESPONSE_DUE_MS = 2 * 60 * 60 * 1000; // flag "needs response" past 2 hours
+
+function needsResponse(row, now) {
+  if (row.status !== "pending") return false;
+  return now - new Date(row.created_at).getTime() > RESPONSE_DUE_MS;
+}
 
 function formatDate(iso) {
   if (!iso) return "—";
@@ -29,6 +36,12 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState(null);
   const [leadsFilter, setLeadsFilter] = useState("all");
+  const [now, setNow] = useState(() => Date.now());
+
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 60_000);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     if (!supabaseAdmin) {
@@ -96,6 +109,7 @@ export default function AdminDashboard() {
     await supabaseAdmin.from("inquiries").update({ status }).eq("id", id);
   }
 
+  const overdueCount = inquiries.filter((row) => needsResponse(row, now)).length;
   const leadsWithEmail = leads.filter((row) => row.email).length;
   const leadsWithoutEmail = leads.length - leadsWithEmail;
   const filteredLeads = leads.filter((row) => {
@@ -119,7 +133,11 @@ export default function AdminDashboard() {
               onClick={() => setActiveTab("inquiries")}
             >
               Inquiries
-              {inquiries.length > 0 && <span className="admin-nav-count">{inquiries.length}</span>}
+              {overdueCount > 0 ? (
+                <span className="admin-nav-count is-overdue">{overdueCount}</span>
+              ) : (
+                inquiries.length > 0 && <span className="admin-nav-count">{inquiries.length}</span>
+              )}
             </button>
             <button
               type="button"
@@ -128,6 +146,13 @@ export default function AdminDashboard() {
             >
               Warm Leads
               {leads.length > 0 && <span className="admin-nav-count">{leads.length}</span>}
+            </button>
+            <button
+              type="button"
+              className={activeTab === "calendar" ? "is-active" : ""}
+              onClick={() => setActiveTab("calendar")}
+            >
+              Calendar
             </button>
           </nav>
           <button type="button" className="admin-signout" onClick={signOut}>
@@ -143,8 +168,10 @@ export default function AdminDashboard() {
             <p className="admin-empty">No inquiries yet.</p>
           ) : (
             <ul className="admin-list">
-              {inquiries.map((row) => (
-                <li key={row.id} className="admin-card">
+              {inquiries.map((row) => {
+                const overdue = needsResponse(row, now);
+                return (
+                <li key={row.id} className={`admin-card ${overdue ? "is-overdue" : ""}`}>
                   <button
                     type="button"
                     className="admin-card-summary"
@@ -155,7 +182,14 @@ export default function AdminDashboard() {
                       <span>{row.event_type || "—"}</span>
                       <span>{formatDate(row.created_at)}</span>
                     </div>
-                    <span className={`admin-status-badge status-${row.status}`}>{row.status}</span>
+                    <div className="admin-card-badges">
+                      {overdue && (
+                        <span className="admin-status-badge admin-badge-overdue">
+                          <AlertCircle size={12} /> Needs Response
+                        </span>
+                      )}
+                      <span className={`admin-status-badge status-${row.status}`}>{row.status}</span>
+                    </div>
                   </button>
 
                   {expandedId === row.id && (
@@ -202,9 +236,12 @@ export default function AdminDashboard() {
                     </div>
                   )}
                 </li>
-              ))}
+                );
+              })}
             </ul>
           )
+        ) : activeTab === "calendar" ? (
+          <BookingCalendar inquiries={inquiries} />
         ) : leads.length === 0 ? (
           <p className="admin-empty">
             No warm leads yet — this fills up as people build an estimate in the chat without submitting

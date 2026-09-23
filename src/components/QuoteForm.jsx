@@ -113,8 +113,9 @@ export default function QuoteForm({ prefillInterest }) {
               </div>
               <h3>Mahalo! Your request has been received.</h3>
               <p>
-                We'll get back to you with availability and pricing as soon as we can. In the
-                meantime, feel free to message us on Facebook if you have any questions.
+                We typically reply within 24 hours with availability and pricing — often much
+                sooner. In the meantime, feel free to message us on Facebook if you have any
+                questions.
               </p>
               <button type="button" className="btn btn-primary" onClick={() => setStatus("idle")}>
                 Submit Another Request
