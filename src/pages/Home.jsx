@@ -20,11 +20,11 @@ export default function Home() {
 
   return (
     <>
+      <DeliveryNotice />
       <Hero />
       <TrustBar />
       <Rentals onSelectInterest={setPrefillInterest} />
       <HowItWorks />
-      <DeliveryNotice />
       <About />
       <WhyChooseUs />
       {/* <Certifications /> */}

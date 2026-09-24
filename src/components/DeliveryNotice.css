@@ -1,33 +1,44 @@
 .delivery-notice {
-  background: var(--color-surface);
-  border-top: 1px solid var(--color-border);
+  background: var(--color-gold-100);
   border-bottom: 1px solid var(--color-border);
-  padding: 32px 0;
 }
 
 .delivery-notice-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 18px;
+  padding: 8px 20px;
   text-align: center;
+  font-size: 0.8rem;
   color: var(--color-ink);
-  font-size: 1.05rem;
-  max-width: 640px;
-  margin: 0 auto;
 }
 
-.delivery-notice-inner p {
-  margin: 0 0 10px;
+.delivery-notice-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.delivery-notice-minimum {
-  font-style: italic;
-  color: var(--color-ink-light);
+.delivery-notice-text svg {
+  color: var(--color-gold-600);
+  flex-shrink: 0;
 }
 
 .delivery-notice-follow {
-  margin-top: 20px !important;
+  font-weight: 700;
+  color: var(--color-ocean-700);
+  white-space: nowrap;
 }
 
-.delivery-notice-follow a {
-  color: var(--color-ocean-700);
-  font-weight: 700;
+.delivery-notice-follow:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .delivery-notice-inner {
+    font-size: 0.74rem;
+    padding: 8px 16px;
+  }
 }

@@ -1,24 +1,19 @@
+import { Truck } from "lucide-react";
 import { business } from "../data/business";
 import "./DeliveryNotice.css";
 
 export default function DeliveryNotice() {
   return (
-    <section className="delivery-notice" aria-label="Delivery and pickup information">
-      <div className="container">
-        <div className="delivery-notice-inner">
-          <p>
-            <strong>Delivery and Pickup</strong> fees apply based on location
-          </p>
-          <p className="delivery-notice-minimum">$250 minimum order required for delivery service</p>
-          <p className="delivery-notice-follow">
-            <strong>Follow us</strong> on{" "}
-            <a href={business.instagramUrl} target="_blank" rel="noreferrer">
-              Instagram
-            </a>{" "}
-            to see examples of our work
-          </p>
-        </div>
+    <div className="delivery-notice" aria-label="Delivery and pickup information">
+      <div className="container delivery-notice-inner">
+        <span className="delivery-notice-text">
+          <Truck size={14} strokeWidth={2.2} />
+          Delivery &amp; Pickup fees apply based on location — $250 minimum for delivery
+        </span>
+        <a href={business.instagramUrl} target="_blank" rel="noreferrer" className="delivery-notice-follow">
+          Follow us on Instagram
+        </a>
       </div>
-    </section>
+    </div>
   );
 }
