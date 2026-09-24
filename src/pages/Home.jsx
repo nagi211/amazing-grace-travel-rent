@@ -3,6 +3,7 @@ import Hero from "../components/Hero";
 import TrustBar from "../components/TrustBar";
 import Rentals from "../components/Rentals";
 import HowItWorks from "../components/HowItWorks";
+import DeliveryNotice from "../components/DeliveryNotice";
 import About from "../components/About";
 import WhyChooseUs from "../components/WhyChooseUs";
 // Hidden for now — re-add the <Certifications /> render below to bring it back.
@@ -23,6 +24,7 @@ export default function Home() {
       <TrustBar />
       <Rentals onSelectInterest={setPrefillInterest} />
       <HowItWorks />
+      <DeliveryNotice />
       <About />
       <WhyChooseUs />
       {/* <Certifications /> */}

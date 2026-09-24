@@ -1,0 +1,33 @@
+.delivery-notice {
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding: 32px 0;
+}
+
+.delivery-notice-inner {
+  text-align: center;
+  color: var(--color-ink);
+  font-size: 1.05rem;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.delivery-notice-inner p {
+  margin: 0 0 10px;
+}
+
+.delivery-notice-minimum {
+  font-style: italic;
+  color: var(--color-ink-light);
+}
+
+.delivery-notice-follow {
+  margin-top: 20px !important;
+}
+
+.delivery-notice-follow a {
+  color: var(--color-ocean-700);
+  font-weight: 700;
+  text-decoration: underline;
+}
