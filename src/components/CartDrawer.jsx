@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { X, Minus, Plus, Trash2, ShoppingCart } from "lucide-react";
+import { Link } from "react-router-dom";
+import { X, Minus, Plus, Trash2, ShoppingCart, ArrowRight } from "lucide-react";
 import { useCart, formatMoney } from "../context/CartContext";
 import { pricingDisclaimer } from "../data/pricing";
 import "./CartDrawer.css";
@@ -39,6 +40,9 @@ export default function CartDrawer() {
           <div className="cart-drawer-empty">
             <p>Your cart is empty.</p>
             <p>Browse rentals and add items to build your event list.</p>
+            <Link to="/pricing" className="btn btn-primary" onClick={closeCart}>
+              Browse Pricing <ArrowRight size={16} />
+            </Link>
           </div>
         ) : (
           <>
