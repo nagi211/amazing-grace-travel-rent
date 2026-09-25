@@ -15,7 +15,7 @@ export default function DeliveryNotice() {
           $250 minimum for delivery
         </span>
         <a href={business.instagramUrl} target="_blank" rel="noreferrer" className="delivery-notice-follow">
-          <InstagramIcon size={14} /> Follow us on Instagram
+          <InstagramIcon size={14} /> Check our work — Follow us on Instagram
         </a>
       </div>
     </div>

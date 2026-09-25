@@ -22,17 +22,14 @@
 }
 
 .delivery-notice-follow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
   font-weight: 700;
   color: var(--color-ocean-700);
-  white-space: nowrap;
 }
 
 .delivery-notice-follow svg {
-  flex-shrink: 0;
+  vertical-align: middle;
+  margin-right: 6px;
+  margin-top: -0.15em;
 }
 
 .delivery-notice-follow:hover {
