@@ -16,8 +16,12 @@
 
 .delivery-notice-text {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 6px;
+}
+
+.delivery-notice-text svg {
+  margin-top: 0.2em;
 }
 
 .delivery-notice-text svg {
