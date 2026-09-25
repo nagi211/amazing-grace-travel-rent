@@ -14,19 +14,11 @@
   color: var(--color-ink);
 }
 
-.delivery-notice-text {
-  display: inline-flex;
-  align-items: flex-start;
-  gap: 6px;
-}
-
-.delivery-notice-text svg {
-  margin-top: 0.2em;
-}
-
-.delivery-notice-text svg {
+.delivery-notice-icon {
   color: var(--color-gold-600);
-  flex-shrink: 0;
+  vertical-align: middle;
+  margin-right: 6px;
+  margin-top: -0.15em;
 }
 
 .delivery-notice-follow {
