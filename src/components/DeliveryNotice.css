@@ -27,9 +27,17 @@
 }
 
 .delivery-notice-follow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   font-weight: 700;
   color: var(--color-ocean-700);
   white-space: nowrap;
+}
+
+.delivery-notice-follow svg {
+  flex-shrink: 0;
 }
 
 .delivery-notice-follow:hover {

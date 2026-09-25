@@ -1,4 +1,5 @@
 import { Truck } from "lucide-react";
+import { InstagramIcon } from "./SocialIcons";
 import { business } from "../data/business";
 import "./DeliveryNotice.css";
 
@@ -7,7 +8,7 @@ export default function DeliveryNotice() {
     <div className="delivery-notice" aria-label="Delivery and pickup information">
       <div className="container delivery-notice-inner">
         <span className="delivery-notice-text">
-          <Truck size={28} strokeWidth={2.2} />
+          <Truck size={16} strokeWidth={2.2} />
           <span>
             Delivery &amp; Pickup fees apply based on location
             <span className="delivery-notice-dash"> — </span>
@@ -16,7 +17,7 @@ export default function DeliveryNotice() {
           </span>
         </span>
         <a href={business.instagramUrl} target="_blank" rel="noreferrer" className="delivery-notice-follow">
-          Follow us on Instagram
+          <InstagramIcon size={14} /> Follow us on Instagram
         </a>
       </div>
     </div>
