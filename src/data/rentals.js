@@ -9,6 +9,7 @@ export const rentals = [
     name: "Event Rentals",
     description: "Tables, chairs, décor and other event essentials.",
     image: "/slide_1.jpg",
+    pricingLink: "/pricing",
   },
   {
     id: "party-packages",
