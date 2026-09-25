@@ -1,5 +1,4 @@
 import { MessageCircle } from "lucide-react";
-import { business } from "../data/business";
 import "./FinalCTA.css";
 
 export default function FinalCTA() {
@@ -15,8 +14,8 @@ export default function FinalCTA() {
           <a href="/#quote" className="btn btn-gold">
             Request a Quote
           </a>
-          <a href={business.messengerUrl} target="_blank" rel="noreferrer" className="btn btn-white">
-            <MessageCircle size={17} /> Message Us
+          <a href="/#contact" className="btn btn-white">
+            <MessageCircle size={17} /> Contact Us
           </a>
         </div>
       </div>
