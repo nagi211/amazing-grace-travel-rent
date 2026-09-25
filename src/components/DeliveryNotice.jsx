@@ -5,7 +5,7 @@ import "./DeliveryNotice.css";
 
 export default function DeliveryNotice() {
   return (
-    <div className="delivery-notice" aria-label="Delivery and pickup information">
+    <div id="home" className="delivery-notice" aria-label="Delivery and pickup information">
       <div className="container delivery-notice-inner">
         <span className="delivery-notice-text">
           <Truck size={16} strokeWidth={2.2} />
