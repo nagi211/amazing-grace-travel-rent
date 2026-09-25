@@ -1,4 +1,5 @@
 import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { InstagramIcon } from "./SocialIcons";
 import { business } from "../data/business";
 import "./Contact.css";
 
@@ -35,11 +36,14 @@ export default function Contact() {
             <a href={business.messengerUrl} target="_blank" rel="noreferrer" className="btn btn-gold">
               <MessageCircle size={17} /> Message Us on Facebook
             </a>
+            <a href={business.instagramMessageUrl} target="_blank" rel="noreferrer" className="btn btn-gold">
+              <InstagramIcon size={17} /> Message Us on Instagram
+            </a>
           </div>
 
           <p className="contact-note">
-            We typically respond as soon as we can — for the fastest reply, Facebook Messenger
-            works great.
+            We typically respond as soon as we can — for the fastest reply, Facebook or Instagram
+            Messenger works great.
           </p>
         </div>
       </div>

@@ -8,6 +8,7 @@ export const business = {
   facebookUrl: "https://www.facebook.com/Rencabelin",
   messengerUrl: "https://m.me/Rencabelin",
   instagramUrl: "https://www.instagram.com/amazinggracehi/",
+  instagramMessageUrl: "https://ig.me/m/amazinggracehi",
   // No street address has been provided by the business yet. Add it here
   // once available and it'll appear across the site automatically.
   phone: "+1 408 859 8947",
