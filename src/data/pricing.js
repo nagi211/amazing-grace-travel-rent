@@ -97,7 +97,7 @@ export const pricingGroups = [
         unit: null,
         image: "/items/decor-displays/signage.jpg",
       },
-      { id: "welcome-bar-umbrella", name: "Welcome / Bar Umbrella", price: "$50", amount: 50, unit: null },
+      { id: "welcome-bar-umbrella", name: "Welcome / Bar Umbrella", price: "$150", amount: 150, unit: null, image: "/items/decor-displays/umbrella.jpg" },
       {
         id: "welcome-mirror",
         name: "Customized Welcome Mirror",
