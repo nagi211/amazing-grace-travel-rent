@@ -36,6 +36,10 @@ export const pricingGroups = [
     items: [
       { id: "tent-20x20", name: "20 x 20 Tent", price: "$350", amount: 350, unit: null },
       { id: "tent-high-peak-20x40", name: "High Peak White Tent (20 x 40)", price: "$1,000", amount: 1000, unit: null },
+      { id: "tent-high-peak-10x10", name: "10' x 10' - High Peak", price: "$185", amount: 185, unit: null, image: "/items/tents/high_peak.png" },
+      { id: "tent-high-peak-10x20", name: "10' x 20' - High Peak", price: "$285", amount: 285, unit: null, image: "/items/tents/high_peak.png" },
+      { id: "tent-high-peak-20x20", name: "20' x 20' - High Peak", price: "$330", amount: 330, unit: null, image: "/items/tents/high_peak.png" },
+      { id: "welcome-bar-umbrella", name: "Welcome / Bar Umbrella", price: "$150", amount: 150, unit: null, image: "/items/decor-displays/umbrella.jpg" },
     ],
   },
   {
@@ -107,7 +111,6 @@ export const pricingGroups = [
         unit: null,
         image: "/items/decor-displays/signage.jpg",
       },
-      { id: "welcome-bar-umbrella", name: "Welcome / Bar Umbrella", price: "$150", amount: 150, unit: null, image: "/items/decor-displays/umbrella.jpg" },
       {
         id: "welcome-mirror",
         name: "Customized Welcome Mirror",
