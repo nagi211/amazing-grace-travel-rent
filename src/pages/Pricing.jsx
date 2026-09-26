@@ -54,14 +54,19 @@ export default function Pricing() {
   const [activeCategory, setActiveCategory] = useState(pricingGroups[0].id);
   const [justAdded, setJustAdded] = useState(null);
   const [previewItem, setPreviewItem] = useState(null);
+  const [selectedSizes, setSelectedSizes] = useState({});
 
   const activeGroup = pricingGroups.find((g) => g.id === activeCategory);
   const isPlanningTab = activeCategory === "coordination-planning";
 
   function handleAdd(item) {
-    addItem(item);
-    setJustAdded(item.id);
-    setTimeout(() => setJustAdded((current) => (current === item.id ? null : current)), 1200);
+    const size = item.sizes ? selectedSizes[item.id] || item.sizes[0] : null;
+    const cartItem = size
+      ? { ...item, id: `${item.id}-${size}`, name: `${item.name} (${size})` }
+      : item;
+    addItem(cartItem);
+    setJustAdded(cartItem.id);
+    setTimeout(() => setJustAdded((current) => (current === cartItem.id ? null : current)), 1200);
   }
 
   useEffect(() => {
@@ -183,6 +188,23 @@ export default function Pricing() {
                 <div className="pricing-item-card-body">
                   <h3>{item.name}</h3>
                   {item.note && <p className="pricing-item-card-note">{item.note}</p>}
+                  {item.sizes && (
+                    <label className="pricing-item-card-size">
+                      Size
+                      <select
+                        value={selectedSizes[item.id] || item.sizes[0]}
+                        onChange={(e) =>
+                          setSelectedSizes((current) => ({ ...current, [item.id]: e.target.value }))
+                        }
+                      >
+                        {item.sizes.map((size) => (
+                          <option key={size} value={size}>
+                            {size}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                  )}
                   <div className="pricing-item-card-footer">
                     <span className="pricing-item-card-price">{item.price}</span>
                     <button
@@ -190,7 +212,7 @@ export default function Pricing() {
                       className="btn btn-outline pricing-item-card-add"
                       onClick={() => handleAdd(item)}
                     >
-                      {justAdded === item.id ? (
+                      {justAdded === `${item.id}${item.sizes ? `-${selectedSizes[item.id] || item.sizes[0]}` : ""}` ? (
                         <>
                           <Check size={16} /> Added
                         </>
