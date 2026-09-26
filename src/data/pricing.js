@@ -115,7 +115,7 @@ export const pricingGroups = [
         price: "$50 each",
         amount: 50,
         unit: "each",
-        image: "/items/decor-displays/pedestals.jpg",
+        image: "/items/decor-displays/white_pedestal.png",
         sizes: ['34"', '24"', '22"'],
       },
       { id: "cooler-120qt", name: "Cooler (120 qt)", price: "$30", amount: 30, unit: null },
