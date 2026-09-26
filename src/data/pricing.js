@@ -39,6 +39,16 @@ export const pricingGroups = [
     ],
   },
   {
+    id: "flooring",
+    icon: "LayoutGrid",
+    title: "Flooring",
+    items: [
+      { id: "dance-floor-natural", name: "Dance Floor – Natural", price: "$75", amount: 75, unit: null, image: "/items/floors/dance_floor_natural.jpg" },
+      { id: "dance-floor-white", name: "Dance Floor – White", price: "$75", amount: 75, unit: null, image: "/items/floors/dance_floor_white.jpg" },
+      { id: "dance-floor-dark-wood", name: "Dance Floor – Dark Wood", price: "$75", amount: 75, unit: null, image: "/items/floors/dance_floor_dark_wood.jpg" },
+    ],
+  },
+  {
     id: "linens-chinaware",
     icon: "Layers",
     title: "Linens & Chinaware",

@@ -16,6 +16,7 @@ import {
   Plus,
   Check,
   X,
+  LayoutGrid,
 } from "lucide-react";
 import {
   pricingGroups,
@@ -28,12 +29,13 @@ import { useCart } from "../context/CartContext";
 import PlaceholderImage from "../components/PlaceholderImage";
 import "./Pricing.css";
 
-const ICONS = { Armchair, Tent, Table2, Heart, Music, ClipboardList, Sparkles, Layers, Lightbulb };
+const ICONS = { Armchair, Tent, Table2, Heart, Music, ClipboardList, Sparkles, Layers, Lightbulb, LayoutGrid };
 
 const TONE_BY_CATEGORY = {
   chairs: "ocean",
   tables: "coral",
   tents: "gold",
+  flooring: "ocean",
   "linens-chinaware": "green",
   lighting: "gold",
   "decor-displays": "coral",
