@@ -39,7 +39,7 @@ const GENERAL_ADD_ON_IDS = [
 ];
 
 function pickTent(guestCount) {
-  return guestCount > 60 ? ITEMS_BY_ID["tent-high-peak-20x40"] : ITEMS_BY_ID["tent-20x20"];
+  return guestCount > 60 ? ITEMS_BY_ID["tent-high-peak-20x40"] : ITEMS_BY_ID["tent-high-peak-20x20"];
 }
 
 export function buildSuggestedPlan({ eventType, guestCount, budget }) {
