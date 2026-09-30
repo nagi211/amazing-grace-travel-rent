@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CheckCircle2, Send } from "lucide-react";
 import { rentals } from "../data/rentals";
 import { packages } from "../data/packages";
@@ -52,6 +52,7 @@ export default function QuoteForm({ prefillInterest }) {
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle"); // idle | submitting | success
   const [lastPrefill, setLastPrefill] = useState(prefillInterest);
+  const cartItemsRef = useRef(null);
 
   if (prefillInterest && prefillInterest !== lastPrefill) {
     setLastPrefill(prefillInterest);
@@ -66,6 +67,7 @@ export default function QuoteForm({ prefillInterest }) {
       details: pendingRequest.details,
       ...(pendingRequest.eventDate ? { eventDate: pendingRequest.eventDate } : {}),
     }));
+    cartItemsRef.current = pendingRequest.cartItems || null;
     clearPendingRequest();
     document.getElementById("quote")?.scrollIntoView({ behavior: "smooth" });
   }, [pendingRequest, clearPendingRequest]);
@@ -84,7 +86,8 @@ export default function QuoteForm({ prefillInterest }) {
 
     setStatus("submitting");
     try {
-      await submitQuoteRequest(values);
+      await submitQuoteRequest(values, cartItemsRef.current);
+      cartItemsRef.current = null;
       setStatus("success");
       setValues(EMPTY_FORM);
     } catch {

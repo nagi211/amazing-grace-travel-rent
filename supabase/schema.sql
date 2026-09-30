@@ -63,6 +63,33 @@ create policy "Authenticated users can update inquiries"
   to authenticated
   using (true);
 
+-- Structured cart line items (id/name/amount/unit/qty), captured going
+-- forward only for inquiries submitted via the cart (Pricing page or
+-- EstimateChat) so the admin dashboard's per-item availability calendar
+-- has something to sum. Older inquiries and non-cart quote requests (the
+-- plain "Request a Quote" links) leave this null.
+alter table public.inquiries add column if not exists cart_items jsonb;
+
+-- ============================================================
+-- Phase E: per-item owned quantity, for the admin availability calendar
+-- ============================================================
+create table if not exists public.inventory (
+  item_id text primary key,
+  total_qty integer not null default 0,
+  updated_at timestamptz not null default now()
+);
+
+-- Admin-only operational data — unlike inquiries, no anon access at all.
+alter table public.inventory enable row level security;
+grant select, insert, update on public.inventory to authenticated;
+
+drop policy if exists "Authenticated users can manage inventory" on public.inventory;
+create policy "Authenticated users can manage inventory"
+  on public.inventory for all
+  to authenticated
+  using (true)
+  with check (true);
+
 -- ============================================================
 -- Phase C: in-progress / abandoned estimate-chat sessions
 -- ============================================================

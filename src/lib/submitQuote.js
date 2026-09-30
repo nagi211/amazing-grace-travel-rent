@@ -5,7 +5,7 @@
 // live in the admin panel at /admin.
 import { supabase } from "./supabaseClient";
 
-export async function submitQuoteRequest(values) {
+export async function submitQuoteRequest(values, cartItems = null) {
   if (!supabase) throw new Error("Supabase is not configured yet.");
 
   const { error } = await supabase.from("inquiries").insert({
@@ -18,6 +18,7 @@ export async function submitQuoteRequest(values) {
     rental_needed: values.rentalNeeded,
     event_location: values.eventLocation,
     details: values.details,
+    cart_items: cartItems,
   });
 
   if (error) throw error;

@@ -79,7 +79,7 @@ export function CartProvider({ children }) {
       `Estimated total: ${formatMoney(total)} (${pricingDisclaimer.toLowerCase()})`,
     ].join("\n");
 
-    setPendingRequest({ interest: "Multiple Items (Cart)", details: summary, ...extra });
+    setPendingRequest({ interest: "Multiple Items (Cart)", details: summary, cartItems: items, ...extra });
     setIsOpen(false);
   }
 

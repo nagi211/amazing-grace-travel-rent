@@ -3,6 +3,7 @@ import { LogOut, Mail, Phone, MapPin, Calendar, Users, Wallet, AlertCircle } fro
 import { supabaseAdmin } from "../../lib/supabaseAdminClient";
 import { useAdminAuth } from "../../context/AdminAuthContext";
 import BookingCalendar from "../../components/admin/BookingCalendar";
+import InventoryPanel from "../../components/admin/InventoryPanel";
 import "./Admin.css";
 
 const STATUSES = ["pending", "contacted", "confirmed", "closed"];
@@ -33,6 +34,7 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("inquiries");
   const [inquiries, setInquiries] = useState([]);
   const [leads, setLeads] = useState([]);
+  const [inventory, setInventory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState(null);
   const [leadsFilter, setLeadsFilter] = useState("all");
@@ -58,10 +60,12 @@ export default function AdminDashboard() {
         .select("*")
         .eq("status", "in_progress")
         .order("updated_at", { ascending: false }),
-    ]).then(([inquiriesRes, leadsRes]) => {
+      supabaseAdmin.from("inventory").select("*"),
+    ]).then(([inquiriesRes, leadsRes, inventoryRes]) => {
       if (!active) return;
       setInquiries(inquiriesRes.data || []);
       setLeads(leadsRes.data || []);
+      setInventory(inventoryRes.data || []);
       setLoading(false);
     });
 
@@ -97,10 +101,24 @@ export default function AdminDashboard() {
       })
       .subscribe();
 
+    const inventoryChannel = supabaseAdmin
+      .channel("inventory-changes")
+      .on("postgres_changes", { event: "*", schema: "public", table: "inventory" }, (payload) => {
+        setInventory((current) => {
+          if (payload.eventType === "DELETE") return current.filter((row) => row.item_id !== payload.old.item_id);
+          const exists = current.some((row) => row.item_id === payload.new.item_id);
+          return exists
+            ? current.map((row) => (row.item_id === payload.new.item_id ? payload.new : row))
+            : [...current, payload.new];
+        });
+      })
+      .subscribe();
+
     return () => {
       active = false;
       supabaseAdmin.removeChannel(inquiriesChannel);
       supabaseAdmin.removeChannel(leadsChannel);
+      supabaseAdmin.removeChannel(inventoryChannel);
     };
   }, []);
 
@@ -153,6 +171,13 @@ export default function AdminDashboard() {
               onClick={() => setActiveTab("calendar")}
             >
               Calendar
+            </button>
+            <button
+              type="button"
+              className={activeTab === "inventory" ? "is-active" : ""}
+              onClick={() => setActiveTab("inventory")}
+            >
+              Inventory
             </button>
           </nav>
           <button type="button" className="admin-signout" onClick={signOut}>
@@ -242,6 +267,8 @@ export default function AdminDashboard() {
           )
         ) : activeTab === "calendar" ? (
           <BookingCalendar inquiries={inquiries} />
+        ) : activeTab === "inventory" ? (
+          <InventoryPanel inventory={inventory} inquiries={inquiries} onInventoryUpdate={setInventory} />
         ) : leads.length === 0 ? (
           <p className="admin-empty">
             No warm leads yet — this fills up as people build an estimate in the chat without submitting
