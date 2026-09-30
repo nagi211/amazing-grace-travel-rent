@@ -97,6 +97,10 @@
   position: relative;
 }
 
+.pricing-item-media img.pricing-item-media-cover {
+  object-fit: cover;
+}
+
 .pricing-gallery-nav {
   position: absolute;
   top: 50%;

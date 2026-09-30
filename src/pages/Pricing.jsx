@@ -205,6 +205,7 @@ export default function Pricing() {
                       tone={TONE_BY_CATEGORY[activeGroup.id] || "ocean"}
                       alt={item.name}
                       iconSize={40}
+                      className={item.cover ? "pricing-item-media-cover" : ""}
                     />
                   </button>
                   {hasGallery && (
