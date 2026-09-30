@@ -93,6 +93,65 @@
   display: block;
 }
 
+.pricing-item-media-wrap {
+  position: relative;
+}
+
+.pricing-gallery-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--color-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.pricing-gallery-nav:hover {
+  background: #fff;
+}
+
+.pricing-gallery-prev {
+  left: 10px;
+}
+
+.pricing-gallery-next {
+  right: 10px;
+}
+
+.pricing-gallery-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.pricing-gallery-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+  padding: 0;
+  cursor: pointer;
+}
+
+.pricing-gallery-dot.active {
+  background: var(--color-ocean-700);
+  box-shadow: none;
+}
+
 .pricing-item-card-body {
   padding: 20px 22px 24px;
   display: flex;
@@ -321,6 +380,7 @@
 }
 
 .pricing-lightbox-content {
+  position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: var(--radius-lg);
@@ -333,6 +393,44 @@
   height: 100%;
   object-fit: contain;
   display: block;
+}
+
+.pricing-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--color-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.pricing-lightbox-nav:hover {
+  background: #fff;
+}
+
+.pricing-lightbox-prev {
+  left: 12px;
+}
+
+.pricing-lightbox-next {
+  right: 12px;
+}
+
+.pricing-lightbox-dots {
+  position: static;
+  margin-top: 12px;
+}
+
+.pricing-lightbox-dots .pricing-gallery-dot.active {
+  background: var(--color-gold-500);
 }
 
 .pricing-lightbox-caption {

@@ -17,6 +17,8 @@ import {
   Check,
   X,
   LayoutGrid,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import {
   pricingGroups,
@@ -57,9 +59,23 @@ export default function Pricing() {
   const [justAdded, setJustAdded] = useState(null);
   const [previewItem, setPreviewItem] = useState(null);
   const [selectedSizes, setSelectedSizes] = useState({});
+  const [galleryIndex, setGalleryIndex] = useState({});
 
   const activeGroup = pricingGroups.find((g) => g.id === activeCategory);
   const isPlanningTab = activeCategory === "coordination-planning";
+
+  function currentImageSrc(item) {
+    if (item.images) return item.images[(galleryIndex[item.id] || 0) % item.images.length];
+    return item.image;
+  }
+
+  function stepGallery(item, direction) {
+    const count = item.images.length;
+    setGalleryIndex((current) => {
+      const cur = current[item.id] || 0;
+      return { ...current, [item.id]: (cur + direction + count) % count };
+    });
+  }
 
   function handleAdd(item) {
     const size = item.sizes ? selectedSizes[item.id] || item.sizes[0] : null;
@@ -170,23 +186,70 @@ export default function Pricing() {
           </div>
         ) : (
           <div className="pricing-items-grid">
-            {activeGroup.items.map((item) => (
+            {activeGroup.items.map((item) => {
+              const hasImage = Boolean(item.image || item.images?.length);
+              const hasGallery = item.images && item.images.length > 1;
+              return (
               <article className="card pricing-item-card" key={item.id}>
-                <button
-                  type="button"
-                  className="pricing-item-media"
-                  aria-label={item.image ? `View larger image of ${item.name}` : item.name}
-                  onClick={() => item.image && setPreviewItem(item)}
-                  disabled={!item.image}
-                >
-                  <PlaceholderImage
-                    src={item.image}
-                    icon={activeGroup.icon}
-                    tone={TONE_BY_CATEGORY[activeGroup.id] || "ocean"}
-                    alt={item.name}
-                    iconSize={40}
-                  />
-                </button>
+                <div className="pricing-item-media-wrap">
+                  <button
+                    type="button"
+                    className="pricing-item-media"
+                    aria-label={hasImage ? `View larger image of ${item.name}` : item.name}
+                    onClick={() => hasImage && setPreviewItem(item)}
+                    disabled={!hasImage}
+                  >
+                    <PlaceholderImage
+                      src={currentImageSrc(item)}
+                      icon={activeGroup.icon}
+                      tone={TONE_BY_CATEGORY[activeGroup.id] || "ocean"}
+                      alt={item.name}
+                      iconSize={40}
+                    />
+                  </button>
+                  {hasGallery && (
+                    <>
+                      <button
+                        type="button"
+                        className="pricing-gallery-nav pricing-gallery-prev"
+                        aria-label="Previous photo"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          stepGallery(item, -1);
+                        }}
+                      >
+                        <ChevronLeft size={18} />
+                      </button>
+                      <button
+                        type="button"
+                        className="pricing-gallery-nav pricing-gallery-next"
+                        aria-label="Next photo"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          stepGallery(item, 1);
+                        }}
+                      >
+                        <ChevronRight size={18} />
+                      </button>
+                      <div className="pricing-gallery-dots">
+                        {item.images.map((src, i) => (
+                          <button
+                            key={src}
+                            type="button"
+                            className={`pricing-gallery-dot ${
+                              i === (galleryIndex[item.id] || 0) ? "active" : ""
+                            }`}
+                            aria-label={`Show photo ${i + 1}`}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setGalleryIndex((current) => ({ ...current, [item.id]: i }));
+                            }}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
                 <div className="pricing-item-card-body">
                   <h3>{item.name}</h3>
                   {item.note && <p className="pricing-item-card-note">{item.note}</p>}
@@ -227,7 +290,8 @@ export default function Pricing() {
                   </div>
                 </div>
               </article>
-            ))}
+              );
+            })}
           </div>
         )}
 
@@ -273,8 +337,43 @@ export default function Pricing() {
               <X size={20} />
             </button>
             <div className="pricing-lightbox-content">
-              <img src={previewItem.image} alt={previewItem.name} />
+              <img src={currentImageSrc(previewItem)} alt={previewItem.name} />
+              {previewItem.images && previewItem.images.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    className="pricing-lightbox-nav pricing-lightbox-prev"
+                    aria-label="Previous photo"
+                    onClick={() => stepGallery(previewItem, -1)}
+                  >
+                    <ChevronLeft size={22} />
+                  </button>
+                  <button
+                    type="button"
+                    className="pricing-lightbox-nav pricing-lightbox-next"
+                    aria-label="Next photo"
+                    onClick={() => stepGallery(previewItem, 1)}
+                  >
+                    <ChevronRight size={22} />
+                  </button>
+                </>
+              )}
             </div>
+            {previewItem.images && previewItem.images.length > 1 && (
+              <div className="pricing-gallery-dots pricing-lightbox-dots">
+                {previewItem.images.map((src, i) => (
+                  <button
+                    key={src}
+                    type="button"
+                    className={`pricing-gallery-dot ${
+                      i === (galleryIndex[previewItem.id] || 0) ? "active" : ""
+                    }`}
+                    aria-label={`Show photo ${i + 1}`}
+                    onClick={() => setGalleryIndex((current) => ({ ...current, [previewItem.id]: i }))}
+                  />
+                ))}
+              </div>
+            )}
             <div className="pricing-lightbox-caption">
               <span>{previewItem.name}</span>
               <span className="pricing-lightbox-price">{previewItem.price}</span>
