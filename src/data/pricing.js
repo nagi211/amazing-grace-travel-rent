@@ -64,6 +64,13 @@ export const pricingGroups = [
       { id: "tablecloths", name: "Tablecloths", price: "$15 each", amount: 15, unit: "each" },
       { id: "plate-dinner", name: "Round White Dinner Plate", price: "$1.15 each", amount: 1.15, unit: "each", image: "/items/linens-chinaware/plate_dinner.png" },
       { id: "plate-salad", name: "Round White Salad Plate", price: "$1.15 each", amount: 1.15, unit: "each", image: "/items/linens-chinaware/plate_salad.png" },
+      { id: "charger-gold", name: "Charger Plate – Gold", price: "$3.75 each", amount: 3.75, unit: "each", image: "/items/linens-chinaware/charger_gold.jpg" },
+      { id: "charger-rattan", name: "Charger Plate – Rattan", price: "$4.50 each", amount: 4.5, unit: "each", image: "/items/linens-chinaware/charger_rattan.jpg" },
+      { id: "charger-gold-rim", name: "Charger Plate – Clear with Gold Rim", price: "$3.75 each", amount: 3.75, unit: "each", image: "/items/linens-chinaware/charger_gold_rim.jpg" },
+      { id: "flatware-gold", name: "Flatware Set – Gold", price: "$1.95 each", amount: 1.95, unit: "each", image: "/items/linens-chinaware/flatware_gold.jpg" },
+      { id: "flatware-silver", name: "Flatware Set – Silver", price: "$1.95 each", amount: 1.95, unit: "each", image: "/items/linens-chinaware/flatware_silver.jpg" },
+      { id: "wine-glass", name: "Wine Glass", price: "$1.10 each", amount: 1.1, unit: "each", image: "/items/linens-chinaware/wine_glass.jpg" },
+      { id: "napkin-polyester", name: "Napkin – Polyester", note: "Many colors available", price: "$2.95 each", amount: 2.95, unit: "each", image: "/items/linens-chinaware/napkin_polyester.jpg" },
     ],
   },
   {
