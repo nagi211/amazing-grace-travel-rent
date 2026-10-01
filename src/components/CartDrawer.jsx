@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { X, Minus, Plus, Trash2, ShoppingCart, ArrowRight } from "lucide-react";
 import { useCart, formatMoney } from "../context/CartContext";
 import { pricingDisclaimer } from "../data/pricing";
@@ -8,6 +8,17 @@ import "./CartDrawer.css";
 export default function CartDrawer() {
   const { items, itemCount, subtotal, isOpen, closeCart, updateQty, removeItem, clearCart, requestQuoteFromCart } =
     useCart();
+  const navigate = useNavigate();
+
+  // The actual quote form only lives on the homepage (Home.jsx renders
+  // QuoteForm at #quote) — but the cart drawer is reachable from every
+  // page. Without this, clicking the button on e.g. /pricing just closed
+  // the drawer with nothing visibly happening, since there was no #quote
+  // on that page to scroll to.
+  function handleRequestQuote() {
+    requestQuoteFromCart();
+    navigate("/");
+  }
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -93,7 +104,7 @@ export default function CartDrawer() {
                 <strong>{formatMoney(subtotal)}</strong>
               </div>
               <p className="cart-drawer-disclaimer">{pricingDisclaimer} — final pricing confirmed with your quote.</p>
-              <button type="button" className="btn btn-primary btn-block" onClick={requestQuoteFromCart}>
+              <button type="button" className="btn btn-primary btn-block" onClick={handleRequestQuote}>
                 Request a Quote for This Cart
               </button>
               <button type="button" className="cart-drawer-clear" onClick={clearCart}>
