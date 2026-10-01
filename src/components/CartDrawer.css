@@ -160,6 +160,35 @@
   background: var(--color-surface);
 }
 
+.cart-drawer-datetime {
+  margin-bottom: 14px;
+}
+
+.cart-drawer-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-ink-light);
+}
+
+.cart-drawer-field input {
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-family: inherit;
+  color: var(--color-ink);
+}
+
+.cart-drawer-time-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
 .cart-drawer-total {
   display: flex;
   align-items: center;

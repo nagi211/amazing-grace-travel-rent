@@ -5,6 +5,20 @@ const CartContext = createContext(null);
 
 const STORAGE_KEY = "agtr-cart-items";
 
+// Matches the "$250 minimum for delivery" banner (DeliveryNotice.jsx) —
+// once a cart clears this, the cart CTA switches from "Request a Quote" to
+// "Checkout" (still the same quote-request flow under the hood, just
+// signaling the order is big enough to fulfill).
+export const DELIVERY_MINIMUM = 250;
+
+function formatTime12h(time24) {
+  if (!time24) return null;
+  const [h, m] = time24.split(":").map(Number);
+  const period = h >= 12 ? "PM" : "AM";
+  const hour12 = h % 12 || 12;
+  return `${hour12}:${String(m).padStart(2, "0")} ${period}`;
+}
+
 function loadStoredItems() {
   if (typeof window === "undefined") return [];
   try {
@@ -68,18 +82,27 @@ export function CartProvider({ children }) {
     setIsOpen(false);
   }
 
-  function requestQuoteFromCart(extra = {}) {
+  function requestQuoteFromCart({ eventDate, startTime, endTime } = {}) {
     if (items.length === 0) return;
     const lines = items.map((i) => `- ${i.name} x${i.qty} — ${formatMoney(i.amount * i.qty)}`);
     const total = items.reduce((sum, i) => sum + i.amount * i.qty, 0);
+    const start = formatTime12h(startTime);
+    const end = formatTime12h(endTime);
+    const timeLine = start && end ? `Rental time: ${start} – ${end}` : null;
     const summary = [
       "Cart items:",
       ...lines,
       "",
       `Estimated total: ${formatMoney(total)} (${pricingDisclaimer.toLowerCase()})`,
+      ...(timeLine ? ["", timeLine] : []),
     ].join("\n");
 
-    setPendingRequest({ interest: "Multiple Items (Cart)", details: summary, cartItems: items, ...extra });
+    setPendingRequest({
+      interest: "Multiple Items (Cart)",
+      details: summary,
+      cartItems: items,
+      ...(eventDate ? { eventDate } : {}),
+    });
     setIsOpen(false);
   }
 

@@ -1,14 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { X, Minus, Plus, Trash2, ShoppingCart, ArrowRight } from "lucide-react";
-import { useCart, formatMoney } from "../context/CartContext";
+import { useCart, formatMoney, DELIVERY_MINIMUM } from "../context/CartContext";
 import { pricingDisclaimer } from "../data/pricing";
+import { todayISODate } from "../lib/dateUtils";
 import "./CartDrawer.css";
 
 export default function CartDrawer() {
   const { items, itemCount, subtotal, isOpen, closeCart, updateQty, removeItem, clearCart, requestQuoteFromCart } =
     useCart();
   const navigate = useNavigate();
+  const [rentalDate, setRentalDate] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const meetsMinimum = subtotal > DELIVERY_MINIMUM;
 
   // The actual quote form only lives on the homepage (Home.jsx renders
   // QuoteForm at #quote) — but the cart drawer is reachable from every
@@ -16,7 +21,7 @@ export default function CartDrawer() {
   // the drawer with nothing visibly happening, since there was no #quote
   // on that page to scroll to.
   function handleRequestQuote() {
-    requestQuoteFromCart();
+    requestQuoteFromCart({ eventDate: rentalDate, startTime, endTime });
     navigate("/");
   }
 
@@ -99,13 +104,35 @@ export default function CartDrawer() {
             </ul>
 
             <div className="cart-drawer-footer">
+              <div className="cart-drawer-datetime">
+                <label className="cart-drawer-field">
+                  Event Date
+                  <input
+                    type="date"
+                    min={todayISODate()}
+                    value={rentalDate}
+                    onChange={(e) => setRentalDate(e.target.value)}
+                  />
+                </label>
+                <div className="cart-drawer-time-row">
+                  <label className="cart-drawer-field">
+                    Start Time
+                    <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
+                  </label>
+                  <label className="cart-drawer-field">
+                    End Time
+                    <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} />
+                  </label>
+                </div>
+              </div>
+
               <div className="cart-drawer-total">
                 <span>Estimated Total</span>
                 <strong>{formatMoney(subtotal)}</strong>
               </div>
               <p className="cart-drawer-disclaimer">{pricingDisclaimer} — final pricing confirmed with your quote.</p>
               <button type="button" className="btn btn-primary btn-block" onClick={handleRequestQuote}>
-                Request a Quote for This Cart
+                {meetsMinimum ? "Checkout" : "Request a Quote for This Cart"}
               </button>
               <button type="button" className="cart-drawer-clear" onClick={clearCart}>
                 Clear Cart
