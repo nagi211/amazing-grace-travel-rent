@@ -96,7 +96,7 @@ export const pricingGroups = [
     items: [
       { id: "tablecloths", name: "Tablecloths", price: "$15 each", amount: 15, unit: "each" },
       { id: "napkin-polyester", name: "Napkin – Polyester", note: "Many colors available", price: "$2.95 each", amount: 2.95, unit: "each", image: "/items/linens/napkin_polyester.jpg" },
-      { id: "napkin-silk", name: "Napkin – Silk", note: "Price to be confirmed", price: "Price TBD", amount: 0, unit: "each", image: "/items/linens/napkin_silk.jpg" },
+      { id: "napkin-silk", name: "Napkin – Silk", price: "$1.25 each", amount: 1.25, unit: "each", image: "/items/linens/napkin_silk.jpg" },
       { id: "table-runner-satin", name: "Table Runner – Satin", note: "Price to be confirmed", price: "Price TBD", amount: 0, unit: "each", image: "/items/linens/table_runner_satin.jpg" },
       { id: "table-runner-cheesecloth", name: "Table Runner – Cheesecloth", note: "Price to be confirmed", price: "Price TBD", amount: 0, unit: "each", image: "/items/linens/table_runner_cheesecloth.jpg" },
       { id: "table-runner-chiffon", name: "Table Runner – Chiffon/Sheer", note: "Price to be confirmed", price: "Price TBD", amount: 0, unit: "each", image: "/items/linens/table_runner_chiffon.jpg" },
