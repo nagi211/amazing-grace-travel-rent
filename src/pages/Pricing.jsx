@@ -17,6 +17,7 @@ import {
   Check,
   X,
   LayoutGrid,
+  UtensilsCrossed,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
@@ -31,14 +32,27 @@ import { useCart } from "../context/CartContext";
 import PlaceholderImage from "../components/PlaceholderImage";
 import "./Pricing.css";
 
-const ICONS = { Armchair, Tent, Table2, Heart, Music, ClipboardList, Sparkles, Layers, Lightbulb, LayoutGrid };
+const ICONS = {
+  Armchair,
+  Tent,
+  Table2,
+  Heart,
+  Music,
+  ClipboardList,
+  Sparkles,
+  Layers,
+  Lightbulb,
+  LayoutGrid,
+  UtensilsCrossed,
+};
 
 const TONE_BY_CATEGORY = {
   chairs: "ocean",
   tables: "coral",
   tents: "gold",
   flooring: "ocean",
-  "linens-chinaware": "green",
+  linens: "green",
+  chinaware: "gold",
   lighting: "gold",
   "decor-displays": "coral",
   "ceremony-services": "green",
