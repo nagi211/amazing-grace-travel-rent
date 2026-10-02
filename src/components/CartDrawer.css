@@ -204,6 +204,14 @@
   margin: 0 0 14px;
 }
 
+.cart-drawer-minimum-note {
+  color: var(--color-coral-600);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 8px 0 0;
+}
+
 .cart-drawer-clear {
   display: block;
   width: 100%;

@@ -4,6 +4,7 @@ import { supabaseAdmin } from "../../lib/supabaseAdminClient";
 import { useAdminAuth } from "../../context/AdminAuthContext";
 import BookingCalendar from "../../components/admin/BookingCalendar";
 import InventoryPanel from "../../components/admin/InventoryPanel";
+import CheckoutsPanel from "../../components/admin/CheckoutsPanel";
 import "./Admin.css";
 
 const STATUSES = ["pending", "contacted", "confirmed", "closed"];
@@ -127,6 +128,15 @@ export default function AdminDashboard() {
     await supabaseAdmin.from("inquiries").update({ status }).eq("id", id);
   }
 
+  async function updatePaymentStatus(id, paymentStatus) {
+    setInquiries((current) =>
+      current.map((row) => (row.id === id ? { ...row, payment_status: paymentStatus } : row))
+    );
+    await supabaseAdmin.from("inquiries").update({ payment_status: paymentStatus }).eq("id", id);
+  }
+
+  const checkoutsCount = inquiries.filter((row) => Array.isArray(row.cart_items) && row.cart_items.length > 0).length;
+
   const overdueCount = inquiries.filter((row) => needsResponse(row, now)).length;
   const leadsWithEmail = leads.filter((row) => row.email).length;
   const leadsWithoutEmail = leads.length - leadsWithEmail;
@@ -164,6 +174,14 @@ export default function AdminDashboard() {
             >
               Warm Leads
               {leads.length > 0 && <span className="admin-nav-count">{leads.length}</span>}
+            </button>
+            <button
+              type="button"
+              className={activeTab === "checkouts" ? "is-active" : ""}
+              onClick={() => setActiveTab("checkouts")}
+            >
+              Checkouts
+              {checkoutsCount > 0 && <span className="admin-nav-count">{checkoutsCount}</span>}
             </button>
             <button
               type="button"
@@ -265,6 +283,8 @@ export default function AdminDashboard() {
               })}
             </ul>
           )
+        ) : activeTab === "checkouts" ? (
+          <CheckoutsPanel inquiries={inquiries} updateStatus={updateStatus} updatePaymentStatus={updatePaymentStatus} />
         ) : activeTab === "calendar" ? (
           <BookingCalendar inquiries={inquiries} />
         ) : activeTab === "inventory" ? (

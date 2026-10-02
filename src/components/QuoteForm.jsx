@@ -1,11 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { CheckCircle2, Send } from "lucide-react";
 import { rentals } from "../data/rentals";
 import { packages } from "../data/packages";
 import { EVENT_TYPES } from "../data/eventTypes";
 import { submitQuoteRequest } from "../lib/submitQuote";
 import { todayISODate } from "../lib/dateUtils";
-import { useCart } from "../context/CartContext";
 import "./QuoteForm.css";
 
 const RENTAL_OPTIONS = [
@@ -47,30 +46,15 @@ function validate(values) {
 }
 
 export default function QuoteForm({ prefillInterest }) {
-  const { pendingRequest, clearPendingRequest } = useCart();
   const [values, setValues] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle"); // idle | submitting | success
   const [lastPrefill, setLastPrefill] = useState(prefillInterest);
-  const cartItemsRef = useRef(null);
 
   if (prefillInterest && prefillInterest !== lastPrefill) {
     setLastPrefill(prefillInterest);
     setValues((v) => ({ ...v, rentalNeeded: prefillInterest }));
   }
-
-  useEffect(() => {
-    if (!pendingRequest) return;
-    setValues((v) => ({
-      ...v,
-      rentalNeeded: pendingRequest.interest,
-      details: pendingRequest.details,
-      ...(pendingRequest.eventDate ? { eventDate: pendingRequest.eventDate } : {}),
-    }));
-    cartItemsRef.current = pendingRequest.cartItems || null;
-    clearPendingRequest();
-    document.getElementById("quote")?.scrollIntoView({ behavior: "smooth" });
-  }, [pendingRequest, clearPendingRequest]);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -86,8 +70,7 @@ export default function QuoteForm({ prefillInterest }) {
 
     setStatus("submitting");
     try {
-      await submitQuoteRequest(values, cartItemsRef.current);
-      cartItemsRef.current = null;
+      await submitQuoteRequest(values);
       setStatus("success");
       setValues(EMPTY_FORM);
     } catch {

@@ -70,6 +70,14 @@ create policy "Authenticated users can update inquiries"
 -- plain "Request a Quote" links) leave this null.
 alter table public.inquiries add column if not exists cart_items jsonb;
 
+-- Manual payment tracking for cart checkouts (see AdminDashboard's
+-- "Checkouts" tab) — there's no online payment processor yet, so staff set
+-- this by hand once they've collected a deposit or full payment outside the
+-- site (Venmo, cash, card reader, etc). Defaults to 'unpaid' for every row,
+-- including non-checkout inquiries, where it's simply unused/ignored.
+alter table public.inquiries add column if not exists payment_status text
+  not null default 'unpaid' check (payment_status in ('unpaid', 'deposit_paid', 'paid_in_full'));
+
 -- ============================================================
 -- Phase E: per-item owned quantity, for the admin availability calendar
 -- ============================================================
