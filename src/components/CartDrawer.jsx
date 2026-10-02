@@ -15,10 +15,12 @@ export default function CartDrawer() {
   const [endTime, setEndTime] = useState("");
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const meetsMinimum = subtotal > DELIVERY_MINIMUM;
+  const hasDuration = Boolean(startDate && endDate);
+  const canCheckout = meetsMinimum && hasDuration;
 
   function handleStartDateChange(value) {
     setStartDate(value);
-    if (endDate && value > endDate) setEndDate(value);
+    if (!endDate || value > endDate) setEndDate(value);
   }
 
   function handleCheckoutSuccess() {
@@ -147,7 +149,7 @@ export default function CartDrawer() {
               <button
                 type="button"
                 className="btn btn-primary btn-block"
-                disabled={!meetsMinimum}
+                disabled={!canCheckout}
                 onClick={() => setIsCheckoutOpen(true)}
               >
                 Checkout
@@ -157,6 +159,9 @@ export default function CartDrawer() {
                   Add {formatMoney(DELIVERY_MINIMUM - subtotal)} more to unlock checkout (${DELIVERY_MINIMUM}{" "}
                   minimum).
                 </p>
+              )}
+              {meetsMinimum && !hasDuration && (
+                <p className="cart-drawer-minimum-note">Pick your rental start and end date to checkout.</p>
               )}
               <button type="button" className="cart-drawer-clear" onClick={clearCart}>
                 Clear Cart
