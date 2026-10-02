@@ -74,6 +74,14 @@
   margin: 0 0 10px;
 }
 
+.checkout-dialog-fulfillment {
+  font-weight: 700;
+  color: var(--color-ocean-700);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-size: 0.72rem;
+}
+
 .checkout-dialog-total {
   display: flex;
   align-items: center;

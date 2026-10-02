@@ -14,7 +14,9 @@ export default function CartDrawer() {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-  const meetsMinimum = subtotal > DELIVERY_MINIMUM;
+  const [fulfillment, setFulfillment] = useState("delivery");
+  const needsMinimum = fulfillment === "delivery";
+  const meetsMinimum = !needsMinimum || subtotal > DELIVERY_MINIMUM;
   const hasDuration = Boolean(startDate && endDate);
   const canCheckout = meetsMinimum && hasDuration;
 
@@ -108,6 +110,27 @@ export default function CartDrawer() {
             </ul>
 
             <div className="cart-drawer-footer">
+              <div className="cart-drawer-fulfillment" role="radiogroup" aria-label="Pickup or delivery">
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={fulfillment === "pickup"}
+                  className={fulfillment === "pickup" ? "is-active" : ""}
+                  onClick={() => setFulfillment("pickup")}
+                >
+                  Pickup
+                </button>
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={fulfillment === "delivery"}
+                  className={fulfillment === "delivery" ? "is-active" : ""}
+                  onClick={() => setFulfillment("delivery")}
+                >
+                  Delivery
+                </button>
+              </div>
+
               <div className="cart-drawer-datetime">
                 <div className="cart-drawer-time-row">
                   <label className="cart-drawer-field">
@@ -156,8 +179,8 @@ export default function CartDrawer() {
               </button>
               {!meetsMinimum && (
                 <p className="cart-drawer-minimum-note">
-                  Add {formatMoney(DELIVERY_MINIMUM - subtotal)} more to unlock checkout (${DELIVERY_MINIMUM}{" "}
-                  minimum).
+                  Add {formatMoney(DELIVERY_MINIMUM - subtotal)} more to unlock delivery checkout (${DELIVERY_MINIMUM}{" "}
+                  minimum), or switch to pickup — no minimum.
                 </p>
               )}
               {meetsMinimum && !hasDuration && (
@@ -175,6 +198,7 @@ export default function CartDrawer() {
         <CheckoutDialog
           items={items}
           subtotal={subtotal}
+          fulfillment={fulfillment}
           startDate={startDate}
           endDate={endDate}
           startTime={startTime}

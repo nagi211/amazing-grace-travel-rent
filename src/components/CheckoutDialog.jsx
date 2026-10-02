@@ -12,7 +12,18 @@ const PHONE_PATTERN = /^[0-9()+\-.\s]{7,20}$/;
 // Confirms a cart checkout inline (no payment collected here — see
 // AdminDashboard's "Checkouts" tab, where payment_status is set by hand
 // once a deposit or payment is collected manually).
-export default function CheckoutDialog({ items, subtotal, startDate, endDate, startTime, endTime, onClose, onSuccess }) {
+export default function CheckoutDialog({
+  items,
+  subtotal,
+  fulfillment,
+  startDate,
+  endDate,
+  startTime,
+  endTime,
+  onClose,
+  onSuccess,
+}) {
+  const fulfillmentLabel = fulfillment === "pickup" ? "Pickup" : "Delivery";
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -48,6 +59,8 @@ export default function CheckoutDialog({ items, subtotal, startDate, endDate, st
           : null;
     const timeLine = start && end ? `Rental time: ${start} – ${end}` : null;
     const details = [
+      `Fulfillment: ${fulfillmentLabel}`,
+      "",
       "Cart checkout:",
       ...lines,
       "",
@@ -65,7 +78,7 @@ export default function CheckoutDialog({ items, subtotal, startDate, endDate, st
           eventDate: startDate || "",
           eventType: "",
           guestCount: "",
-          rentalNeeded: "Multiple Items (Cart Checkout)",
+          rentalNeeded: `Multiple Items (Cart Checkout — ${fulfillmentLabel})`,
           eventLocation,
           details,
         },
@@ -120,6 +133,7 @@ export default function CheckoutDialog({ items, subtotal, startDate, endDate, st
                   </li>
                 ))}
               </ul>
+              <p className="checkout-dialog-meta checkout-dialog-fulfillment">{fulfillmentLabel}</p>
               {startDate && (
                 <p className="checkout-dialog-meta">
                   {endDate && endDate !== startDate ? `${startDate} – ${endDate}` : startDate}
