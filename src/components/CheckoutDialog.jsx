@@ -12,7 +12,7 @@ const PHONE_PATTERN = /^[0-9()+\-.\s]{7,20}$/;
 // Confirms a cart checkout inline (no payment collected here — see
 // AdminDashboard's "Checkouts" tab, where payment_status is set by hand
 // once a deposit or payment is collected manually).
-export default function CheckoutDialog({ items, subtotal, eventDate, startTime, endTime, onClose, onSuccess }) {
+export default function CheckoutDialog({ items, subtotal, startDate, endDate, startTime, endTime, onClose, onSuccess }) {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -40,13 +40,20 @@ export default function CheckoutDialog({ items, subtotal, eventDate, startTime, 
     const lines = items.map((i) => `- ${i.name} x${i.qty} — ${formatMoney(i.amount * i.qty)}`);
     const start = formatTime12h(startTime);
     const end = formatTime12h(endTime);
+    const dateLine =
+      startDate && endDate && endDate !== startDate
+        ? `Rental dates: ${startDate} – ${endDate}`
+        : startDate
+          ? `Rental date: ${startDate}`
+          : null;
     const timeLine = start && end ? `Rental time: ${start} – ${end}` : null;
     const details = [
       "Cart checkout:",
       ...lines,
       "",
       `Estimated total: ${formatMoney(subtotal)} (${pricingDisclaimer.toLowerCase()})`,
-      ...(timeLine ? ["", timeLine] : []),
+      ...(dateLine ? ["", dateLine] : []),
+      ...(timeLine ? [timeLine] : []),
     ].join("\n");
 
     try {
@@ -55,7 +62,7 @@ export default function CheckoutDialog({ items, subtotal, eventDate, startTime, 
           fullName,
           email,
           phone,
-          eventDate: eventDate || "",
+          eventDate: startDate || "",
           eventType: "",
           guestCount: "",
           rentalNeeded: "Multiple Items (Cart Checkout)",
@@ -113,9 +120,9 @@ export default function CheckoutDialog({ items, subtotal, eventDate, startTime, 
                   </li>
                 ))}
               </ul>
-              {eventDate && (
+              {startDate && (
                 <p className="checkout-dialog-meta">
-                  {eventDate}
+                  {endDate && endDate !== startDate ? `${startDate} – ${endDate}` : startDate}
                   {startTime && endTime ? ` · ${formatTime12h(startTime)} – ${formatTime12h(endTime)}` : ""}
                 </p>
               )}

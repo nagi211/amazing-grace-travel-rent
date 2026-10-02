@@ -9,11 +9,17 @@ import "./CartDrawer.css";
 
 export default function CartDrawer() {
   const { items, itemCount, subtotal, isOpen, closeCart, updateQty, removeItem, clearCart } = useCart();
-  const [rentalDate, setRentalDate] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const meetsMinimum = subtotal > DELIVERY_MINIMUM;
+
+  function handleStartDateChange(value) {
+    setStartDate(value);
+    if (endDate && value > endDate) setEndDate(value);
+  }
 
   function handleCheckoutSuccess() {
     setIsCheckoutOpen(false);
@@ -101,15 +107,26 @@ export default function CartDrawer() {
 
             <div className="cart-drawer-footer">
               <div className="cart-drawer-datetime">
-                <label className="cart-drawer-field">
-                  Event Date
-                  <input
-                    type="date"
-                    min={todayISODate()}
-                    value={rentalDate}
-                    onChange={(e) => setRentalDate(e.target.value)}
-                  />
-                </label>
+                <div className="cart-drawer-time-row">
+                  <label className="cart-drawer-field">
+                    Start Date
+                    <input
+                      type="date"
+                      min={todayISODate()}
+                      value={startDate}
+                      onChange={(e) => handleStartDateChange(e.target.value)}
+                    />
+                  </label>
+                  <label className="cart-drawer-field">
+                    End Date
+                    <input
+                      type="date"
+                      min={startDate || todayISODate()}
+                      value={endDate}
+                      onChange={(e) => setEndDate(e.target.value)}
+                    />
+                  </label>
+                </div>
                 <div className="cart-drawer-time-row">
                   <label className="cart-drawer-field">
                     Start Time
@@ -153,7 +170,8 @@ export default function CartDrawer() {
         <CheckoutDialog
           items={items}
           subtotal={subtotal}
-          eventDate={rentalDate}
+          startDate={startDate}
+          endDate={endDate}
           startTime={startTime}
           endTime={endTime}
           onClose={() => setIsCheckoutOpen(false)}
