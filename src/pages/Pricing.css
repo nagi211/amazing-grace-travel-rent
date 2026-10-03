@@ -194,6 +194,7 @@
 
 .pricing-item-card-size select {
   flex: 1;
+  min-width: 0;
   padding: 8px 10px;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);

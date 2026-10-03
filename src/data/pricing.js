@@ -108,6 +108,7 @@ export const pricingGroups = [
           "/items/linens/tablecloth_blue.jpg",
           "/items/linens/tablecloth_ivory.jpg",
         ],
+        cover: true,
         variants: [
           {
             key: "size",
