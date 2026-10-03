@@ -461,6 +461,74 @@
   white-space: nowrap;
 }
 
+.pricing-lightbox-variants {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.pricing-lightbox-variants label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.pricing-lightbox-variants select {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  color: var(--color-ink);
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: inherit;
+}
+
+.pricing-lightbox-qty {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.pricing-lightbox-qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  padding: 4px 8px;
+}
+
+.pricing-lightbox-qty-controls button {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.pricing-lightbox-qty-controls span {
+  min-width: 20px;
+  text-align: center;
+  font-weight: 700;
+  color: #fff;
+}
+
 .pricing-lightbox-add {
   width: 100%;
   margin-top: 14px;

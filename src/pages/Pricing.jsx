@@ -14,6 +14,7 @@ import {
   Settings,
   Wrench,
   Plus,
+  Minus,
   Check,
   X,
   LayoutGrid,
@@ -72,6 +73,7 @@ export default function Pricing() {
   const [activeCategory, setActiveCategory] = useState(pricingGroups[0].id);
   const [justAdded, setJustAdded] = useState(null);
   const [previewItem, setPreviewItem] = useState(null);
+  const [previewQty, setPreviewQty] = useState(1);
   const [selectedVariants, setSelectedVariants] = useState({});
   const [galleryIndex, setGalleryIndex] = useState({});
 
@@ -100,14 +102,19 @@ export default function Pricing() {
     return item.variants.map((v) => getVariantValue(item, v)).join(" / ");
   }
 
-  function handleAdd(item) {
+  function handleAdd(item, qty = 1) {
     const suffix = variantCartSuffix(item);
     const cartItem = suffix
       ? { ...item, id: `${item.id}-${suffix}`, name: `${item.name} (${suffix})` }
       : item;
-    addItem(cartItem);
+    addItem(cartItem, qty);
     setJustAdded(cartItem.id);
     setTimeout(() => setJustAdded((current) => (current === cartItem.id ? null : current)), 1200);
+  }
+
+  function openPreview(item) {
+    setPreviewQty(1);
+    setPreviewItem(item);
   }
 
   useEffect(() => {
@@ -219,7 +226,7 @@ export default function Pricing() {
                     type="button"
                     className="pricing-item-media"
                     aria-label={hasImage ? `View larger image of ${item.name}` : item.name}
-                    onClick={() => hasImage && setPreviewItem(item)}
+                    onClick={() => hasImage && openPreview(item)}
                     disabled={!hasImage}
                   >
                     <PlaceholderImage
@@ -405,18 +412,61 @@ export default function Pricing() {
               <span>{previewItem.name}</span>
               <span className="pricing-lightbox-price">{previewItem.price}</span>
             </div>
+
+            {previewItem.variants && (
+              <div className="pricing-lightbox-variants">
+                {previewItem.variants.map((variant) => (
+                  <label key={variant.key}>
+                    {variant.label}
+                    <select
+                      value={getVariantValue(previewItem, variant)}
+                      onChange={(e) =>
+                        setSelectedVariants((current) => ({
+                          ...current,
+                          [previewItem.id]: { ...current[previewItem.id], [variant.key]: e.target.value },
+                        }))
+                      }
+                    >
+                      {variant.options.map((opt) => (
+                        <option key={opt} value={opt}>
+                          {opt}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                ))}
+              </div>
+            )}
+
+            <div className="pricing-lightbox-qty">
+              <span>Quantity</span>
+              <div className="pricing-lightbox-qty-controls">
+                <button
+                  type="button"
+                  aria-label="Decrease quantity"
+                  onClick={() => setPreviewQty((q) => Math.max(1, q - 1))}
+                >
+                  <Minus size={14} />
+                </button>
+                <span>{previewQty}</span>
+                <button type="button" aria-label="Increase quantity" onClick={() => setPreviewQty((q) => q + 1)}>
+                  <Plus size={14} />
+                </button>
+              </div>
+            </div>
+
             <button
               type="button"
               className="btn btn-primary pricing-lightbox-add"
-              onClick={() => handleAdd(previewItem)}
+              onClick={() => handleAdd(previewItem, previewQty)}
             >
-              {justAdded === previewItem.id ? (
+              {justAdded === `${previewItem.id}${variantCartSuffix(previewItem) ? `-${variantCartSuffix(previewItem)}` : ""}` ? (
                 <>
                   <Check size={16} /> Added to Cart
                 </>
               ) : (
                 <>
-                  <Plus size={16} /> Add to Cart
+                  <Plus size={16} /> Add {previewQty > 1 ? `${previewQty} ` : ""}to Cart
                 </>
               )}
             </button>
