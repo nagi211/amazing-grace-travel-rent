@@ -72,7 +72,7 @@ export default function Pricing() {
   const [activeCategory, setActiveCategory] = useState(pricingGroups[0].id);
   const [justAdded, setJustAdded] = useState(null);
   const [previewItem, setPreviewItem] = useState(null);
-  const [selectedSizes, setSelectedSizes] = useState({});
+  const [selectedVariants, setSelectedVariants] = useState({});
   const [galleryIndex, setGalleryIndex] = useState({});
 
   const activeGroup = pricingGroups.find((g) => g.id === activeCategory);
@@ -91,10 +91,19 @@ export default function Pricing() {
     });
   }
 
+  function getVariantValue(item, variant) {
+    return selectedVariants[item.id]?.[variant.key] || variant.options[0];
+  }
+
+  function variantCartSuffix(item) {
+    if (!item.variants) return null;
+    return item.variants.map((v) => getVariantValue(item, v)).join(" / ");
+  }
+
   function handleAdd(item) {
-    const size = item.sizes ? selectedSizes[item.id] || item.sizes[0] : null;
-    const cartItem = size
-      ? { ...item, id: `${item.id}-${size}`, name: `${item.name} (${size})` }
+    const suffix = variantCartSuffix(item);
+    const cartItem = suffix
+      ? { ...item, id: `${item.id}-${suffix}`, name: `${item.name} (${suffix})` }
       : item;
     addItem(cartItem);
     setJustAdded(cartItem.id);
@@ -268,23 +277,26 @@ export default function Pricing() {
                 <div className="pricing-item-card-body">
                   <h3>{item.name}</h3>
                   {item.note && <p className="pricing-item-card-note">{item.note}</p>}
-                  {item.sizes && (
-                    <label className="pricing-item-card-size">
-                      Size
+                  {item.variants?.map((variant) => (
+                    <label className="pricing-item-card-size" key={variant.key}>
+                      {variant.label}
                       <select
-                        value={selectedSizes[item.id] || item.sizes[0]}
+                        value={getVariantValue(item, variant)}
                         onChange={(e) =>
-                          setSelectedSizes((current) => ({ ...current, [item.id]: e.target.value }))
+                          setSelectedVariants((current) => ({
+                            ...current,
+                            [item.id]: { ...current[item.id], [variant.key]: e.target.value },
+                          }))
                         }
                       >
-                        {item.sizes.map((size) => (
-                          <option key={size} value={size}>
-                            {size}
+                        {variant.options.map((opt) => (
+                          <option key={opt} value={opt}>
+                            {opt}
                           </option>
                         ))}
                       </select>
                     </label>
-                  )}
+                  ))}
                   <div className="pricing-item-card-footer">
                     <span className="pricing-item-card-price">{item.price}</span>
                     <button
@@ -292,7 +304,7 @@ export default function Pricing() {
                       className="btn btn-outline pricing-item-card-add"
                       onClick={() => handleAdd(item)}
                     >
-                      {justAdded === `${item.id}${item.sizes ? `-${selectedSizes[item.id] || item.sizes[0]}` : ""}` ? (
+                      {justAdded === `${item.id}${variantCartSuffix(item) ? `-${variantCartSuffix(item)}` : ""}` ? (
                         <>
                           <Check size={16} /> Added
                         </>

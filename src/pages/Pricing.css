@@ -185,6 +185,10 @@
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--color-ink-light);
+  margin-bottom: 10px;
+}
+
+.pricing-item-card-size:last-of-type {
   margin-bottom: 12px;
 }
 
