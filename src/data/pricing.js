@@ -144,11 +144,23 @@ export const pricingGroups = [
     items: [
       { id: "plate-dinner", name: "Round White Dinner Plate", price: "$1.15 each", amount: 1.15, unit: "each", image: "/items/chinaware/plate_dinner.png" },
       { id: "plate-salad", name: "Round White Salad Plate", price: "$1.15 each", amount: 1.15, unit: "each", image: "/items/chinaware/plate_salad.png" },
-      { id: "charger-gold", name: "Charger Plate – Gold", price: "$3.75 each", amount: 3.75, unit: "each", image: "/items/chinaware/charger_gold.jpg" },
-      { id: "charger-rattan", name: "Charger Plate – Rattan", price: "$4.50 each", amount: 4.5, unit: "each", image: "/items/chinaware/charger_rattan.jpg" },
-      { id: "charger-gold-rim", name: "Charger Plate – Clear with Gold Rim", price: "$3.75 each", amount: 3.75, unit: "each", image: "/items/chinaware/charger_gold_rim.jpg" },
-      { id: "charger-white", name: "Charger Plate – White", note: "Price to be confirmed", price: "Price TBD", amount: 0, unit: "each", image: "/items/chinaware/charger_white.jpg" },
-      { id: "charger-transparent", name: "Charger Plate – Transparent", note: "Price to be confirmed", price: "Price TBD", amount: 0, unit: "each", image: "/items/chinaware/charger_transparent.jpg" },
+      {
+        id: "charger-plate",
+        name: "Charger Plate",
+        price: "$5 each",
+        amount: 5,
+        unit: "each",
+        images: [
+          "/items/chinaware/charger_gold.jpg",
+          "/items/chinaware/charger_rattan.jpg",
+          "/items/chinaware/charger_gold_rim.jpg",
+          "/items/chinaware/charger_white.jpg",
+          "/items/chinaware/charger_transparent.jpg",
+        ],
+        variants: [
+          { key: "color", label: "Color", options: ["Gold", "Rattan", "Clear with Gold Rim", "White", "Transparent"] },
+        ],
+      },
       { id: "flatware-gold", name: "Flatware Set – Gold", price: "$1.95 each", amount: 1.95, unit: "each", image: "/items/chinaware/flatware_gold.jpg" },
       { id: "flatware-silver", name: "Flatware Set – Silver", price: "$1.95 each", amount: 1.95, unit: "each", image: "/items/chinaware/flatware_silver.jpg" },
       { id: "wine-glass-glass", name: "Wine Glass – Glass", price: "$1.10 each", amount: 1.1, unit: "each", image: "/items/chinaware/wine_glass.jpg" },
