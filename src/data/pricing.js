@@ -181,8 +181,7 @@ export const pricingGroups = [
       },
       { id: "flatware-gold", name: "Flatware Set – Gold", price: "$1.95 each", amount: 1.95, unit: "each", image: "/items/chinaware/flatware_gold.jpg" },
       { id: "flatware-silver", name: "Flatware Set – Silver", price: "$1.95 each", amount: 1.95, unit: "each", image: "/items/chinaware/flatware_silver.jpg" },
-      { id: "wine-glass-glass", name: "Wine Glass – Glass", price: "$1.10 each", amount: 1.1, unit: "each", image: "/items/chinaware/wine_glass.jpg" },
-      { id: "wine-glass-plastic", name: "Wine Glass – Plastic", note: "Price to be confirmed", price: "Price TBD", amount: 0, unit: "each" },
+      { id: "wine-glass-glass", name: "Wine Glass", price: "$1.10 each", amount: 1.1, unit: "each", image: "/items/chinaware/wine_glass.jpg" },
     ],
   },
   {
