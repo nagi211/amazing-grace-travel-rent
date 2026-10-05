@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, Phone, MapPin, Calendar } from "lucide-react";
+import { Mail, Phone, MapPin, Calendar, Trash2 } from "lucide-react";
 
 const STATUSES = ["pending", "contacted", "confirmed", "closed"];
 const PAYMENT_STATUSES = [
@@ -26,7 +26,7 @@ function formatMoney(amount) {
 // $250 checkout minimum. There's no online payment yet, so payment_status
 // is set here by hand once a deposit or full payment is collected outside
 // the site.
-export default function CheckoutsPanel({ inquiries, updateStatus, updatePaymentStatus }) {
+export default function CheckoutsPanel({ inquiries, updateStatus, updatePaymentStatus, deleteInquiry }) {
   const [expandedId, setExpandedId] = useState(null);
   const checkouts = inquiries.filter((row) => Array.isArray(row.cart_items) && row.cart_items.length > 0);
 
@@ -125,6 +125,10 @@ export default function CheckoutsPanel({ inquiries, updateStatus, updatePaymentS
                     </button>
                   ))}
                 </div>
+
+                <button type="button" className="admin-delete-btn" onClick={() => deleteInquiry(row.id)}>
+                  <Trash2 size={14} /> Delete
+                </button>
               </div>
             )}
           </li>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { LogOut, Mail, Phone, MapPin, Calendar, Users, Wallet, AlertCircle } from "lucide-react";
+import { LogOut, Mail, Phone, MapPin, Calendar, Users, Wallet, AlertCircle, Trash2 } from "lucide-react";
 import { supabaseAdmin } from "../../lib/supabaseAdminClient";
 import { useAdminAuth } from "../../context/AdminAuthContext";
 import BookingCalendar from "../../components/admin/BookingCalendar";
@@ -133,6 +133,20 @@ export default function AdminDashboard() {
       current.map((row) => (row.id === id ? { ...row, payment_status: paymentStatus } : row))
     );
     await supabaseAdmin.from("inquiries").update({ payment_status: paymentStatus }).eq("id", id);
+  }
+
+  async function deleteInquiry(id) {
+    if (!window.confirm("Delete this inquiry? This can't be undone.")) return;
+    setInquiries((current) => current.filter((row) => row.id !== id));
+    setExpandedId((current) => (current === id ? null : current));
+    await supabaseAdmin.from("inquiries").delete().eq("id", id);
+  }
+
+  async function deleteLead(id) {
+    if (!window.confirm("Delete this warm lead? This can't be undone.")) return;
+    setLeads((current) => current.filter((row) => row.id !== id));
+    setExpandedId((current) => (current === id ? null : current));
+    await supabaseAdmin.from("estimate_sessions").delete().eq("id", id);
   }
 
   const checkoutsCount = inquiries.filter((row) => Array.isArray(row.cart_items) && row.cart_items.length > 0).length;
@@ -276,6 +290,9 @@ export default function AdminDashboard() {
                           </button>
                         ))}
                       </div>
+                      <button type="button" className="admin-delete-btn" onClick={() => deleteInquiry(row.id)}>
+                        <Trash2 size={14} /> Delete Inquiry
+                      </button>
                     </div>
                   )}
                 </li>
@@ -284,7 +301,12 @@ export default function AdminDashboard() {
             </ul>
           )
         ) : activeTab === "checkouts" ? (
-          <CheckoutsPanel inquiries={inquiries} updateStatus={updateStatus} updatePaymentStatus={updatePaymentStatus} />
+          <CheckoutsPanel
+            inquiries={inquiries}
+            updateStatus={updateStatus}
+            updatePaymentStatus={updatePaymentStatus}
+            deleteInquiry={deleteInquiry}
+          />
         ) : activeTab === "calendar" ? (
           <BookingCalendar inquiries={inquiries} />
         ) : activeTab === "inventory" ? (
@@ -381,6 +403,9 @@ export default function AdminDashboard() {
                         <Mail size={14} /> Email {row.email}
                       </a>
                     )}
+                    <button type="button" className="admin-delete-btn" onClick={() => deleteLead(row.id)}>
+                      <Trash2 size={14} /> Delete Lead
+                    </button>
                   </div>
                 )}
               </li>

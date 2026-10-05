@@ -63,6 +63,14 @@ create policy "Authenticated users can update inquiries"
   to authenticated
   using (true);
 
+-- Lets admin clean up test/duplicate submissions from the dashboard.
+grant delete on public.inquiries to authenticated;
+drop policy if exists "Authenticated users can delete inquiries" on public.inquiries;
+create policy "Authenticated users can delete inquiries"
+  on public.inquiries for delete
+  to authenticated
+  using (true);
+
 -- Structured cart line items (id/name/amount/unit/qty), captured going
 -- forward only for inquiries submitted via the cart (Pricing page or
 -- EstimateChat) so the admin dashboard's per-item availability calendar
@@ -148,6 +156,14 @@ create policy "Anyone can update an estimate session"
 drop policy if exists "Authenticated users can view estimate sessions" on public.estimate_sessions;
 create policy "Authenticated users can view estimate sessions"
   on public.estimate_sessions for select
+  to authenticated
+  using (true);
+
+-- Lets admin clean up test/abandoned sessions from the Warm Leads tab.
+grant delete on public.estimate_sessions to authenticated;
+drop policy if exists "Authenticated users can delete estimate sessions" on public.estimate_sessions;
+create policy "Authenticated users can delete estimate sessions"
+  on public.estimate_sessions for delete
   to authenticated
   using (true);
 
