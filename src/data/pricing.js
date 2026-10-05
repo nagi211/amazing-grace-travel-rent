@@ -258,7 +258,6 @@ export const pricingGroups = [
         image: "/items/decor-displays/white_pedestal.png",
         variants: [{ key: "size", label: "Size", options: ['34"', '24"', '22"'] }],
       },
-      { id: "pillar-white", name: "Pillar (White)", price: "$50 each", amount: 50, unit: "each" },
       { id: "arch-faux-flowers", name: "Arch Setup with Faux Flowers", price: "$350", amount: 350, unit: null },
       {
         id: "flower-wall",
