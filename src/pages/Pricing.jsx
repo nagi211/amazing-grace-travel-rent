@@ -19,6 +19,7 @@ import {
   X,
   LayoutGrid,
   UtensilsCrossed,
+  CookingPot,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
@@ -45,6 +46,7 @@ const ICONS = {
   Lightbulb,
   LayoutGrid,
   UtensilsCrossed,
+  CookingPot,
 };
 
 const TONE_BY_CATEGORY = {
@@ -54,6 +56,7 @@ const TONE_BY_CATEGORY = {
   flooring: "ocean",
   linens: "green",
   chinaware: "gold",
+  "catering-essentials": "coral",
   lighting: "gold",
   "decor-displays": "coral",
   "ceremony-services": "green",

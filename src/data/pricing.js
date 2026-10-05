@@ -95,6 +95,8 @@ export const pricingGroups = [
       { id: "sailcloth-tent-44x103", name: "Sailcloth Tent – 44' x 103'", price: "$5,850", amount: 5850, unit: null, image: "/items/tents/sailcloth_44x103.jpg", cover: true },
       { id: "sailcloth-tent-44x123", name: "Sailcloth Tent – 44' x 123'", price: "$6,850", amount: 6850, unit: null, image: "/items/tents/sailcloth_44x123.jpg", cover: true },
       { id: "welcome-bar-umbrella", name: "Welcome / Bar Umbrella", price: "$150", amount: 150, unit: null, image: "/items/decor-displays/umbrella.jpg", cover: true },
+      { id: "tent-siding", name: "Tent Siding", price: "$25 per side", amount: 25, unit: "side" },
+      { id: "water-barrels-sandbags", name: "Water Barrels / Sandbags", price: "$40", amount: 40, unit: null },
     ],
   },
   {
@@ -256,7 +258,31 @@ export const pricingGroups = [
         image: "/items/decor-displays/white_pedestal.png",
         variants: [{ key: "size", label: "Size", options: ['34"', '24"', '22"'] }],
       },
+      { id: "pillar-white", name: "Pillar (White)", price: "$50 each", amount: 50, unit: "each" },
+      { id: "arch-faux-flowers", name: "Arch Setup with Faux Flowers", price: "$350", amount: 350, unit: null },
+      {
+        id: "flower-wall",
+        name: "Flower Wall",
+        price: "$550",
+        amount: 550,
+        unit: null,
+        image: "/items/decor-displays/flower_wall.jpg",
+      },
+      { id: "full-floor-faux-florals", name: "Full Floor Faux Florals", price: "$550", amount: 550, unit: null },
+    ],
+  },
+  {
+    id: "catering-essentials",
+    icon: "CookingPot",
+    title: "Catering Essentials",
+    items: [
+      { id: "warmers-3pan", name: "Warmers (3-Pan)", price: "$30", amount: 30, unit: null },
+      { id: "warmers-sternos", name: "Warmers with Sternos", price: "$50", amount: 50, unit: null },
       { id: "cooler-120qt", name: "Cooler (120 qt)", price: "$30", amount: 30, unit: null },
+      { id: "cooler-100qt", name: "Cooler (100 qt)", price: "$30", amount: 30, unit: null },
+      { id: "cooler-50qt", name: "Cooler (50 qt)", price: "$10", amount: 10, unit: null },
+      { id: "water-jug-10gal", name: "Water Jug (10 gal)", price: "$15", amount: 15, unit: null },
+      { id: "water-jug-30gal", name: "Water Jug (30 gal)", price: "$25", amount: 25, unit: null },
     ],
   },
   {
@@ -270,6 +296,7 @@ export const pricingGroups = [
     icon: "Music",
     title: "Entertainment",
     items: [
+      { id: "dj-sound-system", name: "DJ with Sound System", price: "$750", amount: 750, unit: null },
       {
         id: "dj-emcee-package",
         name: "DJ & Emcee Package",
