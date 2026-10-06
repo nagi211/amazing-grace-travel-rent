@@ -5,6 +5,7 @@ import { packages } from "../data/packages";
 import { EVENT_TYPES } from "../data/eventTypes";
 import { submitQuoteRequest } from "../lib/submitQuote";
 import { todayISODate } from "../lib/dateUtils";
+import { peekSessionId, upsertEstimateSession } from "../lib/estimateSessions";
 import "./QuoteForm.css";
 
 const RENTAL_OPTIONS = [
@@ -71,6 +72,8 @@ export default function QuoteForm({ prefillInterest }) {
     setStatus("submitting");
     try {
       await submitQuoteRequest(values);
+      const sessionId = peekSessionId();
+      if (sessionId) upsertEstimateSession(sessionId, { status: "submitted" });
       setStatus("success");
       setValues(EMPTY_FORM);
     } catch {

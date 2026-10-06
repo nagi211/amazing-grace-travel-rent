@@ -22,6 +22,19 @@ export function getSessionId() {
   }
 }
 
+// Like getSessionId, but never creates one — used right before a real quote
+// submission to check "did this visitor ever touch the chat widget?"
+// without spawning a phantom estimate_sessions row for people who went
+// straight to the quote form.
+export function peekSessionId() {
+  if (typeof window === "undefined") return null;
+  try {
+    return window.localStorage.getItem(SESSION_ID_KEY);
+  } catch {
+    return null;
+  }
+}
+
 export async function upsertEstimateSession(sessionId, fields) {
   if (!supabase || !sessionId) return;
 

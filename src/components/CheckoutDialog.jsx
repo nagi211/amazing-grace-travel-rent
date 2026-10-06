@@ -4,6 +4,7 @@ import { formatMoney } from "../context/CartContext";
 import { formatTime12h } from "../lib/dateUtils";
 import { pricingDisclaimer } from "../data/pricing";
 import { submitQuoteRequest } from "../lib/submitQuote";
+import { peekSessionId, upsertEstimateSession } from "../lib/estimateSessions";
 import "./CheckoutDialog.css";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -84,6 +85,8 @@ export default function CheckoutDialog({
         },
         items
       );
+      const sessionId = peekSessionId();
+      if (sessionId) upsertEstimateSession(sessionId, { status: "submitted" });
       setStatus("success");
     } catch {
       setStatus("idle");
