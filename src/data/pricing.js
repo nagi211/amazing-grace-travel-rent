@@ -266,6 +266,7 @@ export const pricingGroups = [
         amount: 550,
         unit: null,
         image: "/items/decor-displays/flower_wall.jpg",
+        cover: true,
       },
       { id: "full-floor-faux-florals", name: "Full Floor Faux Florals", price: "$550", amount: 550, unit: null },
     ],
