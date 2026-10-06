@@ -32,7 +32,7 @@ function formatMoney(amount) {
 
 export default function AdminDashboard() {
   const { signOut } = useAdminAuth();
-  const [activeTab, setActiveTab] = useState("inquiries");
+  const [activeTab, setActiveTab] = useState("checkouts");
   const [inquiries, setInquiries] = useState([]);
   const [leads, setLeads] = useState([]);
   const [inventory, setInventory] = useState([]);
@@ -143,15 +143,17 @@ export default function AdminDashboard() {
   }
 
   async function deleteLead(id) {
-    if (!window.confirm("Delete this warm lead? This can't be undone.")) return;
+    if (!window.confirm("Delete this chat lead? This can't be undone.")) return;
     setLeads((current) => current.filter((row) => row.id !== id));
     setExpandedId((current) => (current === id ? null : current));
     await supabaseAdmin.from("estimate_sessions").delete().eq("id", id);
   }
 
-  const checkoutsCount = inquiries.filter((row) => Array.isArray(row.cart_items) && row.cart_items.length > 0).length;
+  const checkouts = inquiries.filter((row) => Array.isArray(row.cart_items) && row.cart_items.length > 0);
+  const quoteRequests = inquiries.filter((row) => !(Array.isArray(row.cart_items) && row.cart_items.length > 0));
 
-  const overdueCount = inquiries.filter((row) => needsResponse(row, now)).length;
+  const checkoutsOverdueCount = checkouts.filter((row) => needsResponse(row, now)).length;
+  const overdueCount = quoteRequests.filter((row) => needsResponse(row, now)).length;
   const leadsWithEmail = leads.filter((row) => row.email).length;
   const leadsWithoutEmail = leads.length - leadsWithEmail;
   const filteredLeads = leads.filter((row) => {
@@ -171,14 +173,26 @@ export default function AdminDashboard() {
           <nav className="admin-nav">
             <button
               type="button"
+              className={activeTab === "checkouts" ? "is-active" : ""}
+              onClick={() => setActiveTab("checkouts")}
+            >
+              Checkouts
+              {checkoutsOverdueCount > 0 ? (
+                <span className="admin-nav-count is-overdue">{checkoutsOverdueCount}</span>
+              ) : (
+                checkouts.length > 0 && <span className="admin-nav-count">{checkouts.length}</span>
+              )}
+            </button>
+            <button
+              type="button"
               className={activeTab === "inquiries" ? "is-active" : ""}
               onClick={() => setActiveTab("inquiries")}
             >
-              Inquiries
+              Quote Requests
               {overdueCount > 0 ? (
                 <span className="admin-nav-count is-overdue">{overdueCount}</span>
               ) : (
-                inquiries.length > 0 && <span className="admin-nav-count">{inquiries.length}</span>
+                quoteRequests.length > 0 && <span className="admin-nav-count">{quoteRequests.length}</span>
               )}
             </button>
             <button
@@ -186,16 +200,8 @@ export default function AdminDashboard() {
               className={activeTab === "leads" ? "is-active" : ""}
               onClick={() => setActiveTab("leads")}
             >
-              Warm Leads
+              Chat Leads
               {leads.length > 0 && <span className="admin-nav-count">{leads.length}</span>}
-            </button>
-            <button
-              type="button"
-              className={activeTab === "checkouts" ? "is-active" : ""}
-              onClick={() => setActiveTab("checkouts")}
-            >
-              Checkouts
-              {checkoutsCount > 0 && <span className="admin-nav-count">{checkoutsCount}</span>}
             </button>
             <button
               type="button"
@@ -221,11 +227,14 @@ export default function AdminDashboard() {
         {loading ? (
           <p className="admin-empty">Loading...</p>
         ) : activeTab === "inquiries" ? (
-          inquiries.length === 0 ? (
-            <p className="admin-empty">No inquiries yet.</p>
+          quoteRequests.length === 0 ? (
+            <p className="admin-empty">
+              No quote requests yet — these are direct "Request a Quote" form submissions, separate from
+              cart checkouts.
+            </p>
           ) : (
             <ul className="admin-list">
-              {inquiries.map((row) => {
+              {quoteRequests.map((row) => {
                 const overdue = needsResponse(row, now);
                 return (
                 <li key={row.id} className={`admin-card ${overdue ? "is-overdue" : ""}`}>
@@ -313,8 +322,8 @@ export default function AdminDashboard() {
           <InventoryPanel inventory={inventory} inquiries={inquiries} onInventoryUpdate={setInventory} />
         ) : leads.length === 0 ? (
           <p className="admin-empty">
-            No warm leads yet — this fills up as people build an estimate in the chat without submitting
-            the full quote form.
+            No chat leads yet — this fills up when someone builds an estimate in the chat widget without
+            submitting the full quote form.
           </p>
         ) : (
           <>
@@ -343,7 +352,7 @@ export default function AdminDashboard() {
             </div>
 
             {filteredLeads.length === 0 ? (
-              <p className="admin-empty">No warm leads match this filter.</p>
+              <p className="admin-empty">No chat leads match this filter.</p>
             ) : (
               <ul className="admin-list">
                 {filteredLeads.map((row) => (
