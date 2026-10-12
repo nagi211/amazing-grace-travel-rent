@@ -22,5 +22,23 @@ export async function submitQuoteRequest(values, cartItems = null) {
   });
 
   if (error) throw error;
+
+  // Best-effort confirmation email — never let this fail the booking itself
+  // (the Supabase insert above already succeeded). Covers both callers of
+  // this function: the standalone QuoteForm and the cart's CheckoutDialog.
+  try {
+    await fetch("/api/send-confirmation", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        fullName: values.fullName,
+        email: values.email,
+        summary: values.details || values.rentalNeeded || null,
+      }),
+    });
+  } catch (err) {
+    console.warn("send-confirmation request failed:", err);
+  }
+
   return { ok: true, values };
 }
