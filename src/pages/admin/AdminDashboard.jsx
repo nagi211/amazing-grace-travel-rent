@@ -5,6 +5,7 @@ import { useAdminAuth } from "../../context/AdminAuthContext";
 import BookingCalendar from "../../components/admin/BookingCalendar";
 import InventoryPanel from "../../components/admin/InventoryPanel";
 import CheckoutsPanel from "../../components/admin/CheckoutsPanel";
+import NotificationToggle from "../../components/admin/NotificationToggle";
 import "./Admin.css";
 
 const STATUSES = ["pending", "contacted", "confirmed", "closed"];
@@ -218,6 +219,7 @@ export default function AdminDashboard() {
               Inventory
             </button>
           </nav>
+          <NotificationToggle />
           <button type="button" className="admin-signout" onClick={signOut}>
             <LogOut size={16} /> Sign Out
           </button>

@@ -40,5 +40,22 @@ export async function submitQuoteRequest(values, cartItems = null) {
     console.warn("send-confirmation request failed:", err);
   }
 
+  // Best-effort admin push notification — same fire-and-forget posture as
+  // the confirmation email above.
+  try {
+    const isCheckout = Array.isArray(cartItems) && cartItems.length > 0;
+    await fetch("/api/notify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: isCheckout ? "New Checkout" : "New Quote Request",
+        body: `${values.fullName} — ${values.rentalNeeded || values.eventType || ""}`.trim(),
+        url: "/admin",
+      }),
+    });
+  } catch (err) {
+    console.warn("notify request failed:", err);
+  }
+
   return { ok: true, values };
 }
