@@ -66,5 +66,13 @@ export default function InstallAppButton() {
     );
   }
 
-  return null;
+  // Chrome/Edge/Android only fire beforeinstallprompt once their own
+  // engagement heuristics are satisfied (not guaranteed on a first visit,
+  // and suppressed for a while after a prior dismissal) — show a manual
+  // fallback instead of rendering nothing while we wait for it.
+  return (
+    <p className="admin-notify-note">
+      <Download size={14} /> Use your browser's menu → "Install app" or "Add to Home Screen" to install.
+    </p>
+  );
 }
