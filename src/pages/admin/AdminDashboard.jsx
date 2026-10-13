@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { LogOut, Mail, Phone, MapPin, Calendar, Users, Wallet, AlertCircle, Trash2 } from "lucide-react";
+import { LogOut, Mail, Phone, MapPin, Calendar, Users, Wallet, AlertCircle, Trash2, Menu, X } from "lucide-react";
 import { supabaseAdmin } from "../../lib/supabaseAdminClient";
 import { useAdminAuth } from "../../context/AdminAuthContext";
 import BookingCalendar from "../../components/admin/BookingCalendar";
@@ -34,6 +34,7 @@ function formatMoney(amount) {
 export default function AdminDashboard() {
   const { signOut } = useAdminAuth();
   const [activeTab, setActiveTab] = useState("checkouts");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [inquiries, setInquiries] = useState([]);
   const [leads, setLeads] = useState([]);
   const [inventory, setInventory] = useState([]);
@@ -163,10 +164,34 @@ export default function AdminDashboard() {
     return true;
   });
 
+  const totalOverdueCount = checkoutsOverdueCount + overdueCount;
+
+  function selectTab(tab) {
+    setActiveTab(tab);
+    setMobileMenuOpen(false);
+  }
+
   return (
     <div className="admin-page">
+      <div className="admin-mobile-topbar">
+        <button
+          type="button"
+          className="admin-mobile-menu-btn"
+          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          onClick={() => setMobileMenuOpen((v) => !v)}
+        >
+          {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          {!mobileMenuOpen && totalOverdueCount > 0 && <span className="admin-mobile-menu-dot" />}
+        </button>
+        <span className="admin-mobile-topbar-title">Amazing Grace Admin</span>
+      </div>
+
+      {mobileMenuOpen && (
+        <div className="admin-sidebar-overlay" onClick={() => setMobileMenuOpen(false)} />
+      )}
+
       <div className="admin-shell">
-        <aside className="admin-sidebar">
+        <aside className={`admin-sidebar ${mobileMenuOpen ? "is-open" : ""}`}>
           <div className="admin-sidebar-brand">
             <h1>Amazing Grace</h1>
             <p>Admin Dashboard</p>
@@ -175,7 +200,7 @@ export default function AdminDashboard() {
             <button
               type="button"
               className={activeTab === "checkouts" ? "is-active" : ""}
-              onClick={() => setActiveTab("checkouts")}
+              onClick={() => selectTab("checkouts")}
             >
               Checkouts
               {checkoutsOverdueCount > 0 ? (
@@ -187,7 +212,7 @@ export default function AdminDashboard() {
             <button
               type="button"
               className={activeTab === "inquiries" ? "is-active" : ""}
-              onClick={() => setActiveTab("inquiries")}
+              onClick={() => selectTab("inquiries")}
             >
               Quote Requests
               {overdueCount > 0 ? (
@@ -199,7 +224,7 @@ export default function AdminDashboard() {
             <button
               type="button"
               className={activeTab === "leads" ? "is-active" : ""}
-              onClick={() => setActiveTab("leads")}
+              onClick={() => selectTab("leads")}
             >
               Chat Leads
               {leads.length > 0 && <span className="admin-nav-count">{leads.length}</span>}
@@ -207,14 +232,14 @@ export default function AdminDashboard() {
             <button
               type="button"
               className={activeTab === "calendar" ? "is-active" : ""}
-              onClick={() => setActiveTab("calendar")}
+              onClick={() => selectTab("calendar")}
             >
               Calendar
             </button>
             <button
               type="button"
               className={activeTab === "inventory" ? "is-active" : ""}
-              onClick={() => setActiveTab("inventory")}
+              onClick={() => selectTab("inventory")}
             >
               Inventory
             </button>

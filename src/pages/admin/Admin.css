@@ -211,48 +211,84 @@
   color: #fff;
 }
 
+.admin-mobile-topbar {
+  display: none;
+}
+
+.admin-sidebar-overlay {
+  display: none;
+}
+
 @media (max-width: 899px) {
+  .admin-mobile-topbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: var(--color-ocean-900);
+    color: #fff;
+    padding: 14px 18px;
+  }
+
+  .admin-mobile-menu-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.12);
+    border: none;
+    color: #fff;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .admin-mobile-menu-dot {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-coral-600);
+  }
+
+  .admin-mobile-topbar-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .admin-sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 40;
+  }
+
   .admin-shell {
     flex-direction: column;
   }
 
   .admin-sidebar {
-    position: static;
-    width: 100%;
-    height: auto;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    padding: 14px 20px;
-    gap: 10px 16px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    max-width: 82vw;
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    z-index: 50;
+    box-shadow: var(--shadow-md);
   }
 
-  .admin-sidebar-brand {
-    flex: 1;
-  }
-
-  .admin-sidebar-brand p {
-    display: none;
-  }
-
-  .admin-nav {
-    order: 3;
-    flex-basis: 100%;
-    flex-direction: row;
-    overflow-x: auto;
-  }
-
-  .admin-nav button {
-    white-space: nowrap;
-    flex-shrink: 0;
-    padding: 8px 12px;
-    font-size: 0.85rem;
-  }
-
-  .admin-sidebar .admin-signout {
-    order: 2;
-    margin-top: 0;
-    flex-shrink: 0;
+  .admin-sidebar.is-open {
+    transform: translateX(0);
   }
 
   .admin-main {
