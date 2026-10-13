@@ -117,6 +117,11 @@
   justify-content: center;
 }
 
+.admin-sidebar-brand + .admin-notify-btn,
+.admin-sidebar-brand + .admin-notify-note {
+  margin-bottom: 18px;
+}
+
 .admin-notify-toggle {
   display: flex;
   flex-direction: column;

@@ -2,6 +2,11 @@
 // push events and showing a notification, plus focusing/opening the admin
 // tab when one is tapped. No offline caching (not needed for an admin
 // dashboard that always wants fresh data).
+// A no-op fetch handler — some browsers require a service worker with a
+// fetch listener as part of their "is this installable as an app?" check,
+// even though we don't want any offline caching behavior here.
+self.addEventListener("fetch", () => {});
+
 self.addEventListener("push", (event) => {
   let data = {};
   try {

@@ -6,6 +6,7 @@ import BookingCalendar from "../../components/admin/BookingCalendar";
 import InventoryPanel from "../../components/admin/InventoryPanel";
 import CheckoutsPanel from "../../components/admin/CheckoutsPanel";
 import NotificationToggle from "../../components/admin/NotificationToggle";
+import InstallAppButton from "../../components/admin/InstallAppButton";
 import "./Admin.css";
 
 const STATUSES = ["pending", "contacted", "confirmed", "closed"];
@@ -196,6 +197,7 @@ export default function AdminDashboard() {
             <h1>Amazing Grace</h1>
             <p>Admin Dashboard</p>
           </div>
+          <InstallAppButton />
           <nav className="admin-nav">
             <button
               type="button"
