@@ -197,8 +197,10 @@ export default function AdminDashboard() {
             <h1>Amazing Grace</h1>
             <p>Admin Dashboard</p>
           </div>
-          <InstallAppButton />
-          <NotificationToggle />
+          <div className="admin-sidebar-actions">
+            <InstallAppButton />
+            <NotificationToggle />
+          </div>
           <nav className="admin-nav">
             <button
               type="button"

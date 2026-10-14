@@ -9,6 +9,10 @@ function isIos() {
   return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
 }
 
+function isMobileDevice() {
+  return /android|iphone|ipad|ipod/i.test(window.navigator.userAgent);
+}
+
 // Chrome/Edge/Android fire `beforeinstallprompt` when the manifest + service
 // worker meet install criteria — we capture it and trigger it from our own
 // button instead of relying on the browser's own install UI. iOS Safari
@@ -41,6 +45,10 @@ export default function InstallAppButton() {
     await deferredPrompt.userChoice;
     setDeferredPrompt(null);
   }
+
+  // This is purely a "get the app on your phone" feature — desktop admins
+  // just use the browser directly, so don't clutter their sidebar with it.
+  if (!isMobileDevice()) return null;
 
   if (installed) {
     return (
