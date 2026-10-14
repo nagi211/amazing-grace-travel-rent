@@ -198,6 +198,7 @@ export default function AdminDashboard() {
             <p>Admin Dashboard</p>
           </div>
           <InstallAppButton />
+          <NotificationToggle />
           <nav className="admin-nav">
             <button
               type="button"
@@ -246,7 +247,6 @@ export default function AdminDashboard() {
               Inventory
             </button>
           </nav>
-          <NotificationToggle />
           <button type="button" className="admin-signout" onClick={signOut}>
             <LogOut size={16} /> Sign Out
           </button>
