@@ -31,6 +31,7 @@ import {
   planningPackages,
 } from "../data/pricing";
 import { useCart } from "../context/CartContext";
+import { usePageMeta } from "../lib/usePageMeta";
 import PlaceholderImage from "../components/PlaceholderImage";
 import "./Pricing.css";
 
@@ -72,6 +73,13 @@ const FULFILLMENT_STEPS = [
 ];
 
 export default function Pricing() {
+  usePageMeta({
+    title: "Rental Pricing & Packages | Amazing Grace Travels, Events and Rentals",
+    description:
+      "Browse tents, tables, chairs, linens, lighting, and full event packages with transparent pricing for weddings and celebrations across Oahu, Hawaii.",
+    path: "/pricing",
+  });
+
   const { addItem } = useCart();
   const [activeCategory, setActiveCategory] = useState(pricingGroups[0].id);
   const [justAdded, setJustAdded] = useState(null);

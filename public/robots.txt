@@ -2,4 +2,4 @@ User-agent: *
 Disallow: /admin
 Allow: /
 
-Sitemap: https://amazing-grace-travel-rent.vercel.app/sitemap.xml
+Sitemap: https://www.amazinggrace.events/sitemap.xml
