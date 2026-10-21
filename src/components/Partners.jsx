@@ -42,7 +42,7 @@ export default function Partners() {
       <div className="container">
         <div className="section-header">
           <span className="eyebrow">Our Partners</span>
-          <h2 className="section-title">Venues &amp; Vendors We Love</h2>
+          <h2 className="section-title">Partners We Love</h2>
           <p className="section-subtitle">
             Trusted local partners who make planning your celebration even easier.
           </p>
