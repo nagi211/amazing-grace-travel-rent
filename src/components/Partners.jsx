@@ -181,7 +181,7 @@ export default function Partners() {
                 </div>
               )}
 
-              <a href="#quote" className="btn btn-primary partners-lightbox-cta" onClick={closePartner}>
+              <a href="#contact" className="btn btn-primary partners-lightbox-cta" onClick={closePartner}>
                 Ask Us About This Venue
               </a>
             </div>
