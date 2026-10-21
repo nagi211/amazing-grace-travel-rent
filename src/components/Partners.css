@@ -1,9 +1,13 @@
 /* Its own tint (not the generic alt wash) — it sits between Gallery
    (plain) and Reviews (alt), which already differ from each other, so
-   reusing either one would still blend into its other neighbor. Green
-   also fits the farm/garden theme of the venue photos. */
+   reusing either one would still blend into its other neighbor. Not
+   green: the global .eyebrow badge (used site-wide, see index.css) and
+   the venue category pill below are both green-100/600, so a green
+   section background would wash them out. Ocean tint instead — fits
+   the venue's ocean-view photos just as well and keeps those badges
+   legible. */
 .partners-section {
-  background: var(--color-green-100);
+  background: var(--color-ocean-100);
 }
 
 .partners-category + .partners-category {
