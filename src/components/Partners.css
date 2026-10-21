@@ -1,3 +1,11 @@
+/* Its own tint (not the generic alt wash) — it sits between Gallery
+   (plain) and Reviews (alt), which already differ from each other, so
+   reusing either one would still blend into its other neighbor. Green
+   also fits the farm/garden theme of the venue photos. */
+.partners-section {
+  background: var(--color-green-100);
+}
+
 .partners-category + .partners-category {
   margin-top: 40px;
 }
