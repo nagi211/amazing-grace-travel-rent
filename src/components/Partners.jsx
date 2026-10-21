@@ -38,7 +38,7 @@ export default function Partners() {
   }, [activePartner]);
 
   return (
-    <section id="partners" className="section">
+    <section id="partners" className="section section-alt">
       <div className="container">
         <div className="section-header">
           <span className="eyebrow">Our Partners</span>
