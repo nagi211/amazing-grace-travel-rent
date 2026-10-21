@@ -10,6 +10,7 @@ import WhyChooseUs from "../components/WhyChooseUs";
 // Hidden for now — re-add the <Certifications /> render below to bring it back.
 // import Certifications from "../components/Certifications";
 import Gallery from "../components/Gallery";
+import Partners from "../components/Partners";
 import Reviews from "../components/Reviews";
 import QuoteForm from "../components/QuoteForm";
 import FAQ from "../components/FAQ";
@@ -37,6 +38,7 @@ export default function Home() {
       <WhyChooseUs />
       {/* <Certifications /> */}
       <Gallery />
+      <Partners />
       <Reviews />
       <QuoteForm prefillInterest={prefillInterest} />
       <FAQ />

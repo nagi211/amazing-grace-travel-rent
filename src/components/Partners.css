@@ -1,0 +1,331 @@
+.partners-category + .partners-category {
+  margin-top: 40px;
+}
+
+.partners-category-title {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 340px);
+  justify-content: center;
+  gap: 24px;
+}
+
+.partner-card {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--color-surface);
+}
+
+.partner-card-media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--color-surface-alt);
+}
+
+.partner-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.partner-card:hover .partner-card-media img {
+  transform: scale(1.04);
+}
+
+.partner-card-body {
+  padding: 20px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.partner-card-category {
+  display: inline-block;
+  align-self: flex-start;
+  background: var(--color-green-100);
+  color: var(--color-green-600);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 6px;
+}
+
+.partner-card-body h4 {
+  margin: 0 0 2px;
+  font-size: 1.15rem;
+}
+
+.partner-card-body p {
+  margin: 0;
+  color: var(--color-ink-light);
+  font-size: 0.9rem;
+}
+
+.partner-card-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--color-ink-faint);
+}
+
+.partner-card-cta {
+  margin-top: 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-ocean-700);
+}
+
+/* Lightbox */
+.partners-lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 50, 69, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.partners-lightbox {
+  position: relative;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 960px;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+}
+
+.partners-lightbox-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(6, 50, 69, 0.55);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.partners-lightbox-media {
+  position: relative;
+  background: #000;
+  aspect-ratio: 16 / 10;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* Absolutely positioned so a tall/portrait image's intrinsic size can't
+   expand the flex item past its aspect-ratio box (percentage heights on a
+   normal-flow child resolve against the box's own min-content size before
+   aspect-ratio is applied, which otherwise blows this out). */
+.partners-lightbox-media img,
+.partners-lightbox-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+.partners-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--color-ocean-900);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.partners-lightbox-nav.prev {
+  left: 12px;
+}
+
+.partners-lightbox-nav.next {
+  right: 12px;
+}
+
+.partners-lightbox-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.partners-lightbox-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  padding: 0;
+}
+
+.partners-lightbox-dot.is-active {
+  background: #fff;
+}
+
+.partners-lightbox-info {
+  padding: 24px 28px 28px;
+  overflow-y: auto;
+}
+
+.partners-lightbox-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-coral-600);
+  margin-bottom: 6px;
+}
+
+.partners-lightbox-info h3 {
+  margin: 0 0 2px;
+  font-size: 1.5rem;
+}
+
+.partners-lightbox-tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--color-ocean-700);
+  margin: 0 0 8px;
+}
+
+.partners-lightbox-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: var(--color-ink-faint);
+  margin-bottom: 14px;
+}
+
+.partners-lightbox-description {
+  color: var(--color-ink-light);
+  font-size: 0.95rem;
+  margin-bottom: 18px;
+}
+
+.partners-lightbox-highlights {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.partners-lightbox-highlights li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 0.88rem;
+  color: var(--color-ink);
+}
+
+.partners-lightbox-highlights li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-green-500);
+}
+
+.partners-lightbox-packages h4 {
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+
+.partners-lightbox-packages ul {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.partners-lightbox-packages li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  padding: 8px 12px;
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+}
+
+.partners-lightbox-packages li strong {
+  color: var(--color-ink);
+  font-size: 0.84rem;
+}
+
+.partners-lightbox-packages li span {
+  color: var(--color-ink-faint);
+  white-space: nowrap;
+}
+
+.partners-lightbox-cta {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (min-width: 760px) {
+  .partners-lightbox {
+    flex-direction: row;
+    max-height: 85vh;
+  }
+
+  .partners-lightbox-media {
+    width: 55%;
+    aspect-ratio: auto;
+    flex-shrink: 0;
+  }
+
+  .partners-lightbox-info {
+    width: 45%;
+  }
+
+  .partners-lightbox-packages ul {
+    grid-template-columns: 1fr;
+  }
+}
